@@ -1,0 +1,374 @@
+﻿@font-face {
+  font-family: 'futura';
+  src: url('../public/futura_font.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+:root {
+  --pink: #E8AEB7;
+  --lightBlue: #A9FFF7;
+  --mediumBlue: #B8E1FF;
+  --greyGreen: #82ABA1;
+  --lightGreen: #94FBAB;
+
+  --borderRadiusMedium: 15px;
+  --borderRadiusSmall: 10px;
+  --borderWidthMedium: 5px;
+  --borderWidthSmall: 3px;
+  --transitionSpeed: 0.15s;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  position: relative;
+  height: 100%;
+  min-height: 100%;
+  font-size: 14px;
+  font-family: futura, sans-serif;
+
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+h1 {
+  font-size: 2.5rem;
+  margin: 2px;
+}
+
+h2 {
+  font-size: 2.5rem;
+}
+
+h3 {
+  font-size: 2rem;
+}
+
+h4 {
+  font-size: 1.5rem;
+  margin: 2px;
+}
+
+h5 {
+  font-size: 1rem;
+}
+
+body {
+  margin-bottom: 60px;
+  background-color: #F6F1F1;
+  height: 100%;
+  overflow: hidden;
+}
+
+.navBar {
+  display: flex;
+  height: 60px;
+  background-color: var(--lightBlue);
+  justify-content: space-between;
+  border-bottom-style: solid;
+  border-bottom-color: var(--greyGreen);
+  border-bottom-width: var(--borderWidthSmall);
+}
+
+button {
+  width: 150px;
+  border: solid;
+  border-width: var(--borderWidthSmall);
+  border-radius: var(--borderRadiusSmall);
+  border-color: var(--greyGreen);
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+  font-family: futura, sans-serif;
+  transition: var(--transitionSpeed);
+}
+
+button:hover {
+  background-color: var(--greyGreen);
+  color: white;
+  transform: scale(1.08);
+  cursor: pointer;
+}
+
+.navButton {
+  background-color: var(--mediumBlue);
+  height: 70%;
+  margin: auto 20px;
+}
+
+main {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--pink);
+}
+
+.content {
+  display: flex;
+  flex-direction: row;
+}
+
+.results {
+  width: 100%;
+  height: 25%;
+  display: flex;
+  justify-content: center;
+}
+
+#averageValue {
+  min-height: 60px;
+}
+
+.resultsBoard {
+  background-color: var(--mediumBlue);
+  width: 40%;
+  height: 80%;
+  margin: auto;
+  border-radius: var(--borderRadiusMedium);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  border: solid;
+  border-width: var(--borderWidthMedium);
+  border-color: var(--lightBlue);
+  padding: 5px;
+}
+
+.average {
+  height: 75%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: auto;
+  justify-content: center;
+}
+
+.buttonText {
+  height: 100%;
+}
+
+.players {
+  width: 100%;
+  height: 25%;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.votingCards {
+  width: 55%;
+  height: 50%;
+  margin: auto;
+  padding: 15px;
+}
+
+.votingCardsRow {
+  width: 100%;
+  height: 50%;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  margin: auto;
+}
+
+.card {
+  height: 90%;
+  border-radius: var(--borderRadiusMedium);
+  border-width: var(--borderWidthSmall);
+  border-color: var(--lightBlue);
+  border-style: solid;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-width: 50px;
+}
+
+.player {
+  background-color: var(--greyGreen);
+  width: 100%;
+  font-size: 1.5rem;
+}
+
+.voting {
+  width: 100px;
+  margin: 15px 15px;
+  background-color: var(--mediumBlue);
+  transition: var(--transitionSpeed);
+}
+
+.voting:hover {
+  transform: scale(1.08);
+  cursor: pointer;
+}
+
+.shadowMedium {
+  -webkit-box-shadow: 0px 4px 20px 0px rgba(0,0,0,0.75);
+  -moz-box-shadow: 0px 4px 20px 0px rgba(0,0,0,0.75);
+  box-shadow: 0px 4px 20px 0px rgba(0,0,0,0.75);
+}
+
+.shadowSmall {
+  -webkit-box-shadow: 0px 4px 10px 0px rgba(0,0,0,0.5);
+  -moz-box-shadow: 0px 4px 10px 0px rgba(0,0,0,0.5);
+  box-shadow: 0px 4px 10px 0px rgba(0,0,0,0.5);
+}
+
+.playerCardAndName {
+  display: flex;
+  height: 95%;
+  width: 100px;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-content: center;
+  text-align: center;
+}
+
+.playerName {
+  margin-top: 12px;
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.showButton {
+  margin: 5px;
+  background-color: var(--lightBlue);
+  height: 100px;
+  margin: auto 5px;
+}
+
+.newVoteButton {
+  margin: 5px;
+  background-color: var(--lightBlue);
+  height: 100px;
+  margin: auto 5px;
+}
+
+.startScreen {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+}
+
+.startScreenContent {
+  height: 70%;
+  width: 55%;
+  max-width: 550px;
+  background-color: var(--mediumBlue);
+  margin: 10px auto;
+  border-radius: var(--borderRadiusSmall);
+  border-style: solid;
+  border-width: var(--borderWidthMedium);
+  border-color: var(--lightBlue);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.logoDiv {
+  height: 33%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}
+
+#homeScreenLogo {
+  height: 70%;
+  width: auto;
+  margin: auto;
+}
+
+.startScreenForm {
+  height: 90%;
+  width: 80%;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.formBorder {
+  border-radius: var(--borderRadiusSmall);
+  border-style: solid;
+  border-width: var(--borderWidthSmall);
+  border-color: var(--greyGreen);
+}
+
+.input {
+  height: 50px;
+  width: 80%;
+  text-align: center;
+}
+
+.submitButton {
+  width: 150px;
+  height: 40px;
+  border: solid;
+  border-width: var(--borderWidthSmall);
+  border-radius: var(--borderRadiusSmall);
+  border-color: var(--greyGreen);
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+  font-family: futura, sans-serif;
+  transition: var(--transitionSpeed);
+}
+
+.submitButton:hover {
+  background-color: var(--greyGreen);
+  color: white;
+  transform: scale(1.08);
+  cursor: pointer;
+}
+
+
+.cardValueHidden {
+  background-color: #e5e5f7;
+  opacity: 0.8;
+  background: repeating-linear-gradient( -45deg, #82ABA1, #82ABA1 2.5px, #e5e5f7 2.5px, #e5e5f7 12.5px );
+}
+
+.selected {
+  background-color: var(--lightGreen);
+}
+
+.navBarLogo {
+  height: 80%;
+  width: auto;
+  margin: auto;
+}
+
+.inviteWindow {
+  display: none;
+  position: absolute;
+  min-height: 50px;
+  width: 20%;
+  top: 10%;
+  right: 3%;
+  z-index: 999;
+  background-color: var(--mediumBlue);
+  border-radius: var(--borderRadiusMedium);
+  border: solid;
+  border-width: var(--borderWidthMedium);
+  border-color: var(--lightBlue);
+  padding: 10px;
+}
