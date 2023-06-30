@@ -6,13 +6,6 @@ export class Layout extends Component {
     static displayName = Layout.name;
     render() {
         return (
-            <html lang="en">
-            <head>
-                <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-                <title>Scrum Poker: Showdown</title>
-                <link rel="stylesheet" href="../custom.css"/>
-            </head>
-            <body>
             <main role="main">
                 <div>
                     <NavMenu />
@@ -21,8 +14,6 @@ export class Layout extends Component {
                     </Container>
                 </div>
             </main>
-            </body>
-            </html>
         );    
     }
 }
