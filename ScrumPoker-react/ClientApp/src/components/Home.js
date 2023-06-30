@@ -16,7 +16,16 @@ export class Home extends React.Component {
 
     handleSubmit = (event) => {
         event.preventDefault();
-        // Handle form submission logic here
+        
+        const playerName = event.currentTarget.elements.playerName.value;
+        const votingSystem = event.currentTarget.elements.votingSystem.value;
+        
+        console.log("Player Name: " + playerName)
+        console.log("Voting System: " + votingSystem)
+        
+        // Front end validation
+        
+        // Send to API
     }
 
     render() {
@@ -35,21 +44,17 @@ export class Home extends React.Component {
                                 name="playerName"
                                 className="input formBorder"
                                 value={this.state.playerName}
-                                onChange={this.handleInputChange}
-                            />
-
+                                onChange={this.handleInputChange}/>
                             <label htmlFor="votingSystem">Voting System</label>
                             <select
                                 id="votingSystem"
                                 name="votingSystem"
                                 className="input formBorder"
                                 value={this.state.votingSystem}
-                                onChange={this.handleInputChange}
-                            >
+                                onChange={this.handleInputChange}>
                                 <option value="1, 2, 3, 5, 8, 13, 21, 34">1, 2, 3, 5, 8, 13, 21, 34</option>
                                 <option value="Custom">Custom</option>
                             </select>
-
                             <input type="submit" value="Start" className="submitButton" />
                         </form>
                     </div>
