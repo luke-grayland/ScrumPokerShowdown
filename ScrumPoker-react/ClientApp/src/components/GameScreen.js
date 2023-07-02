@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 
-const Game = () => {
-    
+const GameScreen = () => {
     
     return(
         <>
@@ -10,4 +9,4 @@ const Game = () => {
     )
 }
 
-export default Game
+export default GameScreen

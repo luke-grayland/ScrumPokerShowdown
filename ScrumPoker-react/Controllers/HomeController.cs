@@ -1,6 +1,7 @@
 ﻿using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
 using ScrumPoker_react.Models;
+using ScrumPoker_react.Orchestrators;
 
 namespace ScrumPoker_react.Controllers;
 
@@ -8,35 +9,32 @@ namespace ScrumPoker_react.Controllers;
 [Route("[controller]")]
 public class HomeController : ControllerBase
 {
-    public HomeController()
+    private readonly IGameOrchestrator _gameOrchestrator;
+    
+    public HomeController(IGameOrchestrator gameOrchestrator)
     {
-        
+        _gameOrchestrator = gameOrchestrator;
     }
     
     [HttpPost("StartGame")]
-    public IActionResult StartGame([FromBody] string playerGame)
+    public IActionResult StartGame([FromBody] NewGameModel playerGame)
     {
-        var playerGameModel = JsonSerializer.Deserialize<PlayerGameModel>(playerGame);
-        
-        // if (playerGameViewModel.VotingSystem == null ||
-        //     playerGameViewModel.PlayerName == null)
-        //     throw new NullReferenceException();
-        //
-        // var votingCardValues =
-        //     _gameHelper.FormatVotingCardValues(playerGameViewModel.VotingSystem);
-        //
-        // var playerName =
-        //     _gameHelper.SanitiseValidateName(playerGameViewModel.PlayerName);
-        //
-        // var gameConfig = new RouteValueDictionary()
-        // {
-        //     {"votingCardValues", votingCardValues},
-        //     {"playerName", playerName}
-        // };
-        //
-        // return RedirectToAction("InitialiseGame", "Game", gameConfig);
+        try
+        {
+            if (playerGame == null)
+                throw new NullReferenceException();
 
-        return Ok();
+            var votingSystem = _gameOrchestrator.ValidateVotingSystem(playerGame);
+            var player = _gameOrchestrator.CreatePlayer(playerGame.PlayerName);
+            var gameModel = _gameOrchestrator.AssembleGameModel(votingSystem, player);
+
+            return Ok(JsonSerializer.Serialize(gameModel));
+        }
+        catch
+        {
+            return StatusCode(400, "Invalid custom voting system format");
+        }
     }
+    
 }
 

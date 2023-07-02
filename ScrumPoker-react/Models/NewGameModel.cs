@@ -1,6 +1,6 @@
 namespace ScrumPoker_react.Models;
 
-public class PlayerGameModel
+public class NewGameModel
 {
     public string PlayerName { get; set; }
     public string VotingSystem { get; set; }

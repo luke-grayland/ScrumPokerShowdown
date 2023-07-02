@@ -1,14 +1,19 @@
-import Home from "./components/Home";
-import Game from "./components/Game";
+import HomeScreen from "./components/HomeScreen";
+import GameScreen from "./components/GameScreen";
+import LoadingScreen from "./components/LoadingScreen";
 
 const AppRoutes = [
   {
     index: true,
-    element: <Home />
+    element: <HomeScreen />
+  },
+  {
+    path: "/loading",
+    element: <LoadingScreen/>
   },
   {
     path: '/game',
-    element: <Game />
+    element: <GameScreen />
   }
 ];
 

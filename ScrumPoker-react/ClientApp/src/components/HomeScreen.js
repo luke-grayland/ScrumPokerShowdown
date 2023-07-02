@@ -1,21 +1,21 @@
 import React, {useState} from 'react';
-const Home = () => {
+import { Navigate } from 'react-router-dom';
+const HomeScreen = () => {
 
     const [playerName, setPlayerName] = useState("")
     const [votingSystem, setVotingSystem] = useState("1, 2, 3, 5, 8, 13, 21, 34")
     const [customVotingSystem, setCustomVotingSystem] = useState("")
     const [displayCustomInput, setDisplayCustomInput] = useState(false)
+    const [goToLoading, setGoToLoading] = useState(false)
 
     const handleSubmit = (e) => {
-        e.preventDefault();
-        
-        console.log("Player Name: " + playerName)
-        console.log("Voting System: " + votingSystem)
-        console.log("Custom Voting System: " + customVotingSystem)
-
+        e.preventDefault()
         // Add front end validation
         
-        sendData().then((response) => console.log("api response: " + response))
+        sendData().then((x) => console.log(x))
+        
+        // If validation passed, navigate
+        setGoToLoading(true)
     }
     
     const handleVotingSystemChange = (e) => {
@@ -25,7 +25,7 @@ const Home = () => {
 
     const sendData = async () => {
         const url = 'https://localhost:7050/Home/StartGame';
-
+        
         const data = {
             playerName: playerName,
             votingSystem: votingSystem,
@@ -42,11 +42,12 @@ const Home = () => {
             });
 
             if (!response.ok) {
-                throw new Error('Request failed');
+                console.log(response)
             }
 
-            const responseData = await response.json();
-            console.log(responseData);
+            const gameModel = await response.json();
+            console.log(gameModel);
+            
         } catch (error) {
             console.error(error);
         }
@@ -96,8 +97,11 @@ const Home = () => {
                     </form>
                 </div>
             </div>
+            { goToLoading &&
+                <Navigate to={"/loading"}/>    
+            }
         </div>
     )
 }
 
-export default Home
+export default HomeScreen

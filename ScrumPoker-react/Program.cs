@@ -1,10 +1,14 @@
-﻿var builder = WebApplication.CreateBuilder(args);
+﻿using ScrumPoker_react.Orchestrators;
+
+var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddCors();
 
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddScoped<IGameOrchestrator, GameOrchestrator>();
 
 var app = builder.Build();
 
