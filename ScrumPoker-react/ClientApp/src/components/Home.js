@@ -3,6 +3,7 @@ const Home = () => {
 
     const [playerName, setPlayerName] = useState("")
     const [votingSystem, setVotingSystem] = useState("1, 2, 3, 5, 8, 13, 21, 34")
+    const [customVotingSystem, setCustomVotingSystem] = useState("")
     const [displayCustomInput, setDisplayCustomInput] = useState(false)
 
     const handleSubmit = (e) => {
@@ -10,25 +11,51 @@ const Home = () => {
         
         console.log("Player Name: " + playerName)
         console.log("Voting System: " + votingSystem)
+        console.log("Custom Voting System: " + customVotingSystem)
 
-        // Front end validation
-
-        // Send to API
+        // Add front end validation
+        
+        sendData().then((response) => console.log("api response: " + response))
     }
     
     const handleVotingSystemChange = (e) => {
         setVotingSystem(e.target.value)
         setDisplayCustomInput(votingSystem !== "Custom")
     }
-    
-    const handleCustomInput = (e) => {
-        console.log(e.target.value)
-    }
-    
+
+    const sendData = async () => {
+        const url = 'https://localhost:7050/Home/StartGame';
+
+        const data = {
+            playerName: playerName,
+            votingSystem: votingSystem,
+            customVotingSystem: customVotingSystem
+        };
+
+        try {
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            });
+
+            if (!response.ok) {
+                throw new Error('Request failed');
+            }
+
+            const responseData = await response.json();
+            console.log(responseData);
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
     return (
         <div>
             <div className="logoDiv">
-                <img src="../../public/ScrumPokerShowdownLogo.png" alt="Scrum Poker Logo" id="homeScreenLogo" />
+                <img src="/ScrumPokerShowdownLogo.png" alt="Scrum Poker Logo" id="homeScreenLogo" />
             </div>
             <div className="startScreen">
                 <div className="startScreenContent shadowSmall">
@@ -51,13 +78,19 @@ const Home = () => {
                             <option value="Custom">Custom</option>
                         </select>
                         { displayCustomInput &&
-                            <input
-                                type="text"
-                                id="customVotingSystem"
-                                name="customVotingSystem"
-                                className="input formBorder"
-                                onChange={handleCustomInput}
-                            />
+                            <>
+                                <label htmlFor="customVotingSystem" className="customInputLabel">
+                                    Please enter comma separated values
+                                </label>
+                                <input
+                                    type="text"
+                                    id="customVotingSystem"
+                                    name="customVotingSystem"
+                                    className="input formBorder"
+                                    onChange={(e) => 
+                                        setCustomVotingSystem(e.target.value)}
+                                />
+                            </>
                         }
                         <input type="submit" value="Start" className="submitButton"/>
                     </form>

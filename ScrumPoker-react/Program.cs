@@ -2,6 +2,8 @@
 
 // Add services to the container.
 
+builder.Services.AddCors();
+
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
@@ -17,6 +19,17 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
 
+app.UseCors(builder =>
+    {
+        builder
+            .WithOrigins("http://localhost:3000")
+            .SetIsOriginAllowedToAllowWildcardSubdomains()
+            .AllowAnyHeader()
+            .AllowCredentials()
+            .WithMethods("GET", "PUT", "POST", "DELETE", "OPTIONS")
+            .SetPreflightMaxAge(TimeSpan.FromSeconds(3600));
+    }
+);
 
 app.MapControllerRoute(
     name: "default",

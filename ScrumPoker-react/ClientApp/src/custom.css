@@ -19,6 +19,10 @@
   --transitionSpeed: 0.15s;
 }
 
+#root {
+  height: 100%;
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -269,6 +273,7 @@ main {
 .startScreenContent {
   height: 70%;
   width: 55%;
+  padding: 20px;
   max-width: 550px;
   background-color: var(--mediumBlue);
   margin: 10px auto;
@@ -282,6 +287,10 @@ main {
   align-items: center;
 }
 
+.startScreenForm input {
+  margin: 20px;
+}
+
 .logoDiv {
   height: 33%;
   width: 100%;
@@ -291,9 +300,14 @@ main {
 }
 
 #homeScreenLogo {
-  height: 70%;
+  height: 170px;
   width: auto;
   margin: auto;
+  padding: 10px;
+}
+
+.customInputLabel {
+  font-style: italic;
 }
 
 .startScreenForm {
@@ -339,7 +353,6 @@ main {
   transform: scale(1.08);
   cursor: pointer;
 }
-
 
 .cardValueHidden {
   background-color: #e5e5f7;
