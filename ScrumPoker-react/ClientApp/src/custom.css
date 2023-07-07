@@ -385,3 +385,20 @@ main {
   border-color: var(--lightBlue);
   padding: 10px;
 }
+
+.loadingScreen {
+  height: 85vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+}
+
+.loadingSpin {
+  font-size: 55px;
+  margin-top: 50px;
+}
+
+#votingSystem {
+  margin: 20px;
+}

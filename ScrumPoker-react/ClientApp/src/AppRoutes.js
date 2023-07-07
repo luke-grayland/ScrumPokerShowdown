@@ -13,7 +13,7 @@ const AppRoutes = [
   },
   {
     path: '/game',
-    element: <GameScreen />
+    element: <GameScreen/>
   }
 ];
 
