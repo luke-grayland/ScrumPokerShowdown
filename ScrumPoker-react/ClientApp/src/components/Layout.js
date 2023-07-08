@@ -3,7 +3,6 @@ import { Container } from 'reactstrap';
 import NavMenu from "./NavMenu";
 
 const Layout = (props) => {
-    
     return (
         <main role="main">
             <NavMenu />
