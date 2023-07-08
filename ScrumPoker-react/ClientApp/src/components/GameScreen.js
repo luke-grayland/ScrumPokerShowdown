@@ -1,35 +1,34 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import PlayerCard from "./PlayerCard";
 import VotingCard from "./VotingCard";
+import GameContext from '../contexts/GameContext'
+import NavBar from "./NavBar";
+import InviteWindow from "./InviteWindow";
 
 const GameScreen = () => {
-    const temp = {
-        "Players" : {
-            "Player" : {
-                "Name" : "Luke"
-            }
-        },
-        "VotingSystem" : [1, 2, 3, 5, 8, 13],
-        "VotingCardsTopRow" : [1, 2, 3],
-        "VotingCardsBottomRow" : [5, 8, 13]
-    }
-    
-    const [gameModel, setGameModel] = useState(temp)
+    const {gameContext, updateGameContext} = useContext(GameContext)
+    const [players, setPlayers] = useState(gameContext.Players)
+    const [votingCardsTopRow, setVotingCardsTopRow] = useState(gameContext.VotingCardsTopRow)
+    const [votingCardsBottomRow, setVotingCardsBottomRow] = useState(gameContext.VotingCardsBottomRow)
+    const [showInviteWindow, setShowInviteWindow] = useState(false)
     
     useEffect(() => {
-        //fetch game model on page load
-    }, [])
+        setPlayers(gameContext.Players)
+        setVotingCardsTopRow(gameContext.VotingCardsTopRow)
+        setVotingCardsBottomRow(gameContext.VotingCardsBottomRow)
+        
+        console.log("cheese" + players)
+        
+        //the problem is that this isn't triggering when the gameContext is updated via the updateGameContext call 
+    }, [gameContext])
+    
     
     return (
-        <div>
-            <div className="navBar">
-                <button id="newGame" className="navButton">New Game</button>
-                <img src="/LogoChipOnly.png" alt="Scrum Poker Logo" className="navBarLogo" />
-                <button id="inviteButton" className="navButton inviteHidden">Invite</button>
-            </div>
-            <div id="inviteWindow" className="inviteWindow shadowSmall">
-                <p id="inviteLink">Invite link</p>
-            </div>
+        <>
+            <NavBar showInviteWindow={showInviteWindow} setShowInviteWindow={setShowInviteWindow}/>
+            { showInviteWindow &&
+                <InviteWindow/>
+            }
             <div className="results">
                 <div id="resultsBoard" className="resultsBoard shadowSmall">
                     <div className="average">
@@ -40,23 +39,23 @@ const GameScreen = () => {
                 </div>
             </div>
             <div className="players">
-                {gameModel.Players.map((player) => (
-                    <PlayerCard playerName={player.Name} />
+                {players.map((player) => (
+                    <PlayerCard key={player.Id} playerName={player.Name} />
                 ))}
             </div>
             <div className="votingCards">
                 <div className="votingCardsRow">
-                    {gameModel.VotingCardsTopRow.map((cardValue) => (
-                        <VotingCard cardValue={cardValue} />
+                    {votingCardsTopRow.map((cardValue) => (
+                        <VotingCard key={cardValue} cardValue={cardValue} />
                     ))}
                 </div>
                 <div className="votingCardsRow">
-                    {gameModel.VotingCardsBottomRow.map((cardValue) => (
-                        <VotingCard cardValue={cardValue} />
+                    {votingCardsBottomRow.map((cardValue) => (
+                        <VotingCard key={cardValue} cardValue={cardValue} />
                     ))}
                 </div>
             </div>
-        </div>
+        </>
     );
 };
 

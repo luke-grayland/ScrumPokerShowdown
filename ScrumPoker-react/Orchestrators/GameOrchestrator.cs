@@ -37,6 +37,7 @@ public class GameOrchestrator : IGameOrchestrator
     {
         return new PlayerModel()
         {
+            Id = new Guid(),
             Name = playerName
         };
     }

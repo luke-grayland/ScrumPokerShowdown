@@ -1,11 +1,13 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
+import GameContext from "../contexts/GameContext";
 const HomeScreen = () => {
     const [playerName, setPlayerName] = useState("")
     const [votingSystem, setVotingSystem] = useState("1, 2, 3, 5, 8, 13, 21, 34")
     const [customVotingSystem, setCustomVotingSystem] = useState("")
     const [displayCustomInput, setDisplayCustomInput] = useState(false)
     const navigate = useNavigate()
+    const {gameContext, updateGameContext} = useContext(GameContext)
     
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -39,15 +41,15 @@ const HomeScreen = () => {
             });
 
             if (!response.ok) {
-                console.log(response)
+                console.log("Error: " + response)
             }
 
             const gameModel = await response.json();
+            updateGameContext(gameModel)
+            
             setTimeout(() => {
                 navigate("/game")    
             }, 500)
-            
-            console.log(gameModel);
             
         } catch (error) {
             console.error(error);

@@ -371,7 +371,7 @@ main {
 }
 
 .inviteWindow {
-  display: none;
+  
   position: absolute;
   min-height: 50px;
   width: 20%;
