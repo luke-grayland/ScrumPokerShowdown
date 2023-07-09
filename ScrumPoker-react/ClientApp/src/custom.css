@@ -97,7 +97,7 @@ button {
   transition: var(--transitionSpeed);
 }
 
-button:hover {
+.navButton:hover {
   background-color: var(--greyGreen);
   color: white;
   transform: scale(1.08);
@@ -248,18 +248,18 @@ main {
   text-overflow: ellipsis;
 }
 
-.showButton {
+.showHideButton {
   margin: 5px;
   background-color: var(--lightBlue);
   height: 100px;
   margin: auto 5px;
 }
 
-.newVoteButton {
-  margin: 5px;
-  background-color: var(--lightBlue);
-  height: 100px;
-  margin: auto 5px;
+.showHideButton:hover {
+  background-color: var(--greyGreen);
+  color: white;
+  transform: scale(1.08);
+  cursor: pointer;
 }
 
 .startScreen {

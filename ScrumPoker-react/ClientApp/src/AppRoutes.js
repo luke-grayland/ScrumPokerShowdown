@@ -1,6 +1,6 @@
-import HomeScreen from "./components/HomeScreen";
-import GameScreen from "./components/GameScreen";
-import LoadingScreen from "./components/LoadingScreen";
+import HomeScreen from "./components/HomeScreen/HomeScreen";
+import GameScreen from "./components/GameScreen/GameScreen";
+import LoadingScreen from "./components/LoadingScreen/LoadingScreen";
 
 const AppRoutes = [
   {

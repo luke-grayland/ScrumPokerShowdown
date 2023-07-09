@@ -1,19 +1,21 @@
 import React, {useContext, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
-import GameContext from "../contexts/GameContext";
+import GameContext from "../../contexts/GameContext";
+import {startGame} from "./HomeScreenHelper";
 const HomeScreen = () => {
     const [playerName, setPlayerName] = useState("")
     const [votingSystem, setVotingSystem] = useState("1, 2, 3, 5, 8, 13, 21, 34")
     const [customVotingSystem, setCustomVotingSystem] = useState("")
     const [displayCustomInput, setDisplayCustomInput] = useState(false)
     const navigate = useNavigate()
-    const {gameContext, updateGameContext} = useContext(GameContext)
+    const {updateGameContext} = useContext(GameContext)
     
     const handleSubmit = (e) => {
         e.preventDefault()
-        // Add front end validation
+        // Add front end validation - ensure no 2 values are the same
+        startGame(playerName, votingSystem, customVotingSystem, updateGameContext, navigate)
+            .then((x) => console.log(x))
         
-        sendData().then((x) => console.log(x))
         navigate("/loading")
     }
     
@@ -22,44 +24,10 @@ const HomeScreen = () => {
         setDisplayCustomInput(votingSystem !== "Custom")
     }
 
-    const sendData = async () => {
-        const url = 'https://localhost:7050/Home/StartGame';
-        
-        const data = {
-            playerName: playerName,
-            votingSystem: votingSystem,
-            customVotingSystem: customVotingSystem
-        };
-
-        try {
-            const response = await fetch(url, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(data)
-            });
-
-            if (!response.ok) {
-                console.log("Error: " + response)
-            }
-
-            const gameModel = await response.json();
-            updateGameContext(gameModel)
-            
-            setTimeout(() => {
-                navigate("/game")    
-            }, 500)
-            
-        } catch (error) {
-            console.error(error);
-        }
-    };
-
     return (
         <div>
             <div className="logoDiv">
-                <img src="/ScrumPokerShowdownLogo.png" alt="Scrum Poker Logo" id="homeScreenLogo" />
+                <img src={"/ScrumPokerShowdownLogo.png"} alt="Scrum Poker Logo" id="homeScreenLogo" />
             </div>
             <div className="startScreen">
                 <div className="startScreenContent shadowSmall">

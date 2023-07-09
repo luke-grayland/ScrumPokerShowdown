@@ -37,9 +37,17 @@ public class GameOrchestrator : IGameOrchestrator
     {
         return new PlayerModel()
         {
-            Id = new Guid(),
+            Id = Guid.NewGuid(),
             Name = playerName
         };
+    }
+
+    public GameModel UpdatePlayerVote(GameModel gameModel, int cardValue, Guid playerId)
+    {
+        var playerToUpdate = gameModel.Players.FirstOrDefault(x => x.Id == playerId);
+        playerToUpdate.Vote = cardValue;
+        
+        return gameModel;
     }
     
     private Tuple<List<int>, List<int>> SplitCardsToRows(IList<int> votingCardsVales)
