@@ -47,10 +47,12 @@ public class GameOrchestrator : IGameOrchestrator
         var playerToUpdate = gameModel.Players.FirstOrDefault(x => x.Id == playerId);
         playerToUpdate.Vote = cardValue;
         
+        gameModel.AverageScore = UpdateAverageScore(gameModel.Players);
+        
         return gameModel;
     }
     
-    private Tuple<List<int>, List<int>> SplitCardsToRows(IList<int> votingCardsVales)
+    private static Tuple<List<int>, List<int>> SplitCardsToRows(IList<int> votingCardsVales)
     {
         var topRow = new List<int>();
         var bottomRow = new List<int>();
@@ -67,6 +69,11 @@ public class GameOrchestrator : IGameOrchestrator
         }
 
         return Tuple.Create(topRow, bottomRow);
+    }
+
+    private static int UpdateAverageScore(IEnumerable<PlayerModel> players)
+    {
+        return players.Sum(x => x.Vote); 
     }
 }
 

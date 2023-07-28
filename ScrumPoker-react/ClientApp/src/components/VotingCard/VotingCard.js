@@ -1,14 +1,17 @@
-import React from "react";
+import React, {useContext, useEffect} from "react";
 import {UpdateGameModel} from "./VotingCardHelper";
+import GameContext from "../../contexts/GameContext";
 
 const VotingCard = ({cardValue, setSelectedCard, selectedCard}) => {
     
+    const {gameContext, updateGameContext} = useContext(GameContext)
+    
     const handleClick = () => {
+        console.log("first", gameContext)
         setSelectedCard(cardValue)
-        
-        // update game model via api
-        
-        UpdateGameModel(cardValue).then(r => console.log(r))
+        UpdateGameModel(cardValue).then(gameModel => {
+            updateGameContext(gameModel)
+        })
     }
     
     return(

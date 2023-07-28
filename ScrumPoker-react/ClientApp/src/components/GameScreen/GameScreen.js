@@ -14,20 +14,20 @@ const GameScreen = () => {
     const [showInviteWindow, setShowInviteWindow] = useState(false)
     const [selectedCard, setSelectedCard] = useState(null)
     const [averageResult, setAverageResult] = useState(0)
-    const [showButtonVisible, setShowButtonVisible] = useState(true)
+    const [showAverageResult, setShowAverageResult] = useState(true)
     
     UpdateGame(setPlayers, setVotingCardsTopRow, setVotingCardsBottomRow)
 
     const toggleShowHideButton = () => {
-        if (showButtonVisible)
+        if (showAverageResult)
         {
-            // show results
+            // hide result
         }
         else {
-            // start new vote
+            //show result
         }
-        
-        setShowButtonVisible(!showButtonVisible)
+
+        setShowAverageResult(!showAverageResult)
     }
     
     return (
@@ -43,7 +43,7 @@ const GameScreen = () => {
                         <h1 id="averageValue">{averageResult > 0 ? averageResult.toString() : ""}</h1>
                     </div>
                     <button id="showNewVoteButton" className="showHideButton" onClick={toggleShowHideButton}>
-                        {showButtonVisible ? "Show" : "New Vote"}
+                        {showAverageResult ? "New Vote" : "Show"}
                     </button>
                 </div>
             </div>

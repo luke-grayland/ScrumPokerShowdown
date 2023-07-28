@@ -7,5 +7,7 @@ public class GameModel
     public IList<int> VotingCardsTopRow { get; set; }
     public IList<int> VotingCardsBottomRow { get; set; }
     
+    public int AverageScore { get; set; }
+    
     
 }

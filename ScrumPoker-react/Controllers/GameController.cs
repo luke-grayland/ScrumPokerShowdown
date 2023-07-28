@@ -21,16 +21,19 @@ public class GameController : ControllerBase
     }
     
     [HttpPost("UpdatePlayerVote")]
-    public IActionResult UpdatePlayerVote([FromBody] int cardValue)
+    public IActionResult UpdatePlayerVote([FromBody] UpdatePlayerVoteModel updatePlayerVoteModel)
     {
         try
         {
             var serializedGameModel = _redis.GetDatabase().StringGet(DbKey);
             var gameModel = JsonSerializer.Deserialize<GameModel>(serializedGameModel);
             
-            var playerId = new Guid(); // remember to change this
+            var playerId = gameModel.Players.FirstOrDefault().Id; // remember to change this, need to find the current player
 
-            var updatedGameModel = _gameOrchestrator.UpdatePlayerVote(gameModel, cardValue, playerId);
+            var updatedGameModel = _gameOrchestrator.UpdatePlayerVote(
+                gameModel, 
+                updatePlayerVoteModel.CardValue, 
+                playerId);
         
             _redis.GetDatabase().StringSet(DbKey, JsonSerializer.Serialize(updatedGameModel));
 

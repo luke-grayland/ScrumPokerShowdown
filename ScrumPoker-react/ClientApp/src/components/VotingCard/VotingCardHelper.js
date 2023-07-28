@@ -1,16 +1,13 @@
-import GameContext from "../../contexts/GameContext";
-import {useContext} from "react";
-
 export const UpdateGameModel = async (cardValue) => {
-    // const {updateGameContext} = useContext(GameContext)
-    
     const url = 'https://localhost:7050/Game/UpdatePlayerVote';
 
     const data = {
-        cardValue: cardValue
+        CardValue: cardValue
     };
 
     try {
+        console.log(JSON.stringify(data))
+        
         const response = await fetch(url, {
             method: 'POST',
             headers: {
@@ -20,12 +17,14 @@ export const UpdateGameModel = async (cardValue) => {
         });
 
         if (!response.ok) {
-            console.log("Error: " + response)
+            const error = await response.json()
+            console.log("Error: " + error)
         }
-
-        const gameModel = await response.json();
-        // updateGameContext(gameModel)
-        console.log(gameModel)
+        else {
+            const gameModel = await response.json();
+            // console.log("Game Model Updated", gameModel)
+            return gameModel
+        }
     }
     catch (error) {
         console.error(error);

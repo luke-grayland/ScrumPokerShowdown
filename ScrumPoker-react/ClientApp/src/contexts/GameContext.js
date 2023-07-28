@@ -1,5 +1,5 @@
 import {createContext} from 'react'
 
-const GameModel = createContext()
+const GameContext = createContext()
 
-export default GameModel
+export default GameContext
