@@ -5,28 +5,19 @@ export const UpdateGameModel = async (cardValue) => {
         CardValue: cardValue
     };
 
-    try {
-        console.log(JSON.stringify(data))
-        
-        const response = await fetch(url, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-        });
+    const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    });
 
-        if (!response.ok) {
-            const error = await response.json()
-            console.log("Error: " + error)
-        }
-        else {
-            const gameModel = await response.json();
-            // console.log("Game Model Updated", gameModel)
-            return gameModel
-        }
+    if (!response.ok) {
+        const error = await response.json()
+        console.log("Error: " + error)
     }
-    catch (error) {
-        console.error(error);
+    else {
+        return await response.json();
     }
 }

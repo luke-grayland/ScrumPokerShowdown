@@ -1,14 +1,19 @@
-import {useContext, useEffect} from "react";
-import GameContext from "../../contexts/GameContext";
+export const ResetPlayerVotes = async () => {
+    const url = 'https://localhost:7050/Game/ResetPlayerVotes';
 
-export const UpdateGame = (setPlayers, setVotingCardsTopRow, setVotingCardsBottomRow) => {
-    const {gameContext} = useContext(GameContext)
-    
-    useEffect(() => {
-        setPlayers(gameContext.Players)
-        setVotingCardsTopRow(gameContext.VotingCardsTopRow)
-        setVotingCardsBottomRow(gameContext.VotingCardsBottomRow)
+    const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: {}
+    })
 
-        //the problem is that this isn't triggering when the gameContext is updated via the updateGameContext call 
-    }, [gameContext])
+    if (!response.ok) {
+        const error = await response.json()
+        console.log("Error: " + error)
+    }
+    else {
+        return await response.json();
+    }
 }

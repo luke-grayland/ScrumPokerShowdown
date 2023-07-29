@@ -31,3 +31,30 @@ export const startGame = async (playerName, votingSystem, customVotingSystem, up
         console.error(error);
     }
 };
+
+export const ValidateCustomVotingSystem = (customVotingSystem) => {
+    let result = ""
+    let inputValues = customVotingSystem.split(",")
+    
+    if (customVotingSystem.slice(-1) === ",")
+        result = "Custom values must not end with comma"
+    
+    if (inputValues.some(x => (parseInt(x) < 1 || parseInt(x) > 99)))
+        result = "Custom values must be between 1 - 99"
+    
+    if (inputValues.some(x => isNaN(parseInt(x))))
+        result = "Custom values must be numeric"
+
+    if(inputValues.some((element, index) => {
+        return inputValues.indexOf(element) !== index
+    }))
+        result = "Custom values must not contain duplicates"
+    
+    if (inputValues.length < 3)
+        result = "A minimum of 3 values is required"
+
+    if (inputValues.length > 16)
+        result = "A maximum of 16 values is allowed"
+    
+    return result
+}

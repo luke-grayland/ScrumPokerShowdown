@@ -41,6 +41,5 @@ public class HomeController : ControllerBase
             return StatusCode(400, "Invalid custom voting system format");
         }
     }
-    
 }
 

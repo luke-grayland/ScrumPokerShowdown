@@ -12,7 +12,7 @@ public class GameOrchestrator : IGameOrchestrator
 
         try
         {
-            return votingSystem.Split(",").Select(int.Parse).ToList();
+            return votingSystem.Split(",").Select(int.Parse).OrderBy(x => x).ToList();
         }
         catch
         {
@@ -47,7 +47,17 @@ public class GameOrchestrator : IGameOrchestrator
         var playerToUpdate = gameModel.Players.FirstOrDefault(x => x.Id == playerId);
         playerToUpdate.Vote = cardValue;
         
-        gameModel.AverageScore = UpdateAverageScore(gameModel.Players);
+        gameModel.AverageScore = CalculateAverageScore(gameModel.Players);
+        
+        return gameModel;
+    }
+
+    public GameModel ResetPlayerVotes(GameModel gameModel)
+    {
+        foreach (var player in gameModel.Players)
+            player.Vote = 0;
+
+        gameModel.AverageScore = CalculateAverageScore(gameModel.Players);
         
         return gameModel;
     }
@@ -71,7 +81,7 @@ public class GameOrchestrator : IGameOrchestrator
         return Tuple.Create(topRow, bottomRow);
     }
 
-    private static int UpdateAverageScore(IEnumerable<PlayerModel> players)
+    private static int CalculateAverageScore(IEnumerable<PlayerModel> players)
     {
         return players.Sum(x => x.Vote); 
     }

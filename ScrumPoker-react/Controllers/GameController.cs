@@ -25,9 +25,7 @@ public class GameController : ControllerBase
     {
         try
         {
-            var serializedGameModel = _redis.GetDatabase().StringGet(DbKey);
-            var gameModel = JsonSerializer.Deserialize<GameModel>(serializedGameModel);
-            
+            var gameModel = GetGameModel();
             var playerId = gameModel.Players.FirstOrDefault().Id; // remember to change this, need to find the current player
 
             var updatedGameModel = _gameOrchestrator.UpdatePlayerVote(
@@ -35,13 +33,40 @@ public class GameController : ControllerBase
                 updatePlayerVoteModel.CardValue, 
                 playerId);
         
-            _redis.GetDatabase().StringSet(DbKey, JsonSerializer.Serialize(updatedGameModel));
-
+            SaveGameModel(updatedGameModel);
             return Ok(JsonSerializer.Serialize(updatedGameModel));    
         }
         catch
         {
             return StatusCode(400, "Could not update player vote");
         }
+    }
+    
+    [HttpPost("ResetPlayerVotes")]
+    public IActionResult ResetPlayerVotes()
+    {
+        try
+        {
+            var gameModel = GetGameModel();
+            var updatedGameModel = _gameOrchestrator.ResetPlayerVotes(gameModel);
+            
+            SaveGameModel(updatedGameModel);
+            return Ok(JsonSerializer.Serialize(updatedGameModel));
+        }
+        catch
+        {
+            return StatusCode(400, "Could not reset player votes");
+        }
+    }
+
+    private GameModel GetGameModel()
+    {
+        var serializedGameModel = _redis.GetDatabase().StringGet(DbKey);
+        return JsonSerializer.Deserialize<GameModel>(serializedGameModel);
+    }
+
+    private void SaveGameModel(GameModel updatedGameModel)
+    {
+        _redis.GetDatabase().StringSet(DbKey, JsonSerializer.Serialize(updatedGameModel));
     }
 }

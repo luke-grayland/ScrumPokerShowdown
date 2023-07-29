@@ -1,27 +1,40 @@
 import React, {useContext, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import GameContext from "../../contexts/GameContext";
-import {startGame} from "./HomeScreenHelper";
+import {startGame, ValidateCustomVotingSystem} from "./HomeScreenHelper";
 const HomeScreen = () => {
     const [playerName, setPlayerName] = useState("")
     const [votingSystem, setVotingSystem] = useState("1, 2, 3, 5, 8, 13, 21, 34")
     const [customVotingSystem, setCustomVotingSystem] = useState("")
     const [displayCustomInput, setDisplayCustomInput] = useState(false)
+    const [errorDisplayed, setErrorDisplayed] = useState(false)
+    const [validationResult, setValidationResult] = useState("")
     const navigate = useNavigate()
     const {updateGameContext} = useContext(GameContext)
     
     const handleSubmit = (e) => {
         e.preventDefault()
-        // Add front end validation - ensure no 2 values are the same
-        startGame(playerName, votingSystem, customVotingSystem, updateGameContext, navigate)
-            .then((x) => console.log(x))
+        let result = ValidateCustomVotingSystem(customVotingSystem) 
         
-        navigate("/loading")
+        if (result !== "") {
+            setValidationResult(result);
+            setErrorDisplayed(true)
+        } else {
+            startGame(playerName, votingSystem, customVotingSystem, updateGameContext, navigate).then()
+            navigate("/loading")
+        }
     }
     
     const handleVotingSystemChange = (e) => {
         setVotingSystem(e.target.value)
-        setDisplayCustomInput(votingSystem !== "Custom")
+        
+        if (votingSystem !== "Custom")
+        {
+            setDisplayCustomInput(true)
+            setErrorDisplayed(false)
+        } else {
+            setDisplayCustomInput(false)    
+        }
     }
 
     return (
@@ -62,6 +75,7 @@ const HomeScreen = () => {
                                     onChange={(e) => 
                                         setCustomVotingSystem(e.target.value)}
                                 />
+                                <span className="customVotingSystemErrorMessage">{errorDisplayed ? validationResult : ""}</span>
                             </>
                         }
                         <input type="submit" value="Start" className="submitButton"/>

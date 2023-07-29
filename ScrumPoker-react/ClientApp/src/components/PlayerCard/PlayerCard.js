@@ -1,12 +1,13 @@
 import React from 'react';
 
-const PlayerCard = ({playerName}) => {
+const PlayerCard = ({player, showAverageResult}) => {
     return(
         <div className="playerCardAndName">
-            <div className="player card shadowSmall cardValueHidden">
-                <h2></h2>
+            <div className={`player card shadowSmall ${player.Vote > 0 ? "playerHasVoted" : ""} ${showAverageResult ? "" : "cardValueHidden"}`}>
+                <h2> { (showAverageResult && player.Vote > 0) && player.Vote }
+                </h2>
             </div>
-            <h5 className="playerName">{playerName}</h5>
+            <h5 className="playerName">{player.Name}</h5>
         </div>
     )
 }

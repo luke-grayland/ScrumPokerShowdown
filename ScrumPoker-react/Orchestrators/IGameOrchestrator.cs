@@ -8,4 +8,5 @@ public interface IGameOrchestrator
     public GameModel AssembleGameModel(IList<int> votingSystem, PlayerModel player);
     public PlayerModel CreatePlayer(string playerName);
     public GameModel UpdatePlayerVote(GameModel gameModel, int cardValue, Guid playerId);
+    public GameModel ResetPlayerVotes(GameModel gameModel);
 }

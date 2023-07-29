@@ -11,6 +11,7 @@
   --mediumBlue: #B8E1FF;
   --greyGreen: #82ABA1;
   --lightGreen: #94FBAB;
+  --lightGrey: #e5e5f7;
 
   --borderRadiusMedium: 15px;
   --borderRadiusSmall: 10px;
@@ -204,6 +205,14 @@ main {
   background-color: var(--greyGreen);
   width: 100%;
   font-size: 1.5rem;
+  color: white;
+
+  /*--pink: #E8AEB7;*/
+  /*--lightBlue: #A9FFF7;*/
+  /*--mediumBlue: #B8E1FF;*/
+  /*--greyGreen: #82ABA1;*/
+  /*--lightGreen: #94FBAB;*/
+  /*--lightGrey: #e5e5f7;*/
 }
 
 .voting {
@@ -271,7 +280,7 @@ main {
 }
 
 .startScreenContent {
-  height: 70%;
+  height: 55vh;
   width: 55%;
   padding: 20px;
   max-width: 550px;
@@ -310,13 +319,18 @@ main {
   font-style: italic;
 }
 
+.customVotingSystemErrorMessage {
+  color: red;
+  font-style: italic;
+  height: 25px;
+}
+
 .startScreenForm {
-  height: 90%;
   width: 80%;
   align-items: center;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-start;
 }
 
 .formBorder {
@@ -355,9 +369,12 @@ main {
 }
 
 .cardValueHidden {
-  background-color: #e5e5f7;
   opacity: 0.8;
   background: repeating-linear-gradient( -45deg, #82ABA1, #82ABA1 2.5px, #e5e5f7 2.5px, #e5e5f7 12.5px );
+}
+
+.playerHasVoted {
+  border-color: #5E5E5E;
 }
 
 .selected {
