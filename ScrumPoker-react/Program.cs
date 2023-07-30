@@ -1,4 +1,5 @@
 ﻿using ScrumPoker_react;
+using ScrumPoker_react.Hubs;
 using ScrumPoker_react.Orchestrators;
 using StackExchange.Redis;
 
@@ -7,9 +8,8 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddCors();
-
 builder.Services.AddControllersWithViews();
-
+builder.Services.AddSignalR();
 builder.Services.AddScoped<IGameOrchestrator, GameOrchestrator>();
 
 var redisConfiguration = new RedisConfiguration
@@ -45,6 +45,11 @@ app.UseCors(builder =>
             .SetPreflightMaxAge(TimeSpan.FromSeconds(3600));
     }
 );
+
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapHub<ScrumPokerHub>("/ScrumPokerHub");
+});
 
 app.MapControllerRoute(
     name: "default",

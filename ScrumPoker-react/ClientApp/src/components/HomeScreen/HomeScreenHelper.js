@@ -1,8 +1,9 @@
-export const startGame = async (playerName, votingSystem, customVotingSystem, updateGameContext, navigate) => {
+export const startGame = async (playerName, clientIdContext, votingSystem, customVotingSystem, updateGameContext, navigate) => {
     const url = 'https://localhost:7050/Home/StartGame';
 
     const data = {
         playerName: playerName,
+        clientId: clientIdContext,
         votingSystem: votingSystem,
         customVotingSystem: customVotingSystem
     };
@@ -20,7 +21,7 @@ export const startGame = async (playerName, votingSystem, customVotingSystem, up
             console.log("Error: " + response)
         }
 
-        const gameModel = await response.json();
+        const gameModel = await response.json()
         updateGameContext(gameModel)
 
         setTimeout(() => {

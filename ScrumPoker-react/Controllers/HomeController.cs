@@ -29,7 +29,7 @@ public class HomeController : ControllerBase
                 throw new NullReferenceException();
 
             var votingSystem = _gameOrchestrator.ValidateVotingSystem(playerGame);
-            var player = _gameOrchestrator.CreatePlayer(playerGame.PlayerName);
+            var player = _gameOrchestrator.CreatePlayer(playerGame.PlayerName, playerGame.ClientId);
             var gameModel = _gameOrchestrator.AssembleGameModel(votingSystem, player);
             
             _redis.GetDatabase().StringSet(DbKey, JsonSerializer.Serialize(gameModel));
@@ -41,5 +41,6 @@ public class HomeController : ControllerBase
             return StatusCode(400, "Invalid custom voting system format");
         }
     }
+    
 }
 

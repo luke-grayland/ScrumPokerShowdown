@@ -33,16 +33,16 @@ public class GameOrchestrator : IGameOrchestrator
         };
     }
     
-    public PlayerModel CreatePlayer(string playerName)
+    public PlayerModel CreatePlayer(string playerName, string clientId)
     {
         return new PlayerModel()
         {
-            Id = Guid.NewGuid(),
+            Id = clientId,
             Name = playerName
         };
     }
 
-    public GameModel UpdatePlayerVote(GameModel gameModel, int cardValue, Guid playerId)
+    public GameModel UpdatePlayerVote(GameModel gameModel, int cardValue, string playerId)
     {
         var playerToUpdate = gameModel.Players.FirstOrDefault(x => x.Id == playerId);
         playerToUpdate.Vote = cardValue;

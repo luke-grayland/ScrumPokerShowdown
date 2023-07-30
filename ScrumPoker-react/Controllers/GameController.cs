@@ -1,5 +1,7 @@
 using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
+using ScrumPoker_react.Hubs;
 using ScrumPoker_react.Models;
 using ScrumPoker_react.Orchestrators;
 using StackExchange.Redis;
@@ -13,11 +15,16 @@ public class GameController : ControllerBase
     private readonly IConnectionMultiplexer _redis;
     private const string DbKey = "game-model-key";
     private readonly IGameOrchestrator _gameOrchestrator;
-    
-    public GameController(IConnectionMultiplexer redis, IGameOrchestrator gameOrchestrator)
+    private readonly IHubContext<ScrumPokerHub> _hub;
+
+    public GameController(
+        IConnectionMultiplexer redis, 
+        IGameOrchestrator gameOrchestrator, 
+        IHubContext<ScrumPokerHub> hub)
     {
         _redis = redis;
         _gameOrchestrator = gameOrchestrator;
+        _hub = hub;
     }
     
     [HttpPost("UpdatePlayerVote")]
@@ -26,15 +33,19 @@ public class GameController : ControllerBase
         try
         {
             var gameModel = GetGameModel();
-            var playerId = gameModel.Players.FirstOrDefault().Id; // remember to change this, need to find the current player
-
+    
             var updatedGameModel = _gameOrchestrator.UpdatePlayerVote(
                 gameModel, 
                 updatePlayerVoteModel.CardValue, 
-                playerId);
+                updatePlayerVoteModel.PlayerId);
         
             SaveGameModel(updatedGameModel);
-            return Ok(JsonSerializer.Serialize(updatedGameModel));    
+            
+            _hub.Clients.All.SendAsync(
+                "ReceiveUpdatedGameModel", 
+                JsonSerializer.Serialize(updatedGameModel));
+    
+            return StatusCode(200, "Player vote updated");
         }
         catch
         {

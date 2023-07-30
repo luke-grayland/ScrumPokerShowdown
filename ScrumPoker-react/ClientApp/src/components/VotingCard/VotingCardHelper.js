@@ -1,8 +1,9 @@
-export const UpdateGameModel = async (cardValue) => {
+export const UpdateGameModel = async (cardValue, playerId) => {
     const url = 'https://localhost:7050/Game/UpdatePlayerVote';
 
     const data = {
-        CardValue: cardValue
+        CardValue: cardValue,
+        PlayerId: playerId
     };
 
     const response = await fetch(url, {
@@ -18,6 +19,6 @@ export const UpdateGameModel = async (cardValue) => {
         console.log("Error: " + error)
     }
     else {
-        return await response.json();
+        return response
     }
 }

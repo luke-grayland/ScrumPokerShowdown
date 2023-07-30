@@ -1,14 +1,15 @@
 import React, {useContext} from "react";
 import {UpdateGameModel} from "./VotingCardHelper";
+import ClientIdContext from "../../contexts/ClientIdContext";
 import GameContext from "../../contexts/GameContext";
 
 const VotingCard = ({cardValue, setSelectedCard, selectedCard, showAverageResult}) => {
-    const {updateGameContext} = useContext(GameContext)
+    const {clientIdContext} = useContext(ClientIdContext)
     
     const handleClick = () => {
         if (!showAverageResult) {
             setSelectedCard(cardValue)
-            UpdateGameModel(cardValue).then(gameModel => updateGameContext(gameModel))
+            UpdateGameModel(cardValue, clientIdContext).then()
         }
     }
     

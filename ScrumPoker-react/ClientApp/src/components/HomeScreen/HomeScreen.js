@@ -2,6 +2,7 @@ import React, {useContext, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import GameContext from "../../contexts/GameContext";
 import {startGame, ValidateCustomVotingSystem} from "./HomeScreenHelper";
+import ClientIdContext from "../../contexts/ClientIdContext";
 const HomeScreen = () => {
     const [playerName, setPlayerName] = useState("")
     const [votingSystem, setVotingSystem] = useState("1, 2, 3, 5, 8, 13, 21, 34")
@@ -11,16 +12,24 @@ const HomeScreen = () => {
     const [validationResult, setValidationResult] = useState("")
     const navigate = useNavigate()
     const {updateGameContext} = useContext(GameContext)
+    const {clientIdContext} = useContext(ClientIdContext)
     
     const handleSubmit = (e) => {
         e.preventDefault()
-        let result = ValidateCustomVotingSystem(customVotingSystem) 
         
-        if (result !== "") {
-            setValidationResult(result);
-            setErrorDisplayed(true)
+        if (displayCustomInput) {
+            let result = ValidateCustomVotingSystem(customVotingSystem)
+
+            if (result !== "") {
+                setValidationResult(result);
+                setErrorDisplayed(true)
+            } else {
+                startGame(playerName, clientIdContext, votingSystem, customVotingSystem, updateGameContext, navigate)
+                    .then()
+                navigate("/loading")
+            }
         } else {
-            startGame(playerName, votingSystem, customVotingSystem, updateGameContext, navigate).then()
+            startGame(playerName, clientIdContext, votingSystem, customVotingSystem, updateGameContext, navigate).then()
             navigate("/loading")
         }
     }

@@ -8,6 +8,6 @@ export const NavigateToGameScreenOnLoaded = (gameIsLoaded) => {
         setTimeout(() => {
             if (gameIsLoaded)
                 navigate("/game")
-        }, 800)
+        }, 600)
     }, [gameIsLoaded])
 }
