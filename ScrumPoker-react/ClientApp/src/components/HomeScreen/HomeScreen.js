@@ -1,7 +1,7 @@
 import React, {useContext, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import GameContext from "../../contexts/GameContext";
-import {startGame, ValidateCustomVotingSystem} from "./HomeScreenHelper";
+import {startGame, ValidateCustomVotingSystem, ValidatePlayerName} from "./HomeScreenHelper";
 import ClientIdContext from "../../contexts/ClientIdContext";
 const HomeScreen = () => {
     const [playerName, setPlayerName] = useState("")
@@ -10,27 +10,41 @@ const HomeScreen = () => {
     const [displayCustomInput, setDisplayCustomInput] = useState(false)
     const [votingSystemErrorDisplayed, setVotingSystemErrorDisplayed] = useState(false)
     const [votingSystemValidationResult, setVotingSystemValidationResult] = useState("")
+    const [playerNameErrorDisplayed, setPlayerNameErrorDisplayed] = useState(false)
+    const [playerNameValidationResult, setPlayerNameValidationResult] = useState("")
     const navigate = useNavigate()
     const {updateGameContext} = useContext(GameContext)
     const {clientIdContext} = useContext(ClientIdContext)
     
     const handleSubmit = (e) => {
         e.preventDefault()
+        let gameValid = true
+        
+        let nameValidationResult = ValidatePlayerName(playerName)
+        if(nameValidationResult !== "")
+        {
+            setPlayerNameValidationResult(nameValidationResult)
+            setPlayerNameErrorDisplayed(true)
+            gameValid = false
+        } else {
+            setPlayerNameErrorDisplayed(false)
+        }
         
         if (displayCustomInput) {
-            let result = ValidateCustomVotingSystem(customVotingSystem)
+            let votingValidationResult = ValidateCustomVotingSystem(customVotingSystem)
 
-            if (result !== "") {
-                setVotingSystemValidationResult(result);
+            if (votingValidationResult !== "") {
+                setVotingSystemValidationResult(votingValidationResult);
                 setVotingSystemErrorDisplayed(true)
+                gameValid = false
             } else {
-                startGame(playerName, clientIdContext, votingSystem, customVotingSystem, updateGameContext, navigate)
-                    .then()
-                navigate("/loading")
+                setVotingSystemErrorDisplayed(false)
             }
-        } else {
+        }
+        
+        if (gameValid) {
             startGame(playerName, clientIdContext, votingSystem, customVotingSystem, updateGameContext, navigate).then()
-            navigate("/loading")
+            navigate("/loading")    
         }
     }
     
@@ -63,9 +77,9 @@ const HomeScreen = () => {
                             className="input formBorder"
                             onChange={(e) => setPlayerName(e.target.value)}
                         />
-                        {/*<span className="playerNameErrorMessage">*/}
-                        {/*            {playerNameErrorDisplayed ? playerNameValidationResult : ""}*/}
-                        {/*        </span>*/}
+                        <span className="formErrorMessage">
+                            {playerNameErrorDisplayed ? playerNameValidationResult : ""}
+                        </span>
                         <label htmlFor="votingSystem">Voting System</label>
                         <select
                             id="votingSystem"
@@ -88,7 +102,7 @@ const HomeScreen = () => {
                                     onChange={(e) => 
                                         setCustomVotingSystem(e.target.value)}
                                 />
-                                <span className="customVotingSystemErrorMessage">
+                                <span className="formErrorMessage">
                                     {votingSystemErrorDisplayed ? votingSystemValidationResult : ""}
                                 </span>
                             </>

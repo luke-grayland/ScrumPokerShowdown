@@ -328,10 +328,11 @@ main {
   font-style: italic;
 }
 
-.customVotingSystemErrorMessage {
+.formErrorMessage {
   color: red;
   font-style: italic;
   height: 25px;
+  margin-bottom: 10px;
 }
 
 .startScreenForm {

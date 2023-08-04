@@ -59,3 +59,15 @@ export const ValidateCustomVotingSystem = (customVotingSystem) => {
     
     return result
 }
+
+export const ValidatePlayerName = (playerName) => {
+    let result = ""
+    
+    if (playerName === "")
+        result = "Player name cannot be empty"
+    
+    if (playerName.split("").length > 14)
+        result = "Player name must be under 15 characters"
+    
+    return result
+}
