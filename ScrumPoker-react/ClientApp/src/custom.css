@@ -258,7 +258,6 @@ main {
 }
 
 .showHideButton {
-  margin: 5px;
   background-color: var(--lightBlue);
   height: 100px;
   margin: auto 5px;
@@ -279,10 +278,14 @@ main {
   flex-direction: column;
 }
 
+#startNewGameButton {
+  margin: 15px 0;
+}
+
 .startScreenContent {
-  height: 55vh;
+  min-height: 50vh;
   width: 55%;
-  padding: 20px;
+  padding: 20px 5px;
   max-width: 550px;
   background-color: var(--mediumBlue);
   margin: 10px auto;
@@ -297,7 +300,13 @@ main {
 }
 
 .startScreenForm input {
-  margin: 3px;
+  margin: 15px 0;
+  min-height: 50px;
+}
+
+.startScreenForm select {
+  margin: 15px 0;
+  min-height: 50px;
 }
 
 .logoDiv {

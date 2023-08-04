@@ -8,8 +8,8 @@ const HomeScreen = () => {
     const [votingSystem, setVotingSystem] = useState("1, 2, 3, 5, 8, 13, 21, 34")
     const [customVotingSystem, setCustomVotingSystem] = useState("")
     const [displayCustomInput, setDisplayCustomInput] = useState(false)
-    const [errorDisplayed, setErrorDisplayed] = useState(false)
-    const [validationResult, setValidationResult] = useState("")
+    const [votingSystemErrorDisplayed, setVotingSystemErrorDisplayed] = useState(false)
+    const [votingSystemValidationResult, setVotingSystemValidationResult] = useState("")
     const navigate = useNavigate()
     const {updateGameContext} = useContext(GameContext)
     const {clientIdContext} = useContext(ClientIdContext)
@@ -21,8 +21,8 @@ const HomeScreen = () => {
             let result = ValidateCustomVotingSystem(customVotingSystem)
 
             if (result !== "") {
-                setValidationResult(result);
-                setErrorDisplayed(true)
+                setVotingSystemValidationResult(result);
+                setVotingSystemErrorDisplayed(true)
             } else {
                 startGame(playerName, clientIdContext, votingSystem, customVotingSystem, updateGameContext, navigate)
                     .then()
@@ -34,13 +34,14 @@ const HomeScreen = () => {
         }
     }
     
+    
     const handleVotingSystemChange = (e) => {
         setVotingSystem(e.target.value)
         
         if (votingSystem !== "Custom")
         {
             setDisplayCustomInput(true)
-            setErrorDisplayed(false)
+            setVotingSystemErrorDisplayed(false)
         } else {
             setDisplayCustomInput(false)    
         }
@@ -62,6 +63,9 @@ const HomeScreen = () => {
                             className="input formBorder"
                             onChange={(e) => setPlayerName(e.target.value)}
                         />
+                        {/*<span className="playerNameErrorMessage">*/}
+                        {/*            {playerNameErrorDisplayed ? playerNameValidationResult : ""}*/}
+                        {/*        </span>*/}
                         <label htmlFor="votingSystem">Voting System</label>
                         <select
                             id="votingSystem"
@@ -84,10 +88,12 @@ const HomeScreen = () => {
                                     onChange={(e) => 
                                         setCustomVotingSystem(e.target.value)}
                                 />
-                                <span className="customVotingSystemErrorMessage">{errorDisplayed ? validationResult : ""}</span>
+                                <span className="customVotingSystemErrorMessage">
+                                    {votingSystemErrorDisplayed ? votingSystemValidationResult : ""}
+                                </span>
                             </>
                         }
-                        <input type="submit" value="Start" className="submitButton"/>
+                        <input id="startNewGameButton" type="submit" value="Start" className="submitButton"/>
                     </form>
                 </div>
             </div>
