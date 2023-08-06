@@ -10,10 +10,10 @@ export const ResetPlayerVotes = async () => {
     })
 
     if (!response.ok) {
-        const error = await response.json()
+        const error = await response.text()
         console.log("Error: " + error)
     }
     else {
-        return await response.json();
+        return await response.text();
     }
 }

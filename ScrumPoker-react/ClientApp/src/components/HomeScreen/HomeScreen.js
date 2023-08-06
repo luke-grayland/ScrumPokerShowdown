@@ -66,6 +66,7 @@ const HomeScreen = () => {
             <div className="logoDiv">
                 <img src={"/ScrumPokerShowdownLogo.png"} alt="Scrum Poker Logo" id="homeScreenLogo" />
             </div>
+            <button className={"joinGameButton scrumPokerButton"}>Join a Game</button>
             <div className="startScreen">
                 <div className="startScreenContent shadowSmall">
                     <form className="startScreenForm" onSubmit={handleSubmit}>
@@ -107,7 +108,10 @@ const HomeScreen = () => {
                                 </span>
                             </>
                         }
-                        <input id="startNewGameButton" type="submit" value="Start" className="submitButton"/>
+                        <input id="startNewGameButton" 
+                               type="submit" 
+                               value="New Game" 
+                               className="submitButton scrumPokerButton"/>
                     </form>
                 </div>
             </div>

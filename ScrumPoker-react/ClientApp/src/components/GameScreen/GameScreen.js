@@ -31,7 +31,7 @@ const GameScreen = () => {
     
     const toggleShowHideButton = () => {
         if (showAverageResult) {
-            ResetPlayerVotes().then(updatedGameModel => updateGameContext(updatedGameModel))
+            ResetPlayerVotes().then()
             setSelectedCard(null)
         }
         
@@ -52,7 +52,7 @@ const GameScreen = () => {
                             {(averageResult > 0 && showAverageResult) ? averageResult.toString() : ""}
                         </h1>
                     </div>
-                    <button id="showNewVoteButton" className="showHideButton" onClick={toggleShowHideButton}>
+                    <button id="showNewVoteButton" className="showHideButton scrumPokerButton" onClick={toggleShowHideButton}>
                         {showAverageResult ? "New Vote" : "Show"}
                     </button>
                 </div>

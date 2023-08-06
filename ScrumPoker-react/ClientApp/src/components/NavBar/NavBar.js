@@ -13,10 +13,10 @@ const NavBar = ({ showInviteWindow, setShowInviteWindow }) => {
     
     return(
         <div className="navBar">
-            <button id="newGame" className="navButton" onClick={handleHomeClick}>New Game</button>
+            <button id="newGame" className="navButton scrumPokerButton" onClick={handleHomeClick}>New Game</button>
             <img src="/LogoChipOnly.png" alt="Scrum Poker Logo" className="navBarLogo" />
             <button id="inviteButton" 
-                    className="navButton inviteHidden" 
+                    className="navButton inviteHidden scrumPokerButton" 
                     onClick={handleInviteWindowClick}>Invite</button>
         </div>
     )

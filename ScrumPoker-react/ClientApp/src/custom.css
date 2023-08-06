@@ -98,13 +98,6 @@ button {
   transition: var(--transitionSpeed);
 }
 
-.navButton:hover {
-  background-color: var(--greyGreen);
-  color: white;
-  transform: scale(1.08);
-  cursor: pointer;
-}
-
 .navButton {
   background-color: var(--mediumBlue);
   height: 70%;
@@ -263,11 +256,12 @@ main {
   margin: auto 5px;
 }
 
-.showHideButton:hover {
+.scrumPokerButton:hover {
   background-color: var(--greyGreen);
   color: white;
-  transform: scale(1.08);
+  transform: scale(1.05);
   cursor: pointer;
+  border-color: white;
 }
 
 .startScreen {
@@ -285,7 +279,7 @@ main {
 .startScreenContent {
   min-height: 50vh;
   width: 55%;
-  padding: 20px 5px;
+  padding: 15px 5px;
   max-width: 550px;
   background-color: var(--mediumBlue);
   margin: 10px auto;
@@ -310,7 +304,6 @@ main {
 }
 
 .logoDiv {
-  height: 33%;
   width: 100%;
   display: flex;
   justify-content: center;
@@ -320,8 +313,8 @@ main {
 #homeScreenLogo {
   height: 170px;
   width: auto;
-  margin: auto;
   padding: 10px;
+  margin: 5px auto 5px auto;
 }
 
 .customInputLabel {
@@ -370,13 +363,6 @@ main {
   align-items: center;
   font-family: futura, sans-serif;
   transition: var(--transitionSpeed);
-}
-
-.submitButton:hover {
-  background-color: var(--greyGreen);
-  color: white;
-  transform: scale(1.08);
-  cursor: pointer;
 }
 
 .cardValueHidden {
@@ -429,4 +415,9 @@ main {
 
 #votingSystem {
   margin: 20px;
+}
+
+.joinGameButton {
+  min-height: 50px;
+  margin: 5px auto;
 }
