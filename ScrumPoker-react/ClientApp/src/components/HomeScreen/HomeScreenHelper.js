@@ -19,6 +19,7 @@ export const startGame = async (playerName, clientId, votingSystem, customVoting
 
         if (!response.ok) {
             console.log("Error: " + response)
+            return
         }
 
         const gameModel = await response.json()

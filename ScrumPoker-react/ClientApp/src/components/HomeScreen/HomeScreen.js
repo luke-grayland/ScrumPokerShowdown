@@ -44,10 +44,9 @@ const HomeScreen = () => {
         
         if (gameValid) {
             startGame(playerName, clientContext.clientId, votingSystem, customVotingSystem, updateGameContext, navigate).then()
-            navigate("/loading")    
+            navigate("/loading")
         }
     }
-    
     
     const handleVotingSystemChange = (e) => {
         setVotingSystem(e.target.value)
@@ -66,7 +65,10 @@ const HomeScreen = () => {
             <div className="logoDiv">
                 <img src={"/ScrumPokerShowdownLogo.png"} alt="Scrum Poker Logo" id="homeScreenLogo" />
             </div>
-            <button className={"joinGameButton scrumPokerButton"}>Join a Game</button>
+            <button className={"joinGameButton scrumPokerButton"} 
+                    onClick={() => navigate("/join", {state: {gameIdServerError: false}})}>
+                Join a Game
+            </button>
             <div className="startScreen">
                 <div className="startScreenContent shadowSmall">
                     <form className="startScreenForm" onSubmit={handleSubmit}>
