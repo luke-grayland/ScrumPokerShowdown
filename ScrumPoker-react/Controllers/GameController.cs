@@ -62,7 +62,12 @@ public class GameController : ControllerBase
             var updatedGameModel = _gameOrchestrator.ResetPlayerVotes(gameModel);
             
             SaveGameModel(updatedGameModel);
-            return Ok(JsonSerializer.Serialize(updatedGameModel));
+            
+            _hub.Clients.All.SendAsync(
+                "ReceiveUpdatedGameModel", 
+                JsonSerializer.Serialize(updatedGameModel));
+            
+            return StatusCode(200, "Player votes reset");
         }
         catch
         {
@@ -73,6 +78,7 @@ public class GameController : ControllerBase
     private GameModel GetGameModel()
     {
         var serializedGameModel = _redis.GetDatabase().StringGet(DbKey);
+        
         return JsonSerializer.Deserialize<GameModel>(serializedGameModel);
     }
 

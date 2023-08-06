@@ -46,7 +46,7 @@ public class GameOrchestrator : IGameOrchestrator
     {
         var playerToUpdate = gameModel.Players.FirstOrDefault(x => x.Id == playerId);
         playerToUpdate.Vote = cardValue;
-        
+         
         gameModel.AverageScore = CalculateAverageScore(gameModel.Players);
         
         return gameModel;

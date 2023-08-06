@@ -1,9 +1,9 @@
-export const startGame = async (playerName, clientIdContext, votingSystem, customVotingSystem, updateGameContext, navigate) => {
+export const startGame = async (playerName, clientId, votingSystem, customVotingSystem, updateGameContext, navigate) => {
     const url = 'https://localhost:7050/Home/StartGame';
 
     const data = {
         playerName: playerName,
-        clientId: clientIdContext,
+        clientId: clientId,
         votingSystem: votingSystem,
         customVotingSystem: customVotingSystem
     };

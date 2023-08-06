@@ -5,6 +5,7 @@ import NavBar from "../NavBar/NavBar";
 import InviteWindow from "../InviteWindow/InviteWindow";
 import {ResetPlayerVotes} from "./GameScreenHelper";
 import VotingCardsRow from "./VotingCardsRow";
+import ClientContext from "../../contexts/ClientContext";
 
 const GameScreen = () => {
     const {gameContext, updateGameContext} = useContext(GameContext)
@@ -15,7 +16,12 @@ const GameScreen = () => {
     const [selectedCard, setSelectedCard] = useState(null)
     const [averageResult, setAverageResult] = useState(0)
     const [showAverageResult, setShowAverageResult] = useState(false)
+    const {clientContext} = useContext(ClientContext)
 
+    clientContext.clientConnection.on("ReceiveUpdatedGameModel", (data) => {
+        updateGameContext(JSON.parse(data))
+    })
+    
     useEffect(() => {
         setPlayers(gameContext.Players)
         setVotingCardsTopRow(gameContext.VotingCardsTopRow)

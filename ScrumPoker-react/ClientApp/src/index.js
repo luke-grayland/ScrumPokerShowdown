@@ -7,7 +7,7 @@ import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import reportWebVitals from './reportWebVitals';
 import App from "./App";
 import GameContextProvider from "./contexts/GameContextProvider";
-import ClientIdContextProvider from "./contexts/ClientIdContextProvider";
+import ClientContextProvider from "./contexts/ClientContextProvider";
 
 const baseUrl = document.getElementsByTagName('base')[0].getAttribute('href');
 const rootElement = document.getElementById('root');
@@ -15,11 +15,11 @@ const root = createRoot(rootElement);
 
 root.render(
     <BrowserRouter basename={baseUrl}>
-        <ClientIdContextProvider>
+        <ClientContextProvider>
             <GameContextProvider>
                 <App />
             </GameContextProvider>
-        </ClientIdContextProvider>
+        </ClientContextProvider>
     </BrowserRouter>);
 
 // If you want your app to work offline and load faster, you can change
