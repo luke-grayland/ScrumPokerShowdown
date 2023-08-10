@@ -19,7 +19,7 @@ public class HomeController : ControllerBase
         _gameOrchestrator = gameOrchestrator;
         _redis = redis;
     }
-    
+
     [HttpPost("StartGame")]
     public IActionResult StartGame([FromBody] NewGameModel playerGame)
     {
@@ -31,9 +31,9 @@ public class HomeController : ControllerBase
             var votingSystem = _gameOrchestrator.ValidateVotingSystem(playerGame);
             var player = _gameOrchestrator.CreatePlayer(playerGame.PlayerName, playerGame.ClientId);
             var gameModel = _gameOrchestrator.AssembleGameModel(votingSystem, player);
-            
+
             _redis.GetDatabase().StringSet(DbKey, JsonSerializer.Serialize(gameModel));
-            
+
             return Ok(JsonSerializer.Serialize(gameModel));
         }
         catch
@@ -41,6 +41,5 @@ public class HomeController : ControllerBase
             return StatusCode(400, "Invalid custom voting system format");
         }
     }
-    
 }
 

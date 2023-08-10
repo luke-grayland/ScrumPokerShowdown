@@ -61,6 +61,13 @@ public class GameOrchestrator : IGameOrchestrator
         
         return gameModel;
     }
+
+    public GameModel AddPlayerToGame(GameModel game, PlayerModel player)
+    {
+        game.Players.Add(player);
+        
+        return game;
+    }
     
     private static Tuple<List<int>, List<int>> SplitCardsToRows(IList<int> votingCardsVales)
     {

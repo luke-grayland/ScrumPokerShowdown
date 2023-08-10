@@ -14,6 +14,7 @@ const App = () => {
         newClient.start().then(() => {
             setClientConnection(newClient)
             setClientId(newClient.connectionId)
+            console.log("Connection ID: ", newClient.connectionId)
         })
     },[])
     

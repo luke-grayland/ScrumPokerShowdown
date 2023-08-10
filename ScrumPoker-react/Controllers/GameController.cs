@@ -74,6 +74,32 @@ public class GameController : ControllerBase
             return StatusCode(400, "Could not reset player votes");
         }
     }
+    
+    [HttpPost("JoinGame")]
+    public IActionResult JoinGame([FromBody] JoinGameModel joinGameModel)
+    {
+        try
+        {
+            if (joinGameModel == null)
+                throw new NullReferenceException();
+
+            var player = _gameOrchestrator.CreatePlayer(joinGameModel.PlayerName, joinGameModel.ClientId);
+            var gameModel = GetGameModel();
+            var updatedGameModel = _gameOrchestrator.AddPlayerToGame(gameModel, player);
+            
+            SaveGameModel(updatedGameModel);
+            
+            _hub.Clients.All.SendAsync(
+                "ReceiveUpdatedGameModel", 
+                JsonSerializer.Serialize(updatedGameModel));
+            
+            return Ok(JsonSerializer.Serialize(updatedGameModel));
+        }
+        catch
+        {
+            return StatusCode(400, "Invalid custom voting system format");
+        }
+    }
 
     private GameModel GetGameModel()
     {

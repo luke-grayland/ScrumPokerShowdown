@@ -1,5 +1,5 @@
 export const JoinGame = async (playerName, clientId, gameId, navigate, updateGameContext) => {
-    const url = 'https://localhost:7050/Home/JoinGame';
+    const url = 'https://localhost:7050/Game/JoinGame';
 
     const data = {
         playerName: playerName,
@@ -22,6 +22,7 @@ export const JoinGame = async (playerName, clientId, gameId, navigate, updateGam
         } 
 
         const gameModel = await response.json()
+        console.log(gameModel);
         updateGameContext(gameModel)
         
         setTimeout(() => {
