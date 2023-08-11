@@ -14,15 +14,14 @@ export const JoinGame = async (playerName, clientId, gameId, navigate, updateGam
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(data)
-        });
-
+        })
+        
         if (!response.ok) {
-            console.log("Error: " + response)
+            console.log("Error: " + await response.json())
             return
         } 
 
         const gameModel = await response.json()
-        console.log(gameModel);
         updateGameContext(gameModel)
         
         setTimeout(() => {
@@ -30,6 +29,7 @@ export const JoinGame = async (playerName, clientId, gameId, navigate, updateGam
         }, 500)
 
     } catch (error) {
+        
         navigate("/join", {state: {gameIdServerError: true}})
     }
 }

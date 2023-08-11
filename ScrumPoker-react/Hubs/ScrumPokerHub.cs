@@ -8,4 +8,9 @@ public class ScrumPokerHub : Hub
     {
         await Clients.All.SendAsync("ReceiveUpdatedGameModel", updatedGameModel);
     }
+
+    public async Task ClearCardSelection()
+    {
+        await Clients.All.SendAsync("ClearCardSelection");
+    }
 }

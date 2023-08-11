@@ -72,6 +72,10 @@ public class GameOrchestrator : IGameOrchestrator
 
     public GameModel AddPlayerToGame(GameModel game, PlayerModel player)
     {
+        if (game.Players.Count > 2)
+        {
+            throw new Exception("Game is at maximum capacity");
+        }
         game.Players.Add(player);
         
         return game;

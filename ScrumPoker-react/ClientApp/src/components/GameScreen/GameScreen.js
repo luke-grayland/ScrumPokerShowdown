@@ -21,6 +21,8 @@ const GameScreen = () => {
     clientContext.clientConnection.on("ReceiveUpdatedGameModel", (data) => {
         updateGameContext(JSON.parse(data))
     })
+
+    clientContext.clientConnection.on("ClearCardSelection", () => setSelectedCard(null))
     
     useEffect(() => {
         setPlayers(gameContext.Players)
@@ -33,7 +35,6 @@ const GameScreen = () => {
     const toggleShowHideButton = () => {
         if (showScores) {
             ResetPlayerVotes().then()
-            setSelectedCard(null)
         } else {
             ShowScores().then()
         }

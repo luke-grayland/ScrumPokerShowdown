@@ -60,6 +60,8 @@ public class GameController : ControllerBase
             
             SaveGameModel(updatedGameModel);
             SendGameModelToAllClients(updatedGameModel);
+            
+            _hub.Clients.All.SendAsync("ClearCardSelection");
 
             return StatusCode(200, "Player votes reset");
         }
@@ -80,14 +82,11 @@ public class GameController : ControllerBase
             SaveGameModel(updatedGameModel);
             SendGameModelToAllClients(updatedGameModel);
 
-            var x = JsonSerializer.Serialize(updatedGameModel);
-            
-            return Ok(x);
-            return StatusCode(200, "Player votes reset");
+            return Ok();
         }
         catch
         {
-            return StatusCode(400, "Could not reset player votes");
+            return StatusCode(400, "Could not show scores");
         }
     }
     
@@ -108,9 +107,9 @@ public class GameController : ControllerBase
             
             return Ok(JsonSerializer.Serialize(updatedGameModel));
         }
-        catch
+        catch(Exception exception)
         {
-            return StatusCode(400, "Invalid custom voting system format");
+            return StatusCode(400, exception.Message != string.Empty ? exception.Message : "Could not join game");
         }
     }
 
