@@ -3,7 +3,7 @@ import PlayerCard from "../PlayerCard/PlayerCard";
 import GameContext from '../../contexts/GameContext'
 import NavBar from "../NavBar/NavBar";
 import InviteWindow from "../InviteWindow/InviteWindow";
-import {ResetPlayerVotes} from "./GameScreenHelper";
+import {ResetPlayerVotes, ShowScores} from "./GameScreenHelper";
 import VotingCardsRow from "./VotingCardsRow";
 import ClientContext from "../../contexts/ClientContext";
 
@@ -15,7 +15,7 @@ const GameScreen = () => {
     const [showInviteWindow, setShowInviteWindow] = useState(false)
     const [selectedCard, setSelectedCard] = useState(null)
     const [averageResult, setAverageResult] = useState(0)
-    const [showAverageResult, setShowAverageResult] = useState(false)
+    const [showScores, setShowScores] = useState(false)
     const {clientContext} = useContext(ClientContext)
 
     clientContext.clientConnection.on("ReceiveUpdatedGameModel", (data) => {
@@ -27,15 +27,16 @@ const GameScreen = () => {
         setVotingCardsTopRow(gameContext.VotingCardsTopRow)
         setVotingCardsBottomRow(gameContext.VotingCardsBottomRow)
         setAverageResult(gameContext.AverageScore)
+        setShowScores(gameContext.ScoresDisplayed)
     }, [gameContext])
     
     const toggleShowHideButton = () => {
-        if (showAverageResult) {
+        if (showScores) {
             ResetPlayerVotes().then()
             setSelectedCard(null)
+        } else {
+            ShowScores().then()
         }
-        
-        setShowAverageResult(!showAverageResult)
     }
     
     return (
@@ -49,29 +50,31 @@ const GameScreen = () => {
                     <div className="average">
                         <h4>Average:</h4>
                         <h1 id="averageValue">
-                            {(averageResult > 0 && showAverageResult) ? averageResult.toString() : ""}
+                            {(averageResult > 0 && showScores) ? averageResult.toString() : ""}
                         </h1>
                     </div>
-                    <button id="showNewVoteButton" className="showHideButton scrumPokerButton" onClick={toggleShowHideButton}>
-                        {showAverageResult ? "New Vote" : "Show"}
+                    <button id="showNewVoteButton" 
+                            className="showHideButton scrumPokerButton" 
+                            onClick={toggleShowHideButton}>
+                        {showScores ? "New Vote" : "Show"}
                     </button>
                 </div>
             </div>
             <div className="players">
                 {players.map((player) => (
-                    <PlayerCard key={player.Id} player={player} showAverageResult={showAverageResult}/>
+                    <PlayerCard key={player.Id} player={player} showScores={showScores}/>
                 ))}
             </div>
             <div className="votingCards">
                 <VotingCardsRow votingCardsRow={votingCardsTopRow}
                                 setSelectedCard={setSelectedCard}
                                 selectedCard={selectedCard}
-                                showAverageResult={showAverageResult}/>
+                                showScores={showScores}/>
 
                 <VotingCardsRow votingCardsRow={votingCardsBottomRow}
                                 setSelectedCard={setSelectedCard}
                                 selectedCard={selectedCard}
-                                showAverageResult={showAverageResult}/>    
+                                showScores={showScores}/>    
             </div>
         </>
     );

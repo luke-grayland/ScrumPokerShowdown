@@ -40,10 +40,7 @@ public class GameController : ControllerBase
                 updatePlayerVoteModel.PlayerId);
         
             SaveGameModel(updatedGameModel);
-            
-            _hub.Clients.All.SendAsync(
-                "ReceiveUpdatedGameModel", 
-                JsonSerializer.Serialize(updatedGameModel));
+            SendGameModelToAllClients(updatedGameModel);
     
             return StatusCode(200, "Player vote updated");
         }
@@ -62,11 +59,30 @@ public class GameController : ControllerBase
             var updatedGameModel = _gameOrchestrator.ResetPlayerVotes(gameModel);
             
             SaveGameModel(updatedGameModel);
+            SendGameModelToAllClients(updatedGameModel);
+
+            return StatusCode(200, "Player votes reset");
+        }
+        catch
+        {
+            return StatusCode(400, "Could not reset player votes");
+        }
+    }
+    
+    [HttpPost("ShowScores")]
+    public IActionResult ShowScores()
+    {
+        try
+        {
+            var gameModel = GetGameModel();
+            var updatedGameModel = _gameOrchestrator.ShowScores(gameModel);
             
-            _hub.Clients.All.SendAsync(
-                "ReceiveUpdatedGameModel", 
-                JsonSerializer.Serialize(updatedGameModel));
+            SaveGameModel(updatedGameModel);
+            SendGameModelToAllClients(updatedGameModel);
+
+            var x = JsonSerializer.Serialize(updatedGameModel);
             
+            return Ok(x);
             return StatusCode(200, "Player votes reset");
         }
         catch
@@ -88,10 +104,7 @@ public class GameController : ControllerBase
             var updatedGameModel = _gameOrchestrator.AddPlayerToGame(gameModel, player);
             
             SaveGameModel(updatedGameModel);
-            
-            _hub.Clients.All.SendAsync(
-                "ReceiveUpdatedGameModel", 
-                JsonSerializer.Serialize(updatedGameModel));
+            SendGameModelToAllClients(updatedGameModel);
             
             return Ok(JsonSerializer.Serialize(updatedGameModel));
         }
@@ -111,5 +124,12 @@ public class GameController : ControllerBase
     private void SaveGameModel(GameModel updatedGameModel)
     {
         _redis.GetDatabase().StringSet(DbKey, JsonSerializer.Serialize(updatedGameModel));
+    }
+
+    private void SendGameModelToAllClients(GameModel updatedGameModel)
+    {
+        _hub.Clients.All.SendAsync(
+            "ReceiveUpdatedGameModel", 
+            JsonSerializer.Serialize(updatedGameModel));
     }
 }

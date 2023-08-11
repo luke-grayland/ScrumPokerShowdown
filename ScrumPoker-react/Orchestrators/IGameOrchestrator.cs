@@ -9,5 +9,6 @@ public interface IGameOrchestrator
     public PlayerModel CreatePlayer(string playerName, string clientId);
     public GameModel UpdatePlayerVote(GameModel gameModel, int cardValue, string playerId);
     public GameModel ResetPlayerVotes(GameModel gameModel);
+    public GameModel ShowScores(GameModel gameModel);
     public GameModel AddPlayerToGame(GameModel game, PlayerModel player);
 }

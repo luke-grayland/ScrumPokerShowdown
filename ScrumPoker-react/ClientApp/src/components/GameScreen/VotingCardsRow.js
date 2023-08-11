@@ -1,6 +1,6 @@
 import VotingCard from "../VotingCard/VotingCard";
 
-const VotingCardsRow = ({votingCardsRow, setSelectedCard, selectedCard, showAverageResult}) => {
+const VotingCardsRow = ({votingCardsRow, setSelectedCard, selectedCard, showScores}) => {
     return(
         <div className="votingCardsRow">
             {votingCardsRow.map((cardValue) => (
@@ -8,7 +8,7 @@ const VotingCardsRow = ({votingCardsRow, setSelectedCard, selectedCard, showAver
                             cardValue={cardValue}
                             setSelectedCard={setSelectedCard}
                             selectedCard={selectedCard}
-                            showAverageResult={showAverageResult}/>
+                            showScores={showScores}/>
             ))}
         </div>
     )

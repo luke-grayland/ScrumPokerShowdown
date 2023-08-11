@@ -58,6 +58,14 @@ public class GameOrchestrator : IGameOrchestrator
             player.Vote = 0;
 
         gameModel.AverageScore = CalculateAverageScore(gameModel.Players);
+        gameModel.ScoresDisplayed = false;
+        
+        return gameModel;
+    }
+    
+    public GameModel ShowScores(GameModel gameModel)
+    {
+        gameModel.ScoresDisplayed = true;
         
         return gameModel;
     }

@@ -1,4 +1,4 @@
-export const ResetPlayerVotes = async () => {
+export const ResetPlayerVotes = async() => {
     const url = 'https://localhost:7050/Game/ResetPlayerVotes';
 
     const response = await fetch(url, {
@@ -15,5 +15,22 @@ export const ResetPlayerVotes = async () => {
     }
     else {
         return await response.text();
+    }
+}
+
+export const ShowScores = async() => {
+    const url = 'https://localhost:7050/Game/ShowScores';
+
+    const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: {}
+    })
+
+    if (!response.ok) {
+        const error = await response.text()
+        console.log("Error: " + error)
     }
 }

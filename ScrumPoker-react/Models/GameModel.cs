@@ -6,8 +6,8 @@ public class GameModel
     public IList<int> VotingSystem { get; set; }
     public IList<int> VotingCardsTopRow { get; set; }
     public IList<int> VotingCardsBottomRow { get; set; }
-    
     public int AverageScore { get; set; }
+    public bool ScoresDisplayed { get; set; }
     
     
 }
