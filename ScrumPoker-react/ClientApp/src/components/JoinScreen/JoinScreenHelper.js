@@ -17,9 +17,10 @@ export const JoinGame = async (playerName, clientId, gameId, navigate, updateGam
         })
         
         if (!response.ok) {
-            console.log("Error: " + await response.json())
+            const errorMessage = response.text()
+            navigate("/join", {state: {gameIdServerError: true, errorMessage: errorMessage}})
             return
-        } 
+        }
 
         const gameModel = await response.json()
         updateGameContext(gameModel)
@@ -29,7 +30,6 @@ export const JoinGame = async (playerName, clientId, gameId, navigate, updateGam
         }, 500)
 
     } catch (error) {
-        
-        navigate("/join", {state: {gameIdServerError: true}})
+        navigate("/join", {state: {gameIdServerError: true, errorMessage: "Game ID invalid"}})
     }
 }

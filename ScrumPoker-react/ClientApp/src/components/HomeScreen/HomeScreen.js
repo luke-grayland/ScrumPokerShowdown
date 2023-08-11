@@ -66,7 +66,7 @@ const HomeScreen = () => {
                 <img src={"/ScrumPokerShowdownLogo.png"} alt="Scrum Poker Logo" id="homeScreenLogo" />
             </div>
             <button className={"joinGameButton scrumPokerButton"} 
-                    onClick={() => navigate("/join", {state: {gameIdServerError: false}})}>
+                    onClick={() => navigate("/join", {state: {gameIdServerError: false, errorMessage: ""}})}>
                 Join a Game
             </button>
             <div className="startScreen">

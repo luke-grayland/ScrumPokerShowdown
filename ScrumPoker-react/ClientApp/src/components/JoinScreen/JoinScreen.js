@@ -5,18 +5,20 @@ import {JoinGame} from "./JoinScreenHelper";
 import ClientContext from "../../contexts/ClientContext";
 import GameContext from "../../contexts/GameContext";
 
-const JoinScreen = ({gameIdServerError}) => {
+const JoinScreen = ({gameIdServerError, serverErrorMessage}) => {
     const [playerName, setPlayerName] = useState("")
     const [playerNameErrorDisplayed, setPlayerNameErrorDisplayed] = useState(false)
     const [playerNameValidationResult, setPlayerNameValidationResult] = useState("")
     const [gameId, setGameId] = useState("")
     const navigate = useNavigate()
-    const [gameIdErrorDisplayed, setGameIdErrorDisplayed] = useState(false)
+    const [serverErrorDisplayed, setServerErrorDisplayed] = useState(false)
+    const [errorMessage, setErrorMessage] = useState("")
     const {clientContext} = useContext(ClientContext)
     const {updateGameContext} = useContext(GameContext)
     
     useEffect(() => {
-        setGameIdErrorDisplayed(gameIdServerError)
+        setServerErrorDisplayed(gameIdServerError)
+        setErrorMessage(serverErrorMessage)
     }, [])
     
     const handleSubmit = (e) => {
@@ -67,7 +69,7 @@ const JoinScreen = ({gameIdServerError}) => {
                             onChange={(e) => setGameId(e.target.value)}
                         />
                         <span className="formErrorMessage">
-                            {gameIdErrorDisplayed ? "Game ID invalid" : ""}
+                            {serverErrorDisplayed ? serverErrorMessage : ""}
                         </span>
                         <input id="startNewGameButton"
                                type="submit"

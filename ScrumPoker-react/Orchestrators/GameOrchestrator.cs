@@ -102,7 +102,16 @@ public class GameOrchestrator : IGameOrchestrator
 
     private static int CalculateAverageScore(IEnumerable<PlayerModel> players)
     {
-        return players.Sum(x => x.Vote); 
+        var totalScore = 0;
+        var playerCount = 0;
+
+        foreach (var player in players)
+        {
+            totalScore += player.Vote;
+            playerCount++;
+        }
+
+        return totalScore / playerCount;
     }
 }
 

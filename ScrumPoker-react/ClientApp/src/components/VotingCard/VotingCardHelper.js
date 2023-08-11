@@ -15,10 +15,7 @@ export const UpdateGameModel = async (cardValue, playerId) => {
     });
 
     if (!response.ok) {
-        const error = await response.json()
+        const error = await response.text()
         console.log("Error: " + error)
-    }
-    else {
-        return response
     }
 }
