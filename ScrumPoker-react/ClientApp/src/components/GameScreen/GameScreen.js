@@ -44,7 +44,7 @@ const GameScreen = () => {
         <>
             <NavBar showInviteWindow={showInviteWindow} setShowInviteWindow={setShowInviteWindow}/>
             { showInviteWindow &&
-                <InviteWindow/>
+                <InviteWindow setShowInviteWindow={setShowInviteWindow}/>
             }
             <div className="results">
                 <div id="resultsBoard" className="resultsBoard shadowSmall">

@@ -84,7 +84,7 @@ body {
   border-bottom-width: var(--borderWidthSmall);
 }
 
-button:not(#inviteWindowCloseButton) {
+.scrumPokerButton {
   width: 150px;
   border: solid;
   border-width: var(--borderWidthSmall);
@@ -98,9 +98,54 @@ button:not(#inviteWindowCloseButton) {
   transition: var(--transitionSpeed);
 }
 
+.scrumPokerButton:hover {
+  background-color: var(--greyGreen);
+  color: white;
+  transform: scale(1.05);
+  cursor: pointer;
+  border-color: white;
+}
+
 #inviteWindow {
   right: 10px;
   top: 68px;
+}
+
+.inviteWindowInput {
+  padding: 10px;
+}
+
+.closeIcon {
+  height: auto;
+  width: 16px;
+  opacity: 0.6;
+}
+
+.copyIcon {
+  height: auto;
+  width: 20px;
+  opacity: 0.6;
+}
+
+.copied {
+  position: absolute;
+  right: 165px;
+  top: 190px;
+  font-size: 15px;
+  opacity: 0;
+  transition: opacity 0.08s ease-in-out;
+}
+
+.copied.show {
+  opacity: 1;
+}
+
+.copiedLabel {
+  color: #212529bf;
+}
+
+.copyButton {
+  border-color: #6c757d87 !important;
 }
 
 #inviteWindowLogo {
@@ -209,13 +254,6 @@ main {
   width: 100%;
   font-size: 1.5rem;
   color: white;
-
-  /*--pink: #E8AEB7;*/
-  /*--lightBlue: #A9FFF7;*/
-  /*--mediumBlue: #B8E1FF;*/
-  /*--greyGreen: #82ABA1;*/
-  /*--lightGreen: #94FBAB;*/
-  /*--lightGrey: #e5e5f7;*/
 }
 
 .voting {
@@ -264,14 +302,6 @@ main {
   background-color: var(--lightBlue);
   height: 100px;
   margin: auto 5px;
-}
-
-.scrumPokerButton:hover {
-  background-color: var(--greyGreen);
-  color: white;
-  transform: scale(1.05);
-  cursor: pointer;
-  border-color: white;
 }
 
 .startScreen {
