@@ -15,15 +15,13 @@ public class ScrumPokerHub : Hub
         await Clients.All.SendAsync("ClearCardSelection");
     }
     
-    public override async Task OnDisconnectedAsync(Exception exception)
+    public override async Task OnDisconnectedAsync(Exception? exception)
     {
         var clientId = Context.ConnectionId;
-        var serviceProvider = Context.GetHttpContext().RequestServices;
+        var serviceProvider = Context.GetHttpContext()!.RequestServices;
         var gameController = serviceProvider.GetService<GameController>();
-        gameController.LeaveGame(clientId);
+        gameController?.LeaveGame(clientId);
         
-        
-
         await base.OnDisconnectedAsync(exception);
     }
 }
