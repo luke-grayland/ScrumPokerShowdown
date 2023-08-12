@@ -1,11 +1,11 @@
 import {ValidatePlayerName} from "../HomeScreen/HomeScreenHelper";
 import {useContext, useEffect, useState} from "react";
-import {useNavigate} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import {JoinGame} from "./JoinScreenHelper";
 import ClientContext from "../../contexts/ClientContext";
 import GameContext from "../../contexts/GameContext";
 
-const JoinScreen = ({gameIdServerError, serverErrorMessage}) => {
+const JoinScreen = () => {
     const [playerName, setPlayerName] = useState("")
     const [playerNameErrorDisplayed, setPlayerNameErrorDisplayed] = useState(false)
     const [playerNameValidationResult, setPlayerNameValidationResult] = useState("")
@@ -15,10 +15,20 @@ const JoinScreen = ({gameIdServerError, serverErrorMessage}) => {
     const [errorMessage, setErrorMessage] = useState("")
     const {clientContext} = useContext(ClientContext)
     const {updateGameContext} = useContext(GameContext)
+    const location = useLocation();
+    const { state } = location;
+    const { serverError, serverErrorMessage } = state;
+
+    useEffect(() => {
+        setServerErrorDisplayed(false)
+        setErrorMessage("")
+    }, [serverError, serverErrorMessage])
+    
     
     useEffect(() => {
-        setServerErrorDisplayed(gameIdServerError)
+        setServerErrorDisplayed(serverError)
         setErrorMessage(serverErrorMessage)
+        setGameId("")
     }, [])
     
     const handleSubmit = (e) => {
@@ -69,7 +79,7 @@ const JoinScreen = ({gameIdServerError, serverErrorMessage}) => {
                             onChange={(e) => setGameId(e.target.value)}
                         />
                         <span className="formErrorMessage">
-                            {serverErrorDisplayed ? serverErrorMessage : ""}
+                            {serverErrorDisplayed ? errorMessage : ""}
                         </span>
                         <input id="startNewGameButton"
                                type="submit"

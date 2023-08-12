@@ -95,7 +95,7 @@ public class GameController : ControllerBase
     {
         try
         {
-            if (joinGameModel == null)
+            if (joinGameModel == null || joinGameModel.GameId == string.Empty)
                 throw new NullReferenceException();
 
             var player = _gameOrchestrator.CreatePlayer(joinGameModel.PlayerName, joinGameModel.ClientId);
@@ -107,10 +107,26 @@ public class GameController : ControllerBase
             
             return Ok(JsonSerializer.Serialize(updatedGameModel));
         }
+        catch (NullReferenceException)
+        {
+            return StatusCode(400, "Game ID invalid");
+        }
         catch(Exception exception)
         {
-            return StatusCode(400, exception.Message != string.Empty ? exception.Message : "Could not join game");
+            return StatusCode(400, exception.Message);
         }
+    }
+    
+    public IActionResult LeaveGame(string clientId)
+    {
+        var gameModel = GetGameModel();
+        var player = gameModel.Players.First(x => x.Id == clientId);
+        var updatedGameModel = _gameOrchestrator.RemovePlayerFromGame(gameModel, player);
+            
+        SaveGameModel(updatedGameModel);
+        SendGameModelToAllClients(updatedGameModel);
+            
+        return Ok(JsonSerializer.Serialize(updatedGameModel));
     }
 
     private GameModel GetGameModel()

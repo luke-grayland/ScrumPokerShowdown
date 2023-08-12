@@ -1,4 +1,5 @@
 ﻿using ScrumPoker_react;
+using ScrumPoker_react.Controllers;
 using ScrumPoker_react.Hubs;
 using ScrumPoker_react.Orchestrators;
 using StackExchange.Redis;
@@ -11,6 +12,7 @@ builder.Services.AddCors();
 builder.Services.AddControllersWithViews();
 builder.Services.AddSignalR();
 builder.Services.AddScoped<IGameOrchestrator, GameOrchestrator>();
+builder.Services.AddScoped<GameController>();
 
 var redisConfiguration = new RedisConfiguration
 {

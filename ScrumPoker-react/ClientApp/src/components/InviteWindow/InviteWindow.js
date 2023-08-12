@@ -16,12 +16,13 @@ const InviteWindow = ({setShowInviteWindow}) => {
         
         setTimeout(() => {
             setCopied(false);
+            setShowInviteWindow(false)
         }, 700);
     }
 
     return(
         <>
-            <div id="inviteWindow" className="toast show position-absolute" role="alert">
+            <div id="inviteWindow" className="toast show position-absolute fade-in" role="alert">
                 <div className="toast-header justify-content-between">
                     <img id="inviteWindowLogo" src="/LogoChipOnly.png" className="rounded mr-2" alt="ScrumPokerLogo"/>
                     <strong className="mr-auto align-middle">Game ID</strong>

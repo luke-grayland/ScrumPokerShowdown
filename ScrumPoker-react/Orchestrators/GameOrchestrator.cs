@@ -45,8 +45,9 @@ public class GameOrchestrator : IGameOrchestrator
     public GameModel UpdatePlayerVote(GameModel gameModel, int cardValue, string playerId)
     {
         var playerToUpdate = gameModel.Players.FirstOrDefault(x => x.Id == playerId);
-        playerToUpdate.Vote = cardValue;
-         
+        if (playerToUpdate != null) 
+            playerToUpdate.Vote = cardValue;
+
         gameModel.AverageScore = CalculateAverageScore(gameModel.Players);
         
         return gameModel;
@@ -72,11 +73,17 @@ public class GameOrchestrator : IGameOrchestrator
 
     public GameModel AddPlayerToGame(GameModel game, PlayerModel player)
     {
-        if (game.Players.Count > 2)
-        {
+        if (game.Players.Count > 9)
             throw new Exception("Game is at maximum capacity");
-        }
+        
         game.Players.Add(player);
+        
+        return game;
+    }
+
+    public GameModel RemovePlayerFromGame(GameModel game, PlayerModel player)
+    {
+        game.Players.Remove(player);
         
         return game;
     }
@@ -88,14 +95,10 @@ public class GameOrchestrator : IGameOrchestrator
         var topRowCount = (int)Math.Ceiling(votingCardsVales.Count / 2.0);
 
         for (var i = 0; i < topRowCount; i++)
-        {
             topRow.Add(votingCardsVales[i]);
-        }
 
         for (var i = topRowCount; i < votingCardsVales.Count; i++)
-        {
             bottomRow.Add(votingCardsVales[i]);
-        }
 
         return Tuple.Create(topRow, bottomRow);
     }
@@ -111,7 +114,7 @@ public class GameOrchestrator : IGameOrchestrator
             playerCount++;
         }
 
-        return totalScore / playerCount;
+        return playerCount > 0 ? totalScore / playerCount : 0;
     }
 }
 

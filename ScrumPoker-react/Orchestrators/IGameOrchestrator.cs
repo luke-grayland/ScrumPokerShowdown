@@ -11,4 +11,5 @@ public interface IGameOrchestrator
     public GameModel ResetPlayerVotes(GameModel gameModel);
     public GameModel ShowScores(GameModel gameModel);
     public GameModel AddPlayerToGame(GameModel game, PlayerModel player);
+    public GameModel RemovePlayerFromGame(GameModel game, PlayerModel player);
 }
