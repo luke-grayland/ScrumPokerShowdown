@@ -43,7 +43,8 @@ const HomeScreen = () => {
         }
         
         if (gameValid) {
-            startGame(playerName, clientContext.clientId, votingSystem, customVotingSystem, updateGameContext, navigate).then()
+            startGame(playerName, clientContext.clientId, votingSystem, customVotingSystem, updateGameContext, navigate)
+                .then()
             navigate("/loading")
         }
     }

@@ -84,7 +84,7 @@ body {
   border-bottom-width: var(--borderWidthSmall);
 }
 
-button {
+button:not(#inviteWindowCloseButton) {
   width: 150px;
   border: solid;
   border-width: var(--borderWidthSmall);
@@ -96,6 +96,16 @@ button {
   align-items: center;
   font-family: futura, sans-serif;
   transition: var(--transitionSpeed);
+}
+
+#inviteWindow {
+  right: 10px;
+  top: 68px;
+}
+
+#inviteWindowLogo {
+  width: auto;
+  height: 30px;
 }
 
 .navButton {
@@ -386,18 +396,6 @@ main {
 
 .inviteWindow {
   
-  position: absolute;
-  min-height: 50px;
-  width: 20%;
-  top: 10%;
-  right: 3%;
-  z-index: 999;
-  background-color: var(--mediumBlue);
-  border-radius: var(--borderRadiusMedium);
-  border: solid;
-  border-width: var(--borderWidthMedium);
-  border-color: var(--lightBlue);
-  padding: 10px;
 }
 
 .loadingScreen {

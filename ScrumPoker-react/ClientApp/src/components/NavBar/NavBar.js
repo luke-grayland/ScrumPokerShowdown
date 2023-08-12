@@ -3,13 +3,8 @@ import {useNavigate} from "react-router-dom";
 const NavBar = ({ showInviteWindow, setShowInviteWindow }) => {
     const navigation = useNavigate()
     
-    const handleHomeClick = () => {
-        navigation("/")
-    }
-    
-    const handleInviteWindowClick = () => {
-        setShowInviteWindow(!showInviteWindow)
-    }
+    const handleHomeClick = () => navigation("/")
+    const handleInviteWindowClick = () => setShowInviteWindow(!showInviteWindow)
     
     return(
         <div className="navBar">
