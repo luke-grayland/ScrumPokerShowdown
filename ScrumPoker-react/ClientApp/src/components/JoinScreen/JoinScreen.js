@@ -1,5 +1,5 @@
 import {ValidatePlayerName} from "../HomeScreen/HomeScreenHelper";
-import {useContext, useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {useLocation, useNavigate} from "react-router-dom";
 import {JoinGame} from "./JoinScreenHelper";
 import ClientContext from "../../contexts/ClientContext";
@@ -56,35 +56,40 @@ const JoinScreen = () => {
             <div className="logoDiv">
                 <img src={"/ScrumPokerShowdownLogo.png"} alt="Scrum Poker Logo" id="homeScreenLogo" />
             </div>
+            <div className="joinButtonDiv"></div>
             <div className="startScreen">
-                <div className="startScreenContent shadowSmall">
-                    <form className="startScreenForm" onSubmit={handleSubmit}>
-                        <label htmlFor="playerName">Player Name</label>
-                        <input
-                            type="text"
-                            id="playerName"
-                            name="playerName"
-                            className="input formBorder"
-                            onChange={(e) => setPlayerName(e.target.value)}
-                        />
-                        <span className="formErrorMessage">
-                            {playerNameErrorDisplayed ? playerNameValidationResult : ""}
-                        </span>
-                        <label htmlFor="gameId">Game ID</label>
-                        <input
-                            type="text"
-                            id="gameId"
-                            name="gameId"
-                            className="input formBorder"
-                            onChange={(e) => setGameId(e.target.value)}
-                        />
-                        <span className="formErrorMessage">
-                            {serverErrorDisplayed ? errorMessage : ""}
-                        </span>
+                <div className="startScreenContent shadowSmall card">
+                    <form className="w-75" onSubmit={handleSubmit}>
+                        <div className="mb-3 d-flex flex-column">
+                            <label className="form-label mx-auto text-center" htmlFor="playerName">Player Name</label>
+                            <input
+                                type="text"
+                                id="playerName"
+                                name="playerName"
+                                className="form-control m-2 text-center"
+                                onChange={(e) => setPlayerName(e.target.value)}
+                            />
+                            <span className="invalid-danger text-danger text-center">
+                                {playerNameErrorDisplayed ? playerNameValidationResult : ""}
+                            </span>
+                        </div>
+                        <div className="mb-3 d-flex flex-column">
+                            <label className="form-label mx-auto text-center" htmlFor="gameId">Game ID</label>
+                            <input
+                                type="text"
+                                id="gameId"
+                                name="gameId"
+                                className="form-control m-2 text-center"
+                                onChange={(e) => setGameId(e.target.value)}
+                            />
+                            <span className="invalid-danger text-danger text-center">
+                                {serverErrorDisplayed ? errorMessage : ""}
+                            </span>
+                        </div>
                         <input id="startNewGameButton"
                                type="submit"
                                value="Join Game"
-                               className="submitButton scrumPokerButton"/>
+                               className="btn btn-primary d-flex mx-auto"/>
                     </form>
                 </div>
             </div>

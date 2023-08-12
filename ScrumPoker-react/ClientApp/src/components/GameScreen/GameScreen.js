@@ -55,7 +55,7 @@ const GameScreen = () => {
                         </h1>
                     </div>
                     <button id="showNewVoteButton" 
-                            className="showHideButton scrumPokerButton" 
+                            className="showHideButton btn btn-primary d-flex mx-auto" 
                             onClick={toggleShowHideButton}>
                         {showScores ? "New Vote" : "Show"}
                     </button>

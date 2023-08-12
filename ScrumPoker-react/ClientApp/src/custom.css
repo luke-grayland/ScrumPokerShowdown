@@ -77,34 +77,29 @@ body {
 .navBar {
   display: flex;
   height: 60px;
-  background-color: var(--lightBlue);
-  justify-content: space-between;
-  border-bottom-style: solid;
-  border-bottom-color: var(--greyGreen);
-  border-bottom-width: var(--borderWidthSmall);
 }
 
-.scrumPokerButton {
-  width: 150px;
-  border: solid;
-  border-width: var(--borderWidthSmall);
-  border-radius: var(--borderRadiusSmall);
-  border-color: var(--greyGreen);
-  display: flex;
-  align-content: center;
-  justify-content: center;
-  align-items: center;
-  font-family: futura, sans-serif;
-  transition: var(--transitionSpeed);
-}
+/*.scrumPokerButton {*/
+/*  width: 150px;*/
+/*  border: solid;*/
+/*  border-width: var(--borderWidthSmall);*/
+/*  border-radius: var(--borderRadiusSmall);*/
+/*  border-color: var(--greyGreen);*/
+/*  display: flex;*/
+/*  align-content: center;*/
+/*  justify-content: center;*/
+/*  align-items: center;*/
+/*  font-family: futura, sans-serif;*/
+/*  transition: var(--transitionSpeed);*/
+/*}*/
 
-.scrumPokerButton:hover {
-  background-color: var(--greyGreen);
-  color: white;
-  transform: scale(1.05);
-  cursor: pointer;
-  border-color: white;
-}
+/*.scrumPokerButton:hover {*/
+/*  background-color: var(--greyGreen);*/
+/*  color: white;*/
+/*  transform: scale(1.05);*/
+/*  cursor: pointer;*/
+/*  border-color: white;*/
+/*}*/
 
 #inviteWindow {
   right: 10px;
@@ -312,21 +307,18 @@ main {
   flex-direction: column;
 }
 
-#startNewGameButton {
-  margin: 15px 0;
-}
-
 .startScreenContent {
   min-height: 50vh;
-  width: 55%;
-  padding: 15px 5px;
+  height: 55vh;
+  width: 50%;
+  /*padding: 15px 5px;*/
   max-width: 550px;
   background-color: var(--mediumBlue);
   margin: 10px auto;
   border-radius: var(--borderRadiusSmall);
-  border-style: solid;
-  border-width: var(--borderWidthMedium);
-  border-color: var(--lightBlue);
+  /*border-style: solid;*/
+  /*border-width: var(--borderWidthMedium);*/
+  /*border-color: var(--lightBlue);*/
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
@@ -390,20 +382,20 @@ main {
   text-align: center;
 }
 
-.submitButton {
-  width: 150px;
-  height: 40px;
-  border: solid;
-  border-width: var(--borderWidthSmall);
-  border-radius: var(--borderRadiusSmall);
-  border-color: var(--greyGreen);
-  display: flex;
-  align-content: center;
-  justify-content: center;
-  align-items: center;
-  font-family: futura, sans-serif;
-  transition: var(--transitionSpeed);
-}
+/*.submitButton {*/
+/*  width: 150px;*/
+/*  height: 40px;*/
+/*  border: solid;*/
+/*  border-width: var(--borderWidthSmall);*/
+/*  border-radius: var(--borderRadiusSmall);*/
+/*  border-color: var(--greyGreen);*/
+/*  display: flex;*/
+/*  align-content: center;*/
+/*  justify-content: center;*/
+/*  align-items: center;*/
+/*  font-family: futura, sans-serif;*/
+/*  transition: var(--transitionSpeed);*/
+/*}*/
 
 .cardValueHidden {
   opacity: 0.8;
@@ -441,11 +433,15 @@ main {
   margin-top: 50px;
 }
 
-#votingSystem {
-  margin: 20px;
-}
-
 .joinGameButton {
   min-height: 50px;
   margin: 5px auto;
+}
+
+.homeScreenCard {
+  width: 60%;
+}
+
+.joinButtonDiv {
+  height: 40px;
 }

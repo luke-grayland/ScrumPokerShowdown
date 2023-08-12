@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import GameContext from "../../contexts/GameContext";
 import {startGame, ValidateCustomVotingSystem, ValidatePlayerName} from "./HomeScreenHelper";
@@ -66,55 +66,62 @@ const HomeScreen = () => {
             <div className="logoDiv">
                 <img src={"/ScrumPokerShowdownLogo.png"} alt="Scrum Poker Logo" id="homeScreenLogo" />
             </div>
-            <button className={"joinGameButton scrumPokerButton"} 
-                    onClick={() => navigate("/join", {state: {gameIdServerError: false, errorMessage: ""}})}>
-                Join a Game
-            </button>
+            <div className="joinButtonDiv">
+                <button className="btn btn-primary d-flex mx-auto"
+                        onClick={() => navigate("/join", {state: {gameIdServerError: false, errorMessage: ""}})}>
+                    Join a Game
+                </button>    
+            </div>
             <div className="startScreen">
-                <div className="startScreenContent shadowSmall">
-                    <form className="startScreenForm" onSubmit={handleSubmit}>
-                        <label htmlFor="playerName">Player Name</label>
-                        <input
-                            type="text"
-                            id="playerName"
-                            name="playerName"
-                            className="input formBorder"
-                            onChange={(e) => setPlayerName(e.target.value)}
-                        />
-                        <span className="formErrorMessage">
-                            {playerNameErrorDisplayed ? playerNameValidationResult : ""}
-                        </span>
-                        <label htmlFor="votingSystem">Voting System</label>
-                        <select
-                            id="votingSystem"
-                            name="votingSystem"
-                            className="input formBorder"
-                            onChange={handleVotingSystemChange}>
-                            <option value="1, 2, 3, 5, 8, 13, 21, 34">1, 2, 3, 5, 8, 13, 21, 34</option>
-                            <option value="Custom">Custom</option>
-                        </select>
+                <div className="startScreenContent shadowSmall card">
+                    <form className="w-75" onSubmit={handleSubmit}>
+                        <div className="mb-3 d-flex flex-column">
+                            <label className="form-label mx-auto text-center" htmlFor="playerName">Player Name</label>
+                            <input
+                                type="text"
+                                id="playerName"
+                                name="playerName"
+                                className="form-control m-2 text-center"
+                                onChange={(e) => setPlayerName(e.target.value)}
+                            />
+                            <span className="invalid-danger text-danger text-center">
+                                {playerNameErrorDisplayed ? playerNameValidationResult : ""}
+                            </span>
+                        </div>
+                        <div className="mb-3 d-flex flex-column">
+                            <label className="form-label mx-auto text-center" htmlFor="votingSystem">Voting System</label>
+                            <select id="votingSystem"
+                                name="votingSystem"
+                                className="form-select text-center m-2"
+                                onChange={handleVotingSystemChange}>
+                                <option value="1, 2, 3, 5, 8, 13, 21, 34">1, 2, 3, 5, 8, 13, 21, 34</option>
+                                <option value="Custom">Custom</option>
+                            </select>
+                        </div>
                         { displayCustomInput &&
                             <>
-                                <label htmlFor="customVotingSystem" className="customInputLabel">
-                                    Please enter comma separated values
-                                </label>
-                                <input
-                                    type="text"
-                                    id="customVotingSystem"
-                                    name="customVotingSystem"
-                                    className="input formBorder"
-                                    onChange={(e) => 
-                                        setCustomVotingSystem(e.target.value)}
-                                />
-                                <span className="formErrorMessage">
-                                    {votingSystemErrorDisplayed ? votingSystemValidationResult : ""}
-                                </span>
+                                <div className="mb-3 d-flex flex-column">
+                                    <label htmlFor="customVotingSystem" 
+                                           className="form-label text-secondary text-center">
+                                        Please enter comma separated values
+                                    </label>
+                                    <input
+                                        type="text"
+                                        id="customVotingSystem"
+                                        name="customVotingSystem"
+                                        className="form-control text-center m-2"
+                                        onChange={(e) =>
+                                            setCustomVotingSystem(e.target.value)}/>
+                                    <span className="invalid-danger text-danger text-center">
+                                        {votingSystemErrorDisplayed ? votingSystemValidationResult : ""}
+                                    </span>
+                                </div>
                             </>
                         }
                         <input id="startNewGameButton" 
                                type="submit" 
                                value="New Game" 
-                               className="submitButton scrumPokerButton"/>
+                               className="btn btn-primary d-flex mx-auto"/>
                     </form>
                 </div>
             </div>
