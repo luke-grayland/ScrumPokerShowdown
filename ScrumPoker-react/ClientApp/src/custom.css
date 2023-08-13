@@ -154,7 +154,7 @@ main {
 }
 
 .resultsBoard {
-  width: 40%;
+  width: 30%;
   height: 80%;
   margin: auto;
   display: flex;
@@ -162,6 +162,7 @@ main {
   align-items: center;
   justify-content: space-evenly;
   padding: 15px;
+
 }
 
 .average {
