@@ -8,7 +8,7 @@ const LoadingScreen = () => {
         <>
             <div className="loadingScreen">
                 <div className="logoDiv">
-                    <img src={"/ScrumPokerShowdownLogo.png"} alt="Scrum Poker Logo" id="homeScreenLogo" />
+                    <img src={"/ScrumPokerLogoWithText.png"} alt="Scrum Poker Logo" id="homeScreenLogo" />
                 </div>
                 <FontAwesomeIcon icon={faSpinner} spin className="loadingSpin"/>
             </div>

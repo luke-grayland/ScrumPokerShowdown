@@ -11,13 +11,14 @@
   --mediumBlue: #B8E1FF;
   --greyGreen: #82ABA1;
   --lightGreen: #94FBAB;
-  --lightGrey: #e5e5f7;
 
-  --borderRadiusMedium: 15px;
-  --borderRadiusSmall: 10px;
   --borderWidthMedium: 5px;
   --borderWidthSmall: 3px;
   --transitionSpeed: 0.15s;
+  
+  --background: #FAD3E7;
+  --buttonColor: #0081B4;
+  --lightGrey: #FEF9FB;
 }
 
 #root {
@@ -73,33 +74,6 @@ body {
   height: 100%;
   overflow: hidden;
 }
-
-.navBar {
-  display: flex;
-  height: 60px;
-}
-
-/*.scrumPokerButton {*/
-/*  width: 150px;*/
-/*  border: solid;*/
-/*  border-width: var(--borderWidthSmall);*/
-/*  border-radius: var(--borderRadiusSmall);*/
-/*  border-color: var(--greyGreen);*/
-/*  display: flex;*/
-/*  align-content: center;*/
-/*  justify-content: center;*/
-/*  align-items: center;*/
-/*  font-family: futura, sans-serif;*/
-/*  transition: var(--transitionSpeed);*/
-/*}*/
-
-/*.scrumPokerButton:hover {*/
-/*  background-color: var(--greyGreen);*/
-/*  color: white;*/
-/*  transform: scale(1.05);*/
-/*  cursor: pointer;*/
-/*  border-color: white;*/
-/*}*/
 
 #inviteWindow {
   right: 10px;
@@ -159,7 +133,7 @@ main {
   width: 100%;
   display: flex;
   flex-direction: column;
-  background-color: var(--pink);
+  background-color: var(--background);
 }
 
 .content {
@@ -179,19 +153,14 @@ main {
 }
 
 .resultsBoard {
-  background-color: var(--mediumBlue);
   width: 40%;
   height: 80%;
   margin: auto;
-  border-radius: var(--borderRadiusMedium);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-evenly;
-  border: solid;
-  border-width: var(--borderWidthMedium);
-  border-color: var(--lightBlue);
-  padding: 5px;
+  padding: 15px;
 }
 
 .average {
@@ -231,11 +200,10 @@ main {
   margin: auto;
 }
 
-.card {
+.scrumPokerCard {
   height: 90%;
-  border-radius: var(--borderRadiusMedium);
   border-width: var(--borderWidthSmall);
-  border-color: var(--lightBlue);
+  border-color: var(--bs-white);
   border-style: solid;
   display: flex;
   flex-direction: column;
@@ -245,7 +213,7 @@ main {
 }
 
 .player {
-  background-color: var(--greyGreen);
+  background-color: var(--buttonColor);
   width: 100%;
   font-size: 1.5rem;
   color: white;
@@ -253,8 +221,9 @@ main {
 
 .voting {
   width: 100px;
-  margin: 15px 15px;
-  background-color: var(--mediumBlue);
+  height: 80%;
+  margin: 15px;
+  /*background-color: var(--mediumBlue);*/
   transition: var(--transitionSpeed);
 }
 
@@ -293,12 +262,6 @@ main {
   text-overflow: ellipsis;
 }
 
-.showHideButton {
-  background-color: var(--lightBlue);
-  height: 100px;
-  margin: auto 5px;
-}
-
 .startScreen {
   height: 100%;
   width: 100%;
@@ -308,20 +271,12 @@ main {
 }
 
 .startScreenContent {
-  min-height: 50vh;
-  height: 55vh;
   width: 50%;
-  /*padding: 15px 5px;*/
   max-width: 550px;
-  background-color: var(--mediumBlue);
-  margin: 10px auto;
-  border-radius: var(--borderRadiusSmall);
-  /*border-style: solid;*/
-  /*border-width: var(--borderWidthMedium);*/
-  /*border-color: var(--lightBlue);*/
+  margin: 5px auto;
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
+  justify-content: start;
   align-items: center;
 }
 
@@ -345,7 +300,7 @@ main {
 #homeScreenLogo {
   height: 170px;
   width: auto;
-  padding: 10px;
+  padding: 15px;
   margin: 5px auto 5px auto;
 }
 
@@ -370,7 +325,6 @@ main {
 }
 
 .formBorder {
-  border-radius: var(--borderRadiusSmall);
   border-style: solid;
   border-width: var(--borderWidthSmall);
   border-color: var(--greyGreen);
@@ -407,13 +361,17 @@ main {
 }
 
 .selected {
-  background-color: var(--lightGreen);
+  background-color: var(--lightGreen) !important;
 }
 
 .navBarLogo {
-  height: 80%;
+  height: 40px;
   width: auto;
-  margin: auto;
+  margin: 10px auto;
+}
+
+.navBarButton {
+  height: 38px;
 }
 
 #inviteWindow {
@@ -443,5 +401,18 @@ main {
 }
 
 .joinButtonDiv {
-  height: 40px;
+  min-height: 40px;
+}
+
+.customVotingLabel {
+  font-style: italic;
+}
+
+.buttonBlue {
+  background-color: #0081B4 !important;
+  border-color: #0081B4 !important;
+}
+
+.backgroundLightGrey {
+  background-color: var(--lightGrey);
 }

@@ -24,7 +24,7 @@ const InviteWindow = ({setShowInviteWindow}) => {
         <>
             <div id="inviteWindow" className="toast show position-absolute fade-in" role="alert">
                 <div className="toast-header justify-content-between">
-                    <img id="inviteWindowLogo" src="/LogoChipOnly.png" className="rounded mr-2" alt="ScrumPokerLogo"/>
+                    <img id="inviteWindowLogo" src="/scrumPokerLogoOnly.png" className="rounded mr-2" alt="ScrumPokerLogo"/>
                     <strong className="mr-auto align-middle">Game ID</strong>
                     <button id="inviteWindowCloseButton" className="btn" onClick={() => setShowInviteWindow(false)}>
                         <img className="closeIcon" src="/close-icon.png"/>

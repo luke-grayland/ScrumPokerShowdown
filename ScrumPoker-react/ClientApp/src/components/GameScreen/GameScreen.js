@@ -18,10 +18,7 @@ const GameScreen = () => {
     const [showScores, setShowScores] = useState(false)
     const {clientContext} = useContext(ClientContext)
 
-    clientContext.clientConnection.on("ReceiveUpdatedGameModel", (data) => {
-        updateGameContext(JSON.parse(data))
-    })
-
+    clientContext.clientConnection.on("ReceiveUpdatedGameModel", data => updateGameContext(JSON.parse(data)))
     clientContext.clientConnection.on("ClearCardSelection", () => setSelectedCard(null))
     
     useEffect(() => {
@@ -47,7 +44,7 @@ const GameScreen = () => {
                 <InviteWindow setShowInviteWindow={setShowInviteWindow}/>
             }
             <div className="results">
-                <div id="resultsBoard" className="resultsBoard shadowSmall">
+                <div id="resultsBoard" className="resultsBoard card shadowSmall bg-light">
                     <div className="average">
                         <h4>Average:</h4>
                         <h1 id="averageValue">
@@ -55,7 +52,7 @@ const GameScreen = () => {
                         </h1>
                     </div>
                     <button id="showNewVoteButton" 
-                            className="showHideButton btn btn-primary d-flex mx-auto" 
+                            className="showHideButton btn btn-primary d-flex mx-auto buttonBlue" 
                             onClick={toggleShowHideButton}>
                         {showScores ? "New Vote" : "Show"}
                     </button>

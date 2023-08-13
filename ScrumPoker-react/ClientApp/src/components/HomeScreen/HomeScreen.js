@@ -64,17 +64,21 @@ const HomeScreen = () => {
     return (
         <div>
             <div className="logoDiv">
-                <img src={"/ScrumPokerShowdownLogo.png"} alt="Scrum Poker Logo" id="homeScreenLogo" />
+                <img src={"/scrumPokerLogoWithText.png"} alt="Scrum Poker Logo" id="homeScreenLogo" />
             </div>
             <div className="joinButtonDiv">
-                <button className="btn btn-primary d-flex mx-auto"
+                <button className="btn btn-primary d-flex mx-auto buttonBlue"
                         onClick={() => navigate("/join", {state: {gameIdServerError: false, errorMessage: ""}})}>
                     Join a Game
-                </button>    
+                </button>
+                <h5 className="text-center mt-2">Or</h5>
             </div>
             <div className="startScreen">
-                <div className="startScreenContent shadowSmall card">
-                    <form className="w-75" onSubmit={handleSubmit}>
+                <div className="startScreenContent shadowSmall card bg-light">
+                    <form className="w-75 mt-4 mb-4" onSubmit={handleSubmit}>
+                        <div className="mb-3 d-flex flex-column">
+                            <h3 className="text-center">Start New Game</h3> 
+                        </div>
                         <div className="mb-3 d-flex flex-column">
                             <label className="form-label mx-auto text-center" htmlFor="playerName">Player Name</label>
                             <input
@@ -102,7 +106,7 @@ const HomeScreen = () => {
                             <>
                                 <div className="mb-3 d-flex flex-column">
                                     <label htmlFor="customVotingSystem" 
-                                           className="form-label text-secondary text-center">
+                                           className="form-label text-secondary text-center customVotingLabel">
                                         Please enter comma separated values
                                     </label>
                                     <input
@@ -121,7 +125,7 @@ const HomeScreen = () => {
                         <input id="startNewGameButton" 
                                type="submit" 
                                value="New Game" 
-                               className="btn btn-primary d-flex mx-auto"/>
+                               className="btn btn-primary d-flex mx-auto buttonBlue"/>
                     </form>
                 </div>
             </div>

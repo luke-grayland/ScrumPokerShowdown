@@ -13,9 +13,9 @@ const VotingCard = ({cardValue, setSelectedCard, selectedCard, showScores}) => {
     }
     
     return(
-        <div className={`voting card shadowSmall cardHiddenValue ${selectedCard === cardValue ? 'selected' : ''}`} 
+        <div className={`voting card bg-light shadowSmall cardHiddenValue ${selectedCard === cardValue ? 'selected' : ''}`} 
              onClick={handleClick}>
-            <h3>{cardValue}</h3>
+            <h3 className="text-center my-auto">{cardValue}</h3>
         </div>
     )
 }
