@@ -1,3 +1,4 @@
+using System.Text.RegularExpressions;
 using ScrumPoker_react.Models;
 
 namespace ScrumPoker_react.Orchestrators;
@@ -38,7 +39,7 @@ public class GameOrchestrator : IGameOrchestrator
         return new PlayerModel()
         {
             Id = clientId,
-            Name = playerName
+            Name = SanitisePlayerName(playerName)
         };
     }
 
@@ -115,6 +116,11 @@ public class GameOrchestrator : IGameOrchestrator
         }
 
         return playerCount > 0 ? totalScore / playerCount : 0;
+    }
+
+    private static string SanitisePlayerName(string playerName)
+    {
+        return Regex.Replace(playerName, "[^a-zA-Z0-9]", "");
     }
 }
 

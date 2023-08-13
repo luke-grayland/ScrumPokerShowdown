@@ -17,7 +17,7 @@ const GameScreen = () => {
     const [averageResult, setAverageResult] = useState(0)
     const [showScores, setShowScores] = useState(false)
     const {clientContext} = useContext(ClientContext)
-
+    
     clientContext.clientConnection.on("ReceiveUpdatedGameModel", data => updateGameContext(JSON.parse(data)))
     clientContext.clientConnection.on("ClearCardSelection", () => setSelectedCard(null))
     
@@ -29,13 +29,7 @@ const GameScreen = () => {
         setShowScores(gameContext.ScoresDisplayed)
     }, [gameContext])
     
-    const toggleShowHideButton = () => {
-        if (showScores) {
-            ResetPlayerVotes().then()
-        } else {
-            ShowScores().then()
-        }
-    }
+    const toggleShowHideButton = () => showScores ? ResetPlayerVotes().then() : ShowScores().then()
     
     return (
         <>

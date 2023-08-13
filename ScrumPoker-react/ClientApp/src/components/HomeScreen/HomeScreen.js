@@ -48,7 +48,7 @@ const HomeScreen = () => {
             navigate("/loading")
         }
     }
-    
+
     const handleVotingSystemChange = (e) => {
         let newVotingSystem = e.target.value
         setVotingSystem(newVotingSystem)
@@ -69,7 +69,7 @@ const HomeScreen = () => {
             </div>
             <div className="joinButtonDiv">
                 <button className="btn btn-primary d-flex mx-auto buttonBlue"
-                        onClick={() => navigate("/join", {state: {gameIdServerError: false, errorMessage: ""}})}>
+                        onClick={() => navigate("/join")}>
                     Join a Game
                 </button>
                 <h5 className="text-center mt-2">Or</h5>

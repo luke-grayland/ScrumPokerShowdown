@@ -18,7 +18,9 @@ export const startGame = async (playerName, clientId, votingSystem, customVoting
         });
 
         if (!response.ok) {
-            console.log("Error: " + response)
+            const errorMessage = await response.text()
+            console.log(errorMessage)
+            navigate("/")
             return
         }
 

@@ -24,7 +24,6 @@ const JoinScreen = () => {
         setErrorMessage("")
     }, [serverError, serverErrorMessage])
     
-    
     useEffect(() => {
         setServerErrorDisplayed(serverError)
         setErrorMessage(serverErrorMessage)
