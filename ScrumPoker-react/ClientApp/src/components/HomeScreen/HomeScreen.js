@@ -50,9 +50,10 @@ const HomeScreen = () => {
     }
     
     const handleVotingSystemChange = (e) => {
-        setVotingSystem(e.target.value)
+        let newVotingSystem = e.target.value
+        setVotingSystem(newVotingSystem)
         
-        if (votingSystem !== "Custom")
+        if (newVotingSystem === "Custom")
         {
             setDisplayCustomInput(true)
             setVotingSystemErrorDisplayed(false)
@@ -99,6 +100,7 @@ const HomeScreen = () => {
                                 className="form-select text-center m-2"
                                 onChange={handleVotingSystemChange}>
                                 <option value="1, 2, 3, 5, 8, 13, 21, 34">1, 2, 3, 5, 8, 13, 21, 34</option>
+                                <option value="1, 2, 3, 4, 5, 8, 13, 18, 21, 34">1, 2, 3, 4, 5, 8, 13, 18, 21, 34</option>
                                 <option value="Custom">Custom</option>
                             </select>
                         </div>
@@ -124,7 +126,7 @@ const HomeScreen = () => {
                         }
                         <input id="startNewGameButton" 
                                type="submit" 
-                               value="New Game" 
+                               value="Start Game" 
                                className="btn btn-primary d-flex mx-auto buttonBlue"/>
                     </form>
                 </div>

@@ -7,14 +7,14 @@ const NavBar = ({ showInviteWindow, setShowInviteWindow }) => {
     const handleInviteWindowClick = () => setShowInviteWindow(!showInviteWindow)
     
     return(
-        <div className="d-flex">
+        <div className="d-flex shadowSmall bg-light">
             <button id="newGame" 
                     className="btn btn-primary d-flex mx-auto my-auto buttonBlue navBarButton" 
                     onClick={handleHomeClick}>New Game</button>
             <img src="/scrumPokerLogoOnly.png" alt="Scrum Poker Logo" className="navBarLogo" />
             <button id="inviteButton" 
                     className="btn btn-primary d-flex mx-auto my-auto buttonBlue navBarButton" 
-                    onClick={handleInviteWindowClick}>Invite</button>
+                    onClick={handleInviteWindowClick}>Invite Players</button>
         </div>
     )
 }

@@ -19,6 +19,7 @@
   --background: #FAD3E7;
   --buttonColor: #0081B4;
   --lightGrey: #FEF9FB;
+  --darkGrey: #9d9d9d;
 }
 
 #root {
@@ -213,7 +214,7 @@ main {
 }
 
 .player {
-  background-color: var(--buttonColor);
+  background-color: var(--darkGrey);
   width: 100%;
   font-size: 1.5rem;
   color: white;
