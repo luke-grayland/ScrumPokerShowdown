@@ -104,7 +104,7 @@ public class GameOrchestrator : IGameOrchestrator
         return Tuple.Create(topRow, bottomRow);
     }
 
-    private static int CalculateAverageScore(IEnumerable<PlayerModel> players)
+    private static double CalculateAverageScore(IEnumerable<PlayerModel> players)
     {
         var totalScore = 0;
         var playerCount = 0;
@@ -115,7 +115,9 @@ public class GameOrchestrator : IGameOrchestrator
             playerCount++;
         }
 
-        return playerCount > 0 ? totalScore / playerCount : 0;
+        double averageScore = playerCount > 0 ? (double)totalScore / playerCount : 0;
+
+        return Math.Round(averageScore, 1);
     }
 
     private static string SanitisePlayerName(string playerName)
