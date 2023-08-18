@@ -1,5 +1,5 @@
 export const ResetPlayerVotes = async() => {
-    const url = 'https://localhost:7050/Game/ResetPlayerVotes';
+    const url = process.env.REACT_APP_RESET_PLAYER_VOTES_URL;
 
     const response = await fetch(url, {
         method: 'POST',
@@ -19,7 +19,7 @@ export const ResetPlayerVotes = async() => {
 }
 
 export const ShowScores = async() => {
-    const url = 'https://localhost:7050/Game/ShowScores';
+    const url = process.env.REACT_APP_SHOW_SCORES_URL;
 
     const response = await fetch(url, {
         method: 'POST',
