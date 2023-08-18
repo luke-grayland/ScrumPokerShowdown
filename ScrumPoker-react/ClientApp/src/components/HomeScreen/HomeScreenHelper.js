@@ -1,5 +1,5 @@
 export const startGame = async (playerName, clientId, votingSystem, customVotingSystem, updateGameContext, navigate) => {
-    const url = 'https://localhost:7050/Home/StartGame';
+    const url = process.env.REACT_APP_START_GAME_URL;
 
     const data = {
         playerName: playerName,
@@ -9,6 +9,8 @@ export const startGame = async (playerName, clientId, votingSystem, customVoting
     };
 
     try {
+        console.log("env", process.env.REACT_APP_JOIN_GAME_URL)
+        
         const response = await fetch(url, {
             method: 'POST',
             headers: {
