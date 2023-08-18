@@ -1,5 +1,5 @@
 export const JoinGame = async (playerName, clientId, gameId, navigate, updateGameContext) => {
-    const url = process.env.REACT_APP_JOIN_GAME_URL;
+    const url = 'https://localhost:7050/Game/JoinGame';
 
     const data = {
         playerName: playerName,

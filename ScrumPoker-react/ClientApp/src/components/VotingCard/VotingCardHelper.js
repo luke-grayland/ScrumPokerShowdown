@@ -1,5 +1,5 @@
 export const UpdateGameModel = async (cardValue, playerId) => {
-    const url = process.env.REACT_APP_UPDATE_PLAYER_VOTE_URL;
+    const url = 'https://localhost:7050/Game/UpdatePlayerVote';
 
     const data = {
         CardValue: cardValue,
