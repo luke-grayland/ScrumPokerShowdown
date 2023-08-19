@@ -6,7 +6,10 @@ using StackExchange.Redis;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+IConfiguration configuration = new ConfigurationBuilder()
+    .SetBasePath(Directory.GetCurrentDirectory())
+    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+    .Build();
 
 builder.Services.AddCors();
 builder.Services.AddControllersWithViews();
@@ -16,8 +19,8 @@ builder.Services.AddScoped<GameController>();
 
 var redisConfiguration = new RedisConfiguration
 {
-    ConnectionString = "localhost:6379",
-    InstanceName = "MyRedisInstance"
+    ConnectionString = configuration["Redis:ConnectionString"],
+    InstanceName = configuration["Redis:InstanceName"]
 };
 builder.Services.AddSingleton<IConnectionMultiplexer>(x =>
     ConnectionMultiplexer.Connect(redisConfiguration.ConnectionString));
@@ -27,9 +30,8 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
-    
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-    app.UseHsts();
+    app.UseDefaultFiles();
+    app.UseStaticFiles();
 }
 
 app.UseHttpsRedirection();

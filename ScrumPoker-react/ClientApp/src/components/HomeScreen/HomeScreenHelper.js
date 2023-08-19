@@ -9,8 +9,6 @@ export const startGame = async (playerName, clientId, votingSystem, customVoting
     };
 
     try {
-        console.log("env", process.env.REACT_APP_JOIN_GAME_URL)
-        
         const response = await fetch(url, {
             method: 'POST',
             headers: {

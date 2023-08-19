@@ -3,6 +3,6 @@ import * as signalR from '@microsoft/signalr'
 
 export const GetSignalRConnection = () => {
     return new signalR.HubConnectionBuilder()
-        .withUrl("https://localhost:7050/ScrumPokerHub")
+        .withUrl(process.env.REACT_APP_SCRUM_POKER_HUB_URL)
         .build()
 }
