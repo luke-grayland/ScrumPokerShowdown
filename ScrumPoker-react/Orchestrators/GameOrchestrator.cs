@@ -111,6 +111,9 @@ public class GameOrchestrator : IGameOrchestrator
 
         foreach (var player in players)
         {
+            if (player.Vote < 1)
+                continue;
+                
             totalScore += player.Vote;
             playerCount++;
         }

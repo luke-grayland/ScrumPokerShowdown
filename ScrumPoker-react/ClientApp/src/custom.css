@@ -262,6 +262,7 @@ main {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  padding-bottom: 3px;
 }
 
 .startScreen {
@@ -378,6 +379,7 @@ main {
 
 #inviteWindow {
   transition: 0.2s ease-in-out;
+  z-index: 99;
 }
 
 .loadingScreen {

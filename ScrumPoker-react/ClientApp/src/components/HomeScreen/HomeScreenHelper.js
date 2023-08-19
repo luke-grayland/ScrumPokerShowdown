@@ -69,8 +69,8 @@ export const ValidatePlayerName = (playerName) => {
     if (playerName === "")
         result = "Player name cannot be empty"
     
-    if (playerName.split("").length > 14)
-        result = "Player name must be under 15 characters"
+    if (playerName.split("").length > 19)
+        result = "Player name must be under 20 characters"
     
     return result
 }
