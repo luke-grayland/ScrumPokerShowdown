@@ -104,6 +104,7 @@ body {
   font-size: 15px;
   opacity: 0;
   transition: opacity 0.08s ease-in-out;
+  z-index: 99;
 }
 
 .copied.show {
