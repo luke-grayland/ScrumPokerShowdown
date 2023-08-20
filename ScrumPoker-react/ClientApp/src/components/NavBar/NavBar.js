@@ -1,9 +1,10 @@
 import React from 'react'
 import {useNavigate} from "react-router-dom";
-const NavBar = ({ showInviteWindow, setShowInviteWindow }) => {
+import {NavigateToNewGame} from "./NavBarHelper";
+const NavBar = ({ showInviteWindow, setShowInviteWindow, clientId, groupId }) => {
     const navigation = useNavigate()
     
-    const handleHomeClick = () => navigation("/")
+    const handleHomeClick = () => NavigateToNewGame(navigation, clientId, groupId)
     const handleInviteWindowClick = () => setShowInviteWindow(!showInviteWindow)
     
     return(

@@ -30,14 +30,18 @@ const GameScreen = () => {
         setShowScores(gameContext.ScoresDisplayed)
         setGroupId(gameContext.GroupId)
     }, [gameContext])
-    
+
     const toggleShowHideButton = () => showScores 
         ? ResetPlayerVotes(groupId).then() 
         : ShowScores(groupId).then()
     
     return (
         <>
-            <NavBar showInviteWindow={showInviteWindow} setShowInviteWindow={setShowInviteWindow}/>
+            <NavBar showInviteWindow={showInviteWindow} 
+                    setShowInviteWindow={setShowInviteWindow}
+                    clientId={clientContext.clientId}
+                    groupId={groupId}
+            />
             { showInviteWindow &&
                 <InviteWindow setShowInviteWindow={setShowInviteWindow} groupIdProp={groupId}/>
             }

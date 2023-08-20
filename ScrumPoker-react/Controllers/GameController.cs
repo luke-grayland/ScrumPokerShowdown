@@ -117,13 +117,14 @@ public class GameController : ControllerBase
         }
     }
     
-    public IActionResult LeaveGame(string clientId, string groupId)
+    [HttpPost("LeaveGame")]
+    public IActionResult LeaveGame([FromBody] LeaveGameModel leaveGameModel)
     {
-        var gameModel = GetGameModel(groupId);
-        var player = gameModel.Players.First(x => x.Id == clientId);
+        var gameModel = GetGameModel(leaveGameModel.GroupId);
+        var player = gameModel.Players.First(x => x.Id == leaveGameModel.ClientId);
         var updatedGameModel = _gameOrchestrator.RemovePlayerFromGame(gameModel, player);
             
-        SaveGameModel(updatedGameModel, groupId);
+        SaveGameModel(updatedGameModel, leaveGameModel.GroupId);
         SendGameModelToGroup(updatedGameModel, updatedGameModel.GroupId);
             
         return Ok(JsonSerializer.Serialize(updatedGameModel));
