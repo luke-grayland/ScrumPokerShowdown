@@ -86,6 +86,7 @@ const JoinScreen = () => {
                             <input
                                 type="text"
                                 id="gameId"
+                                value={gameId}
                                 name="gameId"
                                 className="form-control m-2 text-center"
                                 onChange={(e) => setGameId(e.target.value)}

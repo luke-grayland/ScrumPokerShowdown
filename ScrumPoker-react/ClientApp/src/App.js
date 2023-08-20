@@ -8,12 +8,14 @@ import {GetSignalRConnection} from "./SignalRHelper";
 const App = () => {
     const [clientId, setClientId] = useState()
     const [clientConnection, setClientConnection] = useState()
+    const [groupId, setGroupId] = useState()
     
     useEffect(() => {
         const newClient = GetSignalRConnection()
         newClient.start().then(() => {
             setClientConnection(newClient)
             setClientId(newClient.connectionId)
+            setGroupId(groupId)
         })
     },[])
     

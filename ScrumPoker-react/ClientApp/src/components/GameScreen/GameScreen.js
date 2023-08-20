@@ -17,6 +17,7 @@ const GameScreen = () => {
     const [averageResult, setAverageResult] = useState(0)
     const [showScores, setShowScores] = useState(false)
     const {clientContext} = useContext(ClientContext)
+    const [groupId, setGroupId] = useState("")
     
     clientContext.clientConnection.on("ReceiveUpdatedGameModel", data => updateGameContext(JSON.parse(data)))
     clientContext.clientConnection.on("ClearCardSelection", () => setSelectedCard(null))
@@ -27,15 +28,18 @@ const GameScreen = () => {
         setVotingCardsBottomRow(gameContext.VotingCardsBottomRow)
         setAverageResult(gameContext.AverageScore)
         setShowScores(gameContext.ScoresDisplayed)
+        setGroupId(gameContext.GroupId)
     }, [gameContext])
     
-    const toggleShowHideButton = () => showScores ? ResetPlayerVotes().then() : ShowScores().then()
+    const toggleShowHideButton = () => showScores 
+        ? ResetPlayerVotes(groupId).then() 
+        : ShowScores(groupId).then()
     
     return (
         <>
             <NavBar showInviteWindow={showInviteWindow} setShowInviteWindow={setShowInviteWindow}/>
             { showInviteWindow &&
-                <InviteWindow setShowInviteWindow={setShowInviteWindow}/>
+                <InviteWindow setShowInviteWindow={setShowInviteWindow} groupIdProp={groupId}/>
             }
             <div className="results">
                 <div id="resultsBoard" className="resultsBoard card shadowSmall bg-light">
@@ -61,12 +65,14 @@ const GameScreen = () => {
                 <VotingCardsRow votingCardsRow={votingCardsTopRow}
                                 setSelectedCard={setSelectedCard}
                                 selectedCard={selectedCard}
-                                showScores={showScores}/>
+                                showScores={showScores}
+                                groupId={groupId}/>
 
                 <VotingCardsRow votingCardsRow={votingCardsBottomRow}
                                 setSelectedCard={setSelectedCard}
                                 selectedCard={selectedCard}
-                                showScores={showScores}/>    
+                                showScores={showScores}
+                                groupId={groupId}/>    
             </div>
         </>
     );

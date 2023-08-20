@@ -4,7 +4,7 @@ export const JoinGame = async (playerName, clientId, gameId, navigate, updateGam
     const data = {
         playerName: playerName,
         clientId: clientId,
-        gameId: gameId
+        gameId: gameId,
     };
 
     try {

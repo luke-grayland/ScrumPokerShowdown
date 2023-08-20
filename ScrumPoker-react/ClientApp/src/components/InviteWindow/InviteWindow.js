@@ -1,17 +1,21 @@
 import React, {useContext, useEffect, useState} from 'react'
 import ClientContext from "../../contexts/ClientContext";
 
-const InviteWindow = ({setShowInviteWindow}) => {
+const InviteWindow = ({setShowInviteWindow, groupIdProp}) => {
     const {clientContext} = useContext(ClientContext)
     const [connectionId, setConnectionId] = useState("")
     const [copied, setCopied] = useState(false)
+    const [groupId, setGroupId] = useState("")
     
     useEffect(() => {
         setConnectionId(clientContext.clientId)
+        setGroupId(groupIdProp)
     }, [])
     
+    const GetGameId = () => connectionId + "+" + groupId
+    
     const handleCopyClick = () => {
-        navigator.clipboard.writeText(connectionId)
+        navigator.clipboard.writeText(GetGameId())
         setCopied(true)
         
         setTimeout(() => {
@@ -31,7 +35,7 @@ const InviteWindow = ({setShowInviteWindow}) => {
                     </button>
                 </div>
                 <div className="input-group inviteWindowInput">
-                    <input readOnly type="text" className="form-control" placeholder={connectionId}/>
+                    <input readOnly type="text" className="form-control" placeholder={GetGameId()}/>
                     <div className="input-group-append">
                         <button className="btn btn-outline-secondary copyButton"
                                 type="button"

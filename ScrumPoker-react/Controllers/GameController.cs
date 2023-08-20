@@ -13,7 +13,6 @@ namespace ScrumPoker_react.Controllers;
 public class GameController : ControllerBase
 {
     private readonly IConnectionMultiplexer _redis;
-    private const string DbKey = "game-model-key";
     private readonly IGameOrchestrator _gameOrchestrator;
     private readonly IHubContext<ScrumPokerHub> _hub;
 
@@ -32,15 +31,15 @@ public class GameController : ControllerBase
     {
         try
         {
-            var gameModel = GetGameModel();
+            var gameModel = GetGameModel(updatePlayerVoteModel.GroupId);
     
             var updatedGameModel = _gameOrchestrator.UpdatePlayerVote(
                 gameModel, 
                 updatePlayerVoteModel.CardValue, 
                 updatePlayerVoteModel.PlayerId);
         
-            SaveGameModel(updatedGameModel);
-            SendGameModelToAllClients(updatedGameModel);
+            SaveGameModel(updatedGameModel, updatePlayerVoteModel.GroupId);
+            SendGameModelToGroup(updatedGameModel, updatedGameModel.GroupId);
     
             return StatusCode(200, "Player vote updated");
         }
@@ -51,18 +50,18 @@ public class GameController : ControllerBase
     }
     
     [HttpPost("ResetPlayerVotes")]
-    public IActionResult ResetPlayerVotes()
+    public IActionResult ResetPlayerVotes([FromBody]ResetPlayerVotesModel resetPlayerVotesModel)
     {
         try
         {
-            var gameModel = GetGameModel();
+            var gameModel = GetGameModel(resetPlayerVotesModel.GroupId);
             var updatedGameModel = _gameOrchestrator.ResetPlayerVotes(gameModel);
             
-            SaveGameModel(updatedGameModel);
-            SendGameModelToAllClients(updatedGameModel);
+            SaveGameModel(updatedGameModel, resetPlayerVotesModel.GroupId);
+            SendGameModelToGroup(updatedGameModel, updatedGameModel.GroupId);
             
-            _hub.Clients.All.SendAsync("ClearCardSelection");
-
+            _hub.Clients.Group(resetPlayerVotesModel.GroupId).SendAsync("ClearCardSelection");
+            
             return StatusCode(200, "Player votes reset");
         }
         catch
@@ -72,15 +71,15 @@ public class GameController : ControllerBase
     }
     
     [HttpPost("ShowScores")]
-    public IActionResult ShowScores()
+    public IActionResult ShowScores([FromBody]ShowScoresModel showScoresModel)
     {
         try
         {
-            var gameModel = GetGameModel();
+            var gameModel = GetGameModel(showScoresModel.GroupId);
             var updatedGameModel = _gameOrchestrator.ShowScores(gameModel);
             
-            SaveGameModel(updatedGameModel);
-            SendGameModelToAllClients(updatedGameModel);
+            SaveGameModel(updatedGameModel, showScoresModel.GroupId);
+            SendGameModelToGroup(updatedGameModel, updatedGameModel.GroupId);
 
             return Ok();
         }
@@ -99,11 +98,12 @@ public class GameController : ControllerBase
                 throw new NullReferenceException();
 
             var player = _gameOrchestrator.CreatePlayer(joinGameModel.PlayerName, joinGameModel.ClientId);
-            var gameModel = GetGameModel();
-            var updatedGameModel = _gameOrchestrator.AddPlayerToGame(gameModel, player);
+            var groupId = ExtractGroupId(joinGameModel.GameId);
+            var gameModel = GetGameModel(groupId);
+            var updatedGameModel = _gameOrchestrator.AddPlayerToGame(gameModel, player, groupId);
             
-            SaveGameModel(updatedGameModel);
-            SendGameModelToAllClients(updatedGameModel);
+            SaveGameModel(updatedGameModel, groupId);
+            SendGameModelToGroup(updatedGameModel, updatedGameModel.GroupId);
             
             return Ok(JsonSerializer.Serialize(updatedGameModel));
         }
@@ -117,34 +117,39 @@ public class GameController : ControllerBase
         }
     }
     
-    public IActionResult LeaveGame(string clientId)
+    public IActionResult LeaveGame(string clientId, string groupId)
     {
-        var gameModel = GetGameModel();
+        var gameModel = GetGameModel(groupId);
         var player = gameModel.Players.First(x => x.Id == clientId);
         var updatedGameModel = _gameOrchestrator.RemovePlayerFromGame(gameModel, player);
             
-        SaveGameModel(updatedGameModel);
-        SendGameModelToAllClients(updatedGameModel);
+        SaveGameModel(updatedGameModel, groupId);
+        SendGameModelToGroup(updatedGameModel, updatedGameModel.GroupId);
             
         return Ok(JsonSerializer.Serialize(updatedGameModel));
     }
 
-    private GameModel GetGameModel()
+    private GameModel GetGameModel(string groupId)
     {
-        var serializedGameModel = _redis.GetDatabase().StringGet(DbKey);
+        var serializedGameModel = _redis.GetDatabase().StringGet(groupId);
         
         return JsonSerializer.Deserialize<GameModel>(serializedGameModel);
     }
 
-    private void SaveGameModel(GameModel updatedGameModel)
+    private void SaveGameModel(GameModel updatedGameModel, string groupId)
     {
-        _redis.GetDatabase().StringSet(DbKey, JsonSerializer.Serialize(updatedGameModel));
+        _redis.GetDatabase().StringSet(groupId, JsonSerializer.Serialize(updatedGameModel));
     }
 
-    private void SendGameModelToAllClients(GameModel updatedGameModel)
+    private void SendGameModelToGroup(GameModel updatedGameModel, string groupId)
     {
-        _hub.Clients.All.SendAsync(
-            "ReceiveUpdatedGameModel", 
+        _hub.Clients.Group(groupId).SendAsync(
+            "ReceiveUpdatedGameModel",
             JsonSerializer.Serialize(updatedGameModel));
+    }
+    
+    private static string ExtractGroupId(string gameId)
+    {
+        return gameId.Split("+")[1];
     }
 }

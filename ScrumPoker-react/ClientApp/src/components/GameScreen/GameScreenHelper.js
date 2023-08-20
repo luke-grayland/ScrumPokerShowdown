@@ -1,12 +1,16 @@
-export const ResetPlayerVotes = async() => {
+export const ResetPlayerVotes = async(groupId) => {
     const url = process.env.REACT_APP_RESET_PLAYER_VOTES_URL;
+    
+    const data = {
+        GroupId: groupId
+    }
 
     const response = await fetch(url, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: {}
+        body: JSON.stringify(data)
     })
 
     if (!response.ok) {
@@ -18,15 +22,19 @@ export const ResetPlayerVotes = async() => {
     }
 }
 
-export const ShowScores = async() => {
+export const ShowScores = async(groupId) => {
     const url = process.env.REACT_APP_SHOW_SCORES_URL;
+    
+    const data = {
+        GroupId: groupId
+    }
 
     const response = await fetch(url, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: {}
+        body: JSON.stringify(data)
     })
 
     if (!response.ok) {

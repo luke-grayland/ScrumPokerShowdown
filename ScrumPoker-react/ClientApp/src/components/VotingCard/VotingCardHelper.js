@@ -1,9 +1,10 @@
-export const UpdateGameModel = async (cardValue, playerId) => {
+export const UpdateGameModel = async (cardValue, playerId, groupId) => {
     const url = process.env.REACT_APP_UPDATE_PLAYER_VOTE_URL;
 
     const data = {
         CardValue: cardValue,
-        PlayerId: playerId
+        PlayerId: playerId,
+        GroupId: groupId
     };
 
     const response = await fetch(url, {

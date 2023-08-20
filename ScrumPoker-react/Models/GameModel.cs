@@ -8,6 +8,7 @@ public class GameModel
     public IList<int> VotingCardsBottomRow { get; set; }
     public double AverageScore { get; set; }
     public bool ScoresDisplayed { get; set; }
+    public string GroupId { get; set; }
     
     
 }

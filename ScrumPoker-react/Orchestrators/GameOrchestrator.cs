@@ -1,10 +1,19 @@
 using System.Text.RegularExpressions;
+using Microsoft.AspNetCore.Routing.Constraints;
+using Microsoft.AspNetCore.SignalR;
+using ScrumPoker_react.Hubs;
 using ScrumPoker_react.Models;
 
 namespace ScrumPoker_react.Orchestrators;
 
 public class GameOrchestrator : IGameOrchestrator
 {
+    private readonly IHubContext<ScrumPokerHub> _hub;
+    
+    public GameOrchestrator(IHubContext<ScrumPokerHub> hub)
+    {
+        _hub = hub;
+    }
     public List<int> ValidateVotingSystem(NewGameModel newGameModel)
     {
         var votingSystem = newGameModel.VotingSystem == "Custom"
@@ -21,7 +30,7 @@ public class GameOrchestrator : IGameOrchestrator
         }
     }
 
-    public GameModel AssembleGameModel(IList<int> votingSystem, PlayerModel player)
+    public GameModel AssembleGameModel(IList<int> votingSystem, PlayerModel player, string groupId)
     {
         var votingCardRows = SplitCardsToRows(votingSystem);
         
@@ -30,7 +39,8 @@ public class GameOrchestrator : IGameOrchestrator
             Players = new List<PlayerModel>() { player },
             VotingSystem = votingSystem,
             VotingCardsTopRow = votingCardRows.Item1,
-            VotingCardsBottomRow = votingCardRows.Item2
+            VotingCardsBottomRow = votingCardRows.Item2,
+            GroupId = groupId
         };
     }
     
@@ -41,6 +51,14 @@ public class GameOrchestrator : IGameOrchestrator
             Id = clientId,
             Name = SanitisePlayerName(playerName)
         };
+    }
+
+    public string CreateGroup(string clientId)
+    {
+        var groupId = Guid.NewGuid().ToString();
+        _hub.Groups.AddToGroupAsync(clientId, groupId);
+        
+        return groupId;
     }
 
     public GameModel UpdatePlayerVote(GameModel gameModel, int cardValue, string playerId)
@@ -72,11 +90,12 @@ public class GameOrchestrator : IGameOrchestrator
         return gameModel;
     }
 
-    public GameModel AddPlayerToGame(GameModel game, PlayerModel player)
+    public GameModel AddPlayerToGame(GameModel game, PlayerModel player, string groupId)
     {
         if (game.Players.Count > 9)
             throw new Exception("Game is at maximum capacity");
-        
+
+        _hub.Groups.AddToGroupAsync(player.Id, groupId);
         game.Players.Add(player);
         
         return game;
@@ -118,8 +137,8 @@ public class GameOrchestrator : IGameOrchestrator
             playerCount++;
         }
 
-        double averageScore = playerCount > 0 ? (double)totalScore / playerCount : 0;
-
+        var averageScore = playerCount > 0 ? (double)totalScore / playerCount : 0;
+        
         return Math.Round(averageScore, 1);
     }
 
