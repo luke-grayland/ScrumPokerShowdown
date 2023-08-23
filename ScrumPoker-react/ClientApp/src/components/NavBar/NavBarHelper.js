@@ -1,8 +1,6 @@
 export const NavigateToNewGame = async (navigation, clientId, groupId) => {
     navigation("/")
 
-    console.log(clientId)
-    
     const url = process.env.REACT_APP_LEAVE_GAME_URL;
 
     const data = {
