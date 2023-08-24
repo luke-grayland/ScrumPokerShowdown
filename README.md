@@ -3,7 +3,7 @@
 
 Scrum Poker Showdown is a tool that allows scrum teams to plan and estimate work in an Agile environment, allowing users to apply a customised voting system. It's freely available to play here: https://www.scrumpokershowdown.com
 
-This app has a **React JS** front end and an **ASP.NET Core** backend. It uses **Signal R**, which creates a persistent connection between the client and the server, enabling real-time communication. Instead of a traditional database, this app uses a **Redis** distributed cache, which is a lightweight database stored in memory. The front end is styled using **Bootstrap**.
+This app has a **React JS** front end and an **ASP.NET Core** backend. It uses **Signal R**, which creates a persistent connection between the client and the server, enabling real-time communication. Instead of a traditional database, this app uses a **Redis** distributed cache, which is a lightweight database stored in memory.
 
 Scrum Poker Showdown is hosted on **Azure** using App Service.
 
