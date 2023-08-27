@@ -3,12 +3,12 @@ import PlayerCard from "../PlayerCard/PlayerCard";
 import GameContext from '../../contexts/GameContext'
 import NavBar from "../NavBar/NavBar";
 import InviteWindow from "../InviteWindow/InviteWindow";
-import {ResetPlayerVotes, ShowScores} from "./GameScreenHelper";
+import {CheckHasValue, LocalGameContextKey, ResetPlayerVotes, ShowScores} from "./GameScreenHelper";
 import VotingCardsRow from "./VotingCardsRow";
 import ClientContext from "../../contexts/ClientContext";
 
 const GameScreen = () => {
-    const localGameContextKey = "localGameContext"
+    
     const {gameContext, updateGameContext} = useContext(GameContext)
     const [players, setPlayers] = useState(gameContext.Players)
     const [votingCardsTopRow, setVotingCardsTopRow] = useState(gameContext.VotingCardsTopRow)
@@ -24,7 +24,8 @@ const GameScreen = () => {
     clientContext.clientConnection.on("ClearCardSelection", () => setSelectedCard(null))
 
     useEffect(() => {
-        const localGameContext = window.localStorage.getItem(localGameContextKey)
+        
+        const localGameContext = window.localStorage.getItem(LocalGameContextKey)
         
         if(localGameContext !== null)
         {
@@ -35,14 +36,27 @@ const GameScreen = () => {
     }, [])
     
     useEffect(() => {
+        //does the null check on gamecontext need to happen?
         
-        setPlayers(gameContext.Players)
-        setVotingCardsTopRow(gameContext.VotingCardsTopRow)
-        setVotingCardsBottomRow(gameContext.VotingCardsBottomRow)
-        setAverageResult(gameContext.AverageScore)
-        setShowScores(gameContext.ScoresDisplayed)
-        setGroupId(gameContext.GroupId)
-        window.localStorage.setItem(localGameContextKey, JSON.stringify(gameContext))
+        if(CheckHasValue(gameContext, gameContext.Players))
+            setPlayers(gameContext.Players)
+
+        if(CheckHasValue(gameContext, gameContext.VotingCardsTopRow))
+            setVotingCardsTopRow(gameContext.VotingCardsTopRow)
+
+        if(CheckHasValue(gameContext, gameContext.VotingCardsBottomRow))
+            setVotingCardsBottomRow(gameContext.VotingCardsBottomRow)
+
+        if(CheckHasValue(gameContext, gameContext.AverageScore)) 
+            setAverageResult(gameContext.AverageScore)
+
+        if(CheckHasValue(gameContext, gameContext.ScoresDisplayed))
+            setShowScores(gameContext.ScoresDisplayed)
+
+        if(gameContext.GroupId !== null)
+            setGroupId(gameContext.GroupId)
+        
+        window.localStorage.setItem(LocalGameContextKey, JSON.stringify(gameContext))
         
     }, [gameContext])
     
