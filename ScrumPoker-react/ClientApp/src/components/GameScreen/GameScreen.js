@@ -10,53 +10,66 @@ import ClientContext from "../../contexts/ClientContext";
 const GameScreen = () => {
     
     const {gameContext, updateGameContext} = useContext(GameContext)
-    const [players, setPlayers] = useState(gameContext.Players)
-    const [votingCardsTopRow, setVotingCardsTopRow] = useState(gameContext.VotingCardsTopRow)
-    const [votingCardsBottomRow, setVotingCardsBottomRow] = useState(gameContext.VotingCardsBottomRow)
+    const [players, setPlayers] = useState()
+    const [votingCardsTopRow, setVotingCardsTopRow] = useState()
+    const [votingCardsBottomRow, setVotingCardsBottomRow] = useState()
     const [showInviteWindow, setShowInviteWindow] = useState(false)
     const [selectedCard, setSelectedCard] = useState(null)
     const [averageResult, setAverageResult] = useState(0)
     const [showScores, setShowScores] = useState(false)
     const {clientContext} = useContext(ClientContext)
     const [groupId, setGroupId] = useState("")
+    const [clientId, setClientId] = useState("")
+
+        clientContext.clientConnection.on("ReceiveUpdatedGameModel", data => updateGameContext(JSON.parse(data)))
+        clientContext.clientConnection.on("ClearCardSelection", () => setSelectedCard(null))
     
-    clientContext.clientConnection.on("ReceiveUpdatedGameModel", data => updateGameContext(JSON.parse(data)))
-    clientContext.clientConnection.on("ClearCardSelection", () => setSelectedCard(null))
+    // if (clientContext)
+    // {
+    //     clientContext.clientConnection.on("ReceiveUpdatedGameModel", data => updateGameContext(JSON.parse(data)))
+    //     clientContext.clientConnection.on("ClearCardSelection", () => setSelectedCard(null))    
+    // }
 
     useEffect(() => {
-        
-        const localGameContext = window.localStorage.getItem(LocalGameContextKey)
-        
-        if(localGameContext !== null)
-        {
-            console.log("item found")
-            updateGameContext(localGameContext)
-        }
+        // const localGameContext = window.localStorage.getItem(LocalGameContextKey)
+
+        // if(localGameContext !== null)
+        // {
+        //     const parsedLocalGameContext = JSON.parse(localGameContext) 
+        //     updateGameContext({ ...parsedLocalGameContext})
+        // }
         
     }, [])
     
     useEffect(() => {
+        if(clientContext?.clientId)
+            setClientId(clientContext.clientId)
+        
+    }, [clientContext])
+    
+    useEffect(() => {
         //does the null check on gamecontext need to happen?
         
-        if(CheckHasValue(gameContext, gameContext.Players))
+        if(CheckHasValue(gameContext, gameContext?.Players))
             setPlayers(gameContext.Players)
 
-        if(CheckHasValue(gameContext, gameContext.VotingCardsTopRow))
+        if(CheckHasValue(gameContext, gameContext?.VotingCardsTopRow))
             setVotingCardsTopRow(gameContext.VotingCardsTopRow)
 
-        if(CheckHasValue(gameContext, gameContext.VotingCardsBottomRow))
+        if(CheckHasValue(gameContext, gameContext?.VotingCardsBottomRow))
             setVotingCardsBottomRow(gameContext.VotingCardsBottomRow)
 
-        if(CheckHasValue(gameContext, gameContext.AverageScore)) 
+        if(CheckHasValue(gameContext, gameContext?.AverageScore)) 
             setAverageResult(gameContext.AverageScore)
 
-        if(CheckHasValue(gameContext, gameContext.ScoresDisplayed))
+        if(CheckHasValue(gameContext, gameContext?.ScoresDisplayed))
             setShowScores(gameContext.ScoresDisplayed)
 
-        if(gameContext.GroupId !== null)
+        if(gameContext?.GroupId && gameContext.GroupId !== "")
             setGroupId(gameContext.GroupId)
         
-        window.localStorage.setItem(LocalGameContextKey, JSON.stringify(gameContext))
+        // window.localStorage.setItem(LocalGameContextKey, JSON.stringify(gameContext))
+        // console.log("freeeeeze", gameContext)
         
     }, [gameContext])
     
@@ -70,7 +83,7 @@ const GameScreen = () => {
         <>
             <NavBar showInviteWindow={showInviteWindow} 
                     setShowInviteWindow={setShowInviteWindow}
-                    clientId={clientContext.clientId}
+                    clientId={clientId}
                     groupId={groupId}
             />
             { showInviteWindow &&
@@ -92,7 +105,7 @@ const GameScreen = () => {
                 </div>
             </div>
             <div className="players">
-                {players.map((player) => (
+                {players && players.map((player) => (
                     <PlayerCard key={player.Id} player={player} showScores={showScores}/>
                 ))}
             </div>
