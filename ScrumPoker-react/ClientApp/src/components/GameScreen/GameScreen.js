@@ -8,6 +8,7 @@ import VotingCardsRow from "./VotingCardsRow";
 import ClientContext from "../../contexts/ClientContext";
 
 const GameScreen = () => {
+    const localGameContextKey = "localGameContext"
     const {gameContext, updateGameContext} = useContext(GameContext)
     const [players, setPlayers] = useState(gameContext.Players)
     const [votingCardsTopRow, setVotingCardsTopRow] = useState(gameContext.VotingCardsTopRow)
@@ -21,15 +22,31 @@ const GameScreen = () => {
     
     clientContext.clientConnection.on("ReceiveUpdatedGameModel", data => updateGameContext(JSON.parse(data)))
     clientContext.clientConnection.on("ClearCardSelection", () => setSelectedCard(null))
+
+    useEffect(() => {
+        const localGameContext = window.localStorage.getItem(localGameContextKey)
+        
+        if(localGameContext !== null)
+        {
+            console.log("item found")
+            updateGameContext(localGameContext)
+        }
+        
+    }, [])
     
     useEffect(() => {
+        
         setPlayers(gameContext.Players)
         setVotingCardsTopRow(gameContext.VotingCardsTopRow)
         setVotingCardsBottomRow(gameContext.VotingCardsBottomRow)
         setAverageResult(gameContext.AverageScore)
         setShowScores(gameContext.ScoresDisplayed)
         setGroupId(gameContext.GroupId)
+        window.localStorage.setItem(localGameContextKey, JSON.stringify(gameContext))
+        
     }, [gameContext])
+    
+    
 
     const toggleShowHideButton = () => showScores 
         ? ResetPlayerVotes(groupId).then() 
