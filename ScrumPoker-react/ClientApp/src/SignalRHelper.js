@@ -6,3 +6,5 @@ export const GetSignalRConnection = () => {
         .withUrl(process.env.REACT_APP_SCRUM_POKER_HUB_URL)
         .build()
 }
+
+export const SignalRConnectionIdKey = "signalRConnectionId"

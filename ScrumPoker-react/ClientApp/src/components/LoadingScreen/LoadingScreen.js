@@ -5,9 +5,9 @@ import ImageFadeIn from "react-image-fade-in";
 import {LocalGameContextKey} from "../GameScreen/GameScreenHelper";
 
 const LoadingScreen = () => {
-    // useEffect(() => {
-    //     window.localStorage.removeItem(LocalGameContextKey)
-    // }, [])
+    useEffect(() => {
+        window.localStorage.removeItem(LocalGameContextKey)
+    }, [])
     
     return (
         <div className="loadingScreen">

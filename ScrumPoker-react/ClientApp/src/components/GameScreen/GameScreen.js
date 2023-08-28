@@ -6,9 +6,9 @@ import InviteWindow from "../InviteWindow/InviteWindow";
 import {CheckHasValue, LocalGameContextKey, ResetPlayerVotes, ShowScores} from "./GameScreenHelper";
 import VotingCardsRow from "./VotingCardsRow";
 import ClientContext from "../../contexts/ClientContext";
+import {SignalRConnectionIdKey} from "../../SignalRHelper";
 
 const GameScreen = () => {
-    
     const {gameContext, updateGameContext} = useContext(GameContext)
     const [players, setPlayers] = useState()
     const [votingCardsTopRow, setVotingCardsTopRow] = useState()
@@ -20,60 +20,41 @@ const GameScreen = () => {
     const {clientContext} = useContext(ClientContext)
     const [groupId, setGroupId] = useState("")
     const [clientId, setClientId] = useState("")
-
-        clientContext.clientConnection.on("ReceiveUpdatedGameModel", data => updateGameContext(JSON.parse(data)))
-        clientContext.clientConnection.on("ClearCardSelection", () => setSelectedCard(null))
     
-    // if (clientContext)
-    // {
-    //     clientContext.clientConnection.on("ReceiveUpdatedGameModel", data => updateGameContext(JSON.parse(data)))
-    //     clientContext.clientConnection.on("ClearCardSelection", () => setSelectedCard(null))    
-    // }
+    if (clientContext)
+    {
+        clientContext.clientConnection.on("ReceiveUpdatedGameModel", data => updateGameContext(JSON.parse(data)))
+        clientContext.clientConnection.on("ClearCardSelection", () => setSelectedCard(null))    
+    }
 
     useEffect(() => {
-        // const localGameContext = window.localStorage.getItem(LocalGameContextKey)
-
-        // if(localGameContext !== null)
-        // {
-        //     const parsedLocalGameContext = JSON.parse(localGameContext) 
-        //     updateGameContext({ ...parsedLocalGameContext})
-        // }
-        
+        const localGameContext = window.localStorage.getItem(LocalGameContextKey)
+        if(localGameContext !== null)
+        {
+            const parsedLocalGameContext = JSON.parse(localGameContext)
+            updateGameContext({ ...parsedLocalGameContext})
+        }
     }, [])
     
     useEffect(() => {
         if(clientContext?.clientId)
             setClientId(clientContext.clientId)
-        
     }, [clientContext])
     
     useEffect(() => {
         //does the null check on gamecontext need to happen?
+        if (gameContext === null || gameContext === undefined)
+            return
         
-        if(CheckHasValue(gameContext, gameContext?.Players))
-            setPlayers(gameContext.Players)
-
-        if(CheckHasValue(gameContext, gameContext?.VotingCardsTopRow))
-            setVotingCardsTopRow(gameContext.VotingCardsTopRow)
-
-        if(CheckHasValue(gameContext, gameContext?.VotingCardsBottomRow))
-            setVotingCardsBottomRow(gameContext.VotingCardsBottomRow)
-
-        if(CheckHasValue(gameContext, gameContext?.AverageScore)) 
-            setAverageResult(gameContext.AverageScore)
-
-        if(CheckHasValue(gameContext, gameContext?.ScoresDisplayed))
-            setShowScores(gameContext.ScoresDisplayed)
-
-        if(gameContext?.GroupId && gameContext.GroupId !== "")
-            setGroupId(gameContext.GroupId)
+        setPlayers(gameContext.Players)
+        setVotingCardsTopRow(gameContext.VotingCardsTopRow)
+        setVotingCardsBottomRow(gameContext.VotingCardsBottomRow)
+        setAverageResult(gameContext.AverageScore)
+        setShowScores(gameContext.ScoresDisplayed)
+        setGroupId(gameContext.GroupId)
         
-        // window.localStorage.setItem(LocalGameContextKey, JSON.stringify(gameContext))
-        // console.log("freeeeeze", gameContext)
-        
+        window.localStorage.setItem(LocalGameContextKey, JSON.stringify(gameContext))
     }, [gameContext])
-    
-    
 
     const toggleShowHideButton = () => showScores 
         ? ResetPlayerVotes(groupId).then() 

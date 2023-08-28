@@ -3,19 +3,18 @@ import {Route, Routes} from 'react-router-dom';
 import AppRoutes from './AppRoutes';
 import './custom.css';
 import Layout from "./components/Layout";
-import {GetSignalRConnection} from "./SignalRHelper";
+import {GetSignalRConnection, SignalRConnectionIdKey} from "./SignalRHelper";
 
 const App = () => {
     const [clientId, setClientId] = useState()
     const [clientConnection, setClientConnection] = useState()
-    const [groupId, setGroupId] = useState()
     
     useEffect(() => {
         const newClient = GetSignalRConnection()
         newClient.start().then(() => {
             setClientConnection(newClient)
             setClientId(newClient.connectionId)
-            setGroupId(groupId)
+            window.localStorage.setItem(SignalRConnectionIdKey, newClient.connectionId);
         })
     },[])
     
