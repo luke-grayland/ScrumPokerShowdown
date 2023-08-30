@@ -9,8 +9,7 @@ const VotingCardsRow = ({votingCardsRow, setSelectedCard, selectedCard, showScor
                             setSelectedCard={setSelectedCard}
                             selectedCard={selectedCard}
                             showScores={showScores}
-                            groupId={groupId}
-                />
+                            groupId={groupId}/>
             ))}
         </div>
     )

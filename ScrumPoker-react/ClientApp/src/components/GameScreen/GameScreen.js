@@ -3,7 +3,12 @@ import PlayerCard from "../PlayerCard/PlayerCard";
 import GameContext from '../../contexts/GameContext'
 import NavBar from "../NavBar/NavBar";
 import InviteWindow from "../InviteWindow/InviteWindow";
-import {LocalGameContextKey, LocalPlayerIdKey, ResetPlayerVotes, ShowScores} from "./GameScreenHelper";
+import {
+    LocalGameContextKey,
+    LocalPlayerIdKey,
+    ResetPlayerVotes,
+    ShowScores
+} from "./GameScreenHelper";
 import VotingCardsRow from "./VotingCardsRow";
 import ClientContext from "../../contexts/ClientContext";
 
@@ -28,6 +33,7 @@ const GameScreen = () => {
 
     useEffect(() => {
         const localGameContext = window.localStorage.getItem(LocalGameContextKey)
+        
         if(localGameContext !== null) {
             const parsedLocalGameContext = JSON.parse(localGameContext)
             updateGameContext({ ...parsedLocalGameContext})

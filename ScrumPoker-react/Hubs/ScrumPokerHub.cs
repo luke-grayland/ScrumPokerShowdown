@@ -31,20 +31,23 @@ public class ScrumPokerHub : Hub
     
     public override async Task OnDisconnectedAsync(Exception? exception)
     {
-        //Still needs to be implemented following Signal R groups updates.
-        //Group ID needs to be found from somewhere in order for this to work.
-        var groupId = "test";
-        var clientId = Context.ConnectionId;
-        var serviceProvider = Context.GetHttpContext()!.RequestServices;
-        var gameController = serviceProvider.GetService<GameController>();
-
-        var leaveGameModel = new LeaveGameModel()
-        {
-            ClientId = clientId,
-            GroupId = groupId
-        };
-        
-        gameController?.LeaveGame(leaveGameModel);
+        //TODO needs testing
+        // var groupId = Context.GetHttpContext()!.Request.Query["groupId"].ToString();
+        //
+        // if (groupId != "")
+        // {
+        //     var clientId = Context.ConnectionId;
+        //     var serviceProvider = Context.GetHttpContext()!.RequestServices;
+        //     var gameController = serviceProvider.GetService<GameController>();
+        //
+        //     var leaveGameModel = new LeaveGameModel()
+        //     {
+        //         ClientId = clientId,
+        //         GroupId = groupId
+        //     };
+        //
+        //     gameController?.LeaveGame(leaveGameModel);    
+        // }
         
         await base.OnDisconnectedAsync(exception);
     }
