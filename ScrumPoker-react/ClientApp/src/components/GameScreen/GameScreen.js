@@ -3,10 +3,9 @@ import PlayerCard from "../PlayerCard/PlayerCard";
 import GameContext from '../../contexts/GameContext'
 import NavBar from "../NavBar/NavBar";
 import InviteWindow from "../InviteWindow/InviteWindow";
-import {CheckHasValue, LocalGameContextKey, ResetPlayerVotes, ShowScores} from "./GameScreenHelper";
+import {LocalGameContextKey, LocalPlayerIdKey, ResetPlayerVotes, ShowScores} from "./GameScreenHelper";
 import VotingCardsRow from "./VotingCardsRow";
 import ClientContext from "../../contexts/ClientContext";
-import {SignalRConnectionIdKey} from "../../SignalRHelper";
 
 const GameScreen = () => {
     const {gameContext, updateGameContext} = useContext(GameContext)
@@ -29,8 +28,7 @@ const GameScreen = () => {
 
     useEffect(() => {
         const localGameContext = window.localStorage.getItem(LocalGameContextKey)
-        if(localGameContext !== null)
-        {
+        if(localGameContext !== null) {
             const parsedLocalGameContext = JSON.parse(localGameContext)
             updateGameContext({ ...parsedLocalGameContext})
         }
@@ -38,12 +36,15 @@ const GameScreen = () => {
     
     useEffect(() => {
         if(clientContext?.clientId)
-            setClientId(clientContext.clientId)
+        {
+            const clientId = clientContext.clientId 
+            setClientId(clientId)
+            window.localStorage.setItem(LocalPlayerIdKey, clientId)
+        }
     }, [clientContext])
     
     useEffect(() => {
-        //does the null check on gamecontext need to happen?
-        if (gameContext === null || gameContext === undefined)
+        if (gameContext === undefined)
             return
         
         setPlayers(gameContext.Players)
@@ -52,7 +53,7 @@ const GameScreen = () => {
         setAverageResult(gameContext.AverageScore)
         setShowScores(gameContext.ScoresDisplayed)
         setGroupId(gameContext.GroupId)
-        
+
         window.localStorage.setItem(LocalGameContextKey, JSON.stringify(gameContext))
     }, [gameContext])
 

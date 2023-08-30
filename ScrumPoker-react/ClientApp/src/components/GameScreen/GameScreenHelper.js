@@ -1,4 +1,5 @@
 export const LocalGameContextKey = "localGameContext"
+export const LocalPlayerIdKey = "localPlayerId"
 
 export const ResetPlayerVotes = async(groupId) => {
     const url = process.env.REACT_APP_RESET_PLAYER_VOTES_URL;
@@ -43,8 +44,4 @@ export const ShowScores = async(groupId) => {
         const error = await response.text()
         console.log("Error: " + error)
     }
-}
-
-export const CheckHasValue = (gameContext, contextArray) => {
-    return gameContext !== null && Array.isArray(contextArray)
 }

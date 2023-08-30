@@ -48,6 +48,16 @@ public class GameController : ControllerBase
             return StatusCode(400, "Could not update player vote");
         }
     }
+
+    public void UpdatePlayerId(string groupId, string oldPlayerId, string newPlayerId)
+    {
+        var gameModel = GetGameModel(groupId);
+
+        var updatedGameModel = _gameOrchestrator.UpdatePlayerId(gameModel, oldPlayerId, newPlayerId);
+        
+        SaveGameModel(updatedGameModel, groupId);
+        SendGameModelToGroup(updatedGameModel, updatedGameModel.GroupId);
+    }
     
     [HttpPost("ResetPlayerVotes")]
     public IActionResult ResetPlayerVotes([FromBody]ResetPlayerVotesModel resetPlayerVotesModel)

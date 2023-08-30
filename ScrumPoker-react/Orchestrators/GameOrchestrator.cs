@@ -71,6 +71,16 @@ public class GameOrchestrator : IGameOrchestrator
         
         return gameModel;
     }
+    
+    public GameModel UpdatePlayerId(GameModel gameModel, string oldPlayerId, string newPlayerId)
+    {
+        var playerToUpdate = gameModel.Players.FirstOrDefault(x => x.Id == oldPlayerId);
+        if (playerToUpdate != null)
+            playerToUpdate.Id = newPlayerId;
+        
+        return gameModel;
+    }
+    
 
     public GameModel ResetPlayerVotes(GameModel gameModel)
     {

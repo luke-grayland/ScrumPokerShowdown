@@ -1,3 +1,5 @@
+import {LocalGameContextKey, LocalPlayerIdKey} from "../GameScreen/GameScreenHelper";
+
 export const startGame = async (playerName, clientId, votingSystem, customVotingSystem, updateGameContext, navigate) => {
     const url = process.env.REACT_APP_START_GAME_URL;
 
@@ -73,4 +75,19 @@ export const ValidatePlayerName = (playerName) => {
         result = "Player name must be under 20 characters"
     
     return result
+}
+
+export const GetExistingGroupId = () => {
+    let groupId = ""
+    const localGameContext = JSON.parse(window.localStorage.getItem(LocalGameContextKey))
+    
+    if(localGameContext !== null)
+        groupId = localGameContext?.GroupId !== null ? localGameContext.GroupId : ""
+    
+    return groupId
+}
+
+export const GetExistingPlayerId = () => {
+    const localPlayerId = window.localStorage.getItem(LocalPlayerIdKey)
+    return localPlayerId === null ? "" : localPlayerId 
 }
