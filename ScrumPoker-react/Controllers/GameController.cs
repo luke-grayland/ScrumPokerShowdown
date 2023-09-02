@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
@@ -49,16 +50,17 @@ public class GameController : ControllerBase
         }
     }
 
-    public void UpdatePlayerId(string groupId, string oldPlayerId, string newPlayerId)
+    [HttpPost("UpdatePlayerId")]
+    public void UpdatePlayerId([FromBody] UpdatePlayerIdModel updatePlayerIdModel)
     {
-        if (string.IsNullOrEmpty(groupId) || string.IsNullOrEmpty(oldPlayerId) || string.IsNullOrEmpty(newPlayerId))
-            return;
+        var gameModel = GetGameModel(updatePlayerIdModel.GroupId);
         
-        var gameModel = GetGameModel(groupId);
-
-        var updatedGameModel = _gameOrchestrator.UpdatePlayerId(gameModel, oldPlayerId, newPlayerId);
+        var updatedGameModel = _gameOrchestrator.UpdatePlayerId(
+            gameModel, 
+            updatePlayerIdModel.OldPlayerId, 
+            updatePlayerIdModel.NewPlayerId);
         
-        SaveGameModel(updatedGameModel, groupId);
+        SaveGameModel(updatedGameModel, updatePlayerIdModel.GroupId);
         SendGameModelToGroup(updatedGameModel, updatedGameModel.GroupId);
     }
     
