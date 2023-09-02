@@ -11,6 +11,7 @@ import {
 } from "./GameScreenHelper";
 import VotingCardsRow from "./VotingCardsRow";
 import ClientContext from "../../contexts/ClientContext";
+import {useNavigate} from "react-router-dom";
 
 const GameScreen = () => {
     const {gameContext, updateGameContext} = useContext(GameContext)
@@ -24,6 +25,11 @@ const GameScreen = () => {
     const {clientContext} = useContext(ClientContext)
     const [groupId, setGroupId] = useState("")
     const [clientId, setClientId] = useState("")
+    const navigate = useNavigate()
+
+    window.onpopstate = () => {
+        navigate("/");
+    }
     
     if (clientContext)
     {
@@ -38,6 +44,7 @@ const GameScreen = () => {
             const parsedLocalGameContext = JSON.parse(localGameContext)
             updateGameContext({...parsedLocalGameContext})
         }
+
     }, [])
     
     useEffect(() => {

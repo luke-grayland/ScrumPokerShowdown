@@ -46,7 +46,7 @@ const JoinScreen = () => {
 
         if (gameValid) {
             JoinGame(playerName, clientContext.clientId, gameId, navigate, updateGameContext).then()
-            navigate("/loading")
+            navigate("/loading", {state: {fromHome: true}})
         }
     }
 

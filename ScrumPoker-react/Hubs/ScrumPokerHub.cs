@@ -16,11 +16,9 @@ public class ScrumPokerHub : Hub
         var groupId = Context.GetHttpContext()!.Request.Query["groupId"].ToString();
         var oldPlayerId = Context.GetHttpContext()!.Request.Query["playerId"].ToString();
 
-        if (groupId != "")
-            await Groups.AddToGroupAsync(Context.ConnectionId, groupId);
-
-        if (oldPlayerId != "")
+        if (groupId != "" && oldPlayerId != "")
         {
+            await Groups.AddToGroupAsync(Context.ConnectionId, groupId);
             var serviceProvider = Context.GetHttpContext()!.RequestServices;
             var gameController = serviceProvider.GetService<GameController>();
             gameController?.UpdatePlayerId(groupId, oldPlayerId, Context.ConnectionId);

@@ -39,3 +39,4 @@ export const ShowScores = async(groupId) => {
         console.log("Error: " + error)
     }
 }
+
