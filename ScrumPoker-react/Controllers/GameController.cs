@@ -51,6 +51,9 @@ public class GameController : ControllerBase
 
     public void UpdatePlayerId(string groupId, string oldPlayerId, string newPlayerId)
     {
+        if (string.IsNullOrEmpty(groupId) || string.IsNullOrEmpty(oldPlayerId) || string.IsNullOrEmpty(newPlayerId))
+            return;
+        
         var gameModel = GetGameModel(groupId);
 
         var updatedGameModel = _gameOrchestrator.UpdatePlayerId(gameModel, oldPlayerId, newPlayerId);
