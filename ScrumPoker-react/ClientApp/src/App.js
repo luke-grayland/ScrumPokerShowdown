@@ -18,7 +18,6 @@ const App = () => {
         newClient.start().then(() => {
             setClientConnection(newClient)
             setClientId(newClient.connectionId)
-            console.log('new client id', newClient.connectionId)
             window.localStorage.setItem(SignalRConnectionIdKey, newClient.connectionId);
         })
     },[])

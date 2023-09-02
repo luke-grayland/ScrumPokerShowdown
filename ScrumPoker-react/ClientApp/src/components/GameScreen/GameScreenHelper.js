@@ -3,10 +3,7 @@ export const LocalPlayerIdKey = "localPlayerId"
 
 export const ResetPlayerVotes = async(groupId) => {
     const url = process.env.REACT_APP_RESET_PLAYER_VOTES_URL;
-    
-    const data = {
-        GroupId: groupId
-    }
+    const data = { GroupId: groupId }
 
     const response = await fetch(url, {
         method: 'POST',
@@ -27,10 +24,7 @@ export const ResetPlayerVotes = async(groupId) => {
 
 export const ShowScores = async(groupId) => {
     const url = process.env.REACT_APP_SHOW_SCORES_URL;
-    
-    const data = {
-        GroupId: groupId
-    }
+    const data = { GroupId: groupId }
 
     const response = await fetch(url, {
         method: 'POST',

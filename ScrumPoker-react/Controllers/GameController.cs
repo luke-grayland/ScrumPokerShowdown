@@ -130,9 +130,6 @@ public class GameController : ControllerBase
     [HttpPost("LeaveGame")]
     public IActionResult LeaveGame([FromBody] LeaveGameModel leaveGameModel)
     {
-        // if (leaveGameModel.GroupId == string.Empty)
-        //     return Ok();
-        
         var gameModel = GetGameModel(leaveGameModel.GroupId);
         var player = gameModel.Players.FirstOrDefault(x => x.Id == leaveGameModel.ClientId);
         var updatedGameModel = _gameOrchestrator.RemovePlayerFromGame(gameModel, player);

@@ -36,7 +36,7 @@ const GameScreen = () => {
         
         if(localGameContext !== null) {
             const parsedLocalGameContext = JSON.parse(localGameContext)
-            updateGameContext({ ...parsedLocalGameContext})
+            updateGameContext({...parsedLocalGameContext})
         }
     }, [])
     
