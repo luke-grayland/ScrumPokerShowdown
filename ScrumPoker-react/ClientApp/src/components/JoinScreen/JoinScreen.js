@@ -1,7 +1,7 @@
 import {ValidatePlayerName} from "../HomeScreen/HomeScreenHelper";
 import React, {useContext, useEffect, useState} from "react";
-import {useLocation, useNavigate} from "react-router-dom";
-import {JoinGame} from "./JoinScreenHelper";
+import {useLocation, useNavigate, useSearchParams} from "react-router-dom";
+import {GameIdQueryParameterText, JoinGame} from "./JoinScreenHelper";
 import ClientContext from "../../contexts/ClientContext";
 import GameContext from "../../contexts/GameContext";
 
@@ -18,6 +18,8 @@ const JoinScreen = () => {
     const location = useLocation();
     const { state } = location;
     const { serverError, serverErrorMessage } = state;
+    const [searchParams] = useSearchParams();
+    const gameIdQueryParams = searchParams.get(GameIdQueryParameterText);
 
     useEffect(() => {
         setServerErrorDisplayed(false)
@@ -27,7 +29,7 @@ const JoinScreen = () => {
     useEffect(() => {
         setServerErrorDisplayed(serverError)
         setErrorMessage(serverErrorMessage)
-        setGameId("")
+        setGameId(gameIdQueryParams)
     }, [])
     
     const handleSubmit = (e) => {
@@ -89,7 +91,7 @@ const JoinScreen = () => {
                                 value={gameId}
                                 name="gameId"
                                 className="form-control m-2 text-center"
-                                onChange={(e) => setGameId(e.target.value)}
+                                // onChange={(e) => setGameId(e.target.value)}
                             />
                             <span className="invalid-danger text-danger text-center">
                                 {serverErrorDisplayed ? errorMessage : ""}
