@@ -18,7 +18,7 @@ const InviteWindow = ({setShowInviteWindow, groupIdProp}) => {
         + GameIdQueryParameterText 
         + "=" 
         + connectionId 
-        + "+" 
+        + "%2B" 
         + groupId
     
     const handleCopyClick = () => {
