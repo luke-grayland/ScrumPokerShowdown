@@ -1,7 +1,7 @@
 import {ValidatePlayerName} from "../HomeScreen/HomeScreenHelper";
 import React, {useContext, useEffect, useState} from "react";
-import {useLocation, useNavigate} from "react-router-dom";
-import {JoinGame} from "./JoinScreenHelper";
+import {useNavigate, useSearchParams} from "react-router-dom";
+import {GameIdQueryParameterText, JoinGame} from "./JoinScreenHelper";
 import ClientContext from "../../contexts/ClientContext";
 import GameContext from "../../contexts/GameContext";
 
@@ -11,23 +11,12 @@ const JoinScreen = () => {
     const [playerNameValidationResult, setPlayerNameValidationResult] = useState("")
     const [gameId, setGameId] = useState("")
     const navigate = useNavigate()
-    const [serverErrorDisplayed, setServerErrorDisplayed] = useState(false)
-    const [errorMessage, setErrorMessage] = useState("")
     const {clientContext} = useContext(ClientContext)
     const {updateGameContext} = useContext(GameContext)
-    const location = useLocation();
-    const { state } = location;
-    const { serverError, serverErrorMessage } = state;
-
-    useEffect(() => {
-        setServerErrorDisplayed(false)
-        setErrorMessage("")
-    }, [serverError, serverErrorMessage])
+    const [searchParams] = useSearchParams();
     
     useEffect(() => {
-        setServerErrorDisplayed(serverError)
-        setErrorMessage(serverErrorMessage)
-        setGameId("")
+        setGameId(searchParams.get(GameIdQueryParameterText))
     }, [])
     
     const handleSubmit = (e) => {
@@ -55,13 +44,6 @@ const JoinScreen = () => {
             <div className="logoDiv">
                 <img src={"/ScrumPokerLogoWithText.png"} alt="Scrum Poker Logo" id="homeScreenLogo" />
             </div>
-            <div className="joinButtonDiv">
-                <button className="btn btn-primary d-flex mx-auto buttonBlue"
-                        onClick={() => navigate("/")}>
-                    Home
-                </button>
-                <h5 className="text-center mt-2">Or</h5>
-            </div>
             <div className="startScreen">
                 <div className="startScreenContent shadowSmall card bg-light">
                     <form className="w-75 mt-4 mb-4" onSubmit={handleSubmit}>
@@ -86,14 +68,11 @@ const JoinScreen = () => {
                             <input
                                 type="text"
                                 id="gameId"
-                                value={gameId}
+                                value={gameId ?? ""}
                                 name="gameId"
                                 className="form-control m-2 text-center"
-                                onChange={(e) => setGameId(e.target.value)}
+                                readOnly
                             />
-                            <span className="invalid-danger text-danger text-center">
-                                {serverErrorDisplayed ? errorMessage : ""}
-                            </span>
                         </div>
                         <input id="startNewGameButton"
                                type="submit"

@@ -67,13 +67,6 @@ const HomeScreen = () => {
             <div className="logoDiv">
                 <img src={"/scrumPokerLogoWithText.png"} alt="Scrum Poker Logo" id="homeScreenLogo" />
             </div>
-            <div className="joinButtonDiv">
-                <button className="btn btn-primary d-flex mx-auto buttonBlue"
-                        onClick={() => navigate("/join", {state: {serverError: false, serverErrorMessage: ""}})}>
-                    Join a Game
-                </button>
-                <h5 className="text-center mt-2">Or</h5>
-            </div>
             <div className="startScreen">
                 <div className="startScreenContent shadowSmall card bg-light">
                     <form className="w-75 mt-4 mb-4" onSubmit={handleSubmit}>

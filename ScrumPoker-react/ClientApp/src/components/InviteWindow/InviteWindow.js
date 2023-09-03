@@ -1,5 +1,6 @@
 import React, {useContext, useEffect, useState} from 'react'
 import ClientContext from "../../contexts/ClientContext";
+import {GameIdQueryParameterText} from "../JoinScreen/JoinScreenHelper";
 
 const InviteWindow = ({setShowInviteWindow, groupIdProp}) => {
     const {clientContext} = useContext(ClientContext)
@@ -12,10 +13,16 @@ const InviteWindow = ({setShowInviteWindow, groupIdProp}) => {
         setGroupId(groupIdProp)
     }, [])
     
-    const GetGameId = () => connectionId + "+" + groupId
+    const GetJoinLink = () => process.env.REACT_APP_MAIN_URL 
+        + "join?" 
+        + GameIdQueryParameterText 
+        + "=" 
+        + connectionId 
+        + "%2B" 
+        + groupId
     
     const handleCopyClick = () => {
-        navigator.clipboard.writeText(GetGameId())
+        navigator.clipboard.writeText(GetJoinLink()).then()
         setCopied(true)
         
         setTimeout(() => {
@@ -35,7 +42,7 @@ const InviteWindow = ({setShowInviteWindow, groupIdProp}) => {
                     </button>
                 </div>
                 <div className="input-group inviteWindowInput">
-                    <input readOnly type="text" className="form-control" placeholder={GetGameId()}/>
+                    <input readOnly type="text" className="form-control" placeholder={GetJoinLink()}/>
                     <div className="input-group-append">
                         <button className="btn btn-outline-secondary copyButton"
                                 type="button"
