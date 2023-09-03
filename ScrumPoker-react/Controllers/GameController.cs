@@ -1,4 +1,3 @@
-using System.Diagnostics;
 using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
@@ -112,7 +111,10 @@ public class GameController : ControllerBase
             if (joinGameModel == null || joinGameModel.GameId == string.Empty)
                 throw new NullReferenceException();
 
-            var player = _gameOrchestrator.CreatePlayer(joinGameModel.PlayerName, joinGameModel.ClientId);
+            var player = _gameOrchestrator.CreatePlayer(
+                joinGameModel.PlayerName, 
+                joinGameModel.ClientId, 
+                Constants.PlayerMode.Player);
             var groupId = ExtractGroupId(joinGameModel.GameId);
             var gameModel = GetGameModel(groupId);
             var updatedGameModel = _gameOrchestrator.AddPlayerToGame(gameModel, player, groupId);

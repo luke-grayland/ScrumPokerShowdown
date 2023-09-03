@@ -43,12 +43,13 @@ public class GameOrchestrator : IGameOrchestrator
         };
     }
     
-    public PlayerModel CreatePlayer(string playerName, string clientId)
+    public PlayerModel CreatePlayer(string playerName, string clientId, string playerMode)
     {
         return new PlayerModel()
         {
             Id = clientId,
-            Name = SanitisePlayerName(playerName)
+            Name = SanitisePlayerName(playerName),
+            PlayerMode = playerMode
         };
     }
 

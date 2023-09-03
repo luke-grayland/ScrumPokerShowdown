@@ -1,6 +1,3 @@
-export const LocalGameContextKey = "localGameContext"
-export const LocalPlayerIdKey = "localPlayerId"
-
 export const ResetPlayerVotes = async(groupId) => {
     const url = process.env.REACT_APP_RESET_PLAYER_VOTES_URL;
     const data = { GroupId: groupId }

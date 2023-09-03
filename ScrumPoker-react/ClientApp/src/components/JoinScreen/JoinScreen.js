@@ -1,9 +1,10 @@
 import {ValidatePlayerName} from "../HomeScreen/HomeScreenHelper";
 import React, {useContext, useEffect, useState} from "react";
 import {useNavigate, useSearchParams} from "react-router-dom";
-import {GameIdQueryParameterText, JoinGame} from "./JoinScreenHelper";
 import ClientContext from "../../contexts/ClientContext";
 import GameContext from "../../contexts/GameContext";
+import {GameIdQueryParameterText} from "../../Constants";
+import {JoinGame} from "./JoinScreenHelper";
 
 const JoinScreen = () => {
     const [playerName, setPlayerName] = useState("")

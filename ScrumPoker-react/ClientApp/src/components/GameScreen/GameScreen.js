@@ -3,16 +3,12 @@ import PlayerCard from "../PlayerCard/PlayerCard";
 import GameContext from '../../contexts/GameContext'
 import NavBar from "../NavBar/NavBar";
 import InviteWindow from "../InviteWindow/InviteWindow";
-import {
-    LocalGameContextKey,
-    LocalPlayerIdKey,
-    ResetPlayerVotes,
-    ShowScores
-} from "./GameScreenHelper";
+import {ResetPlayerVotes, ShowScores} from "./GameScreenHelper";
 import VotingCardsRow from "./VotingCardsRow";
 import ClientContext from "../../contexts/ClientContext";
 import {useNavigate} from "react-router-dom";
 import {StyledKofiButton} from "../KofiButton/KofiButton";
+import {LocalGameContextKey, LocalPlayerIdKey, ConstPlayerMode} from "../../Constants";
 
 const GameScreen = () => {
     const {gameContext, updateGameContext} = useContext(GameContext)
@@ -27,10 +23,9 @@ const GameScreen = () => {
     const [groupId, setGroupId] = useState("")
     const [clientId, setClientId] = useState("")
     const navigate = useNavigate()
+    const [spectatorMode, setSpectatorMode] = useState(true)
 
-    window.onpopstate = () => {
-        navigate("/");
-    }
+    window.onpopstate = () => navigate("/")
     
     if (clientContext)
     {
@@ -45,7 +40,6 @@ const GameScreen = () => {
             const parsedLocalGameContext = JSON.parse(localGameContext)
             updateGameContext({...parsedLocalGameContext})
         }
-
     }, [])
     
     useEffect(() => {
@@ -101,22 +95,28 @@ const GameScreen = () => {
                 </div>
             </div>
             <div className="players">
-                {players && players.map((player) => (
-                    <PlayerCard key={player.Id} player={player} showScores={showScores}/>
-                ))}
+                {players && players.map((player) => {
+                        const shouldRenderPlayerCard = player.PlayerMode === ConstPlayerMode.Player;
+
+                        return shouldRenderPlayerCard ? (
+                            <PlayerCard key={player.Id} player={player} showScores={showScores} />
+                        ) : null;
+                    })}
             </div>
             <div className="votingCards">
                 <VotingCardsRow votingCardsRow={votingCardsTopRow}
                                 setSelectedCard={setSelectedCard}
                                 selectedCard={selectedCard}
                                 showScores={showScores}
-                                groupId={groupId}/>
-
+                                groupId={groupId}
+                                spectatorMode={spectatorMode}/>
+                <h4 className="spectatorModeText">Spectator Mode</h4>
                 <VotingCardsRow votingCardsRow={votingCardsBottomRow}
                                 setSelectedCard={setSelectedCard}
                                 selectedCard={selectedCard}
                                 showScores={showScores}
-                                groupId={groupId}/>    
+                                groupId={groupId}
+                                spectatorMode={spectatorMode}/>
             </div>
             <StyledKofiButton/>
         </>

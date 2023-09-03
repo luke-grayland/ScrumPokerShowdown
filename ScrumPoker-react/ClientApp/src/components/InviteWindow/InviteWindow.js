@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useState} from 'react'
 import ClientContext from "../../contexts/ClientContext";
-import {GameIdQueryParameterText} from "../JoinScreen/JoinScreenHelper";
+import {GameIdQueryParameterText} from "../../Constants";
 
 const InviteWindow = ({setShowInviteWindow, groupIdProp}) => {
     const {clientContext} = useContext(ClientContext)

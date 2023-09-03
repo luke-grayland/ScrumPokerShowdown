@@ -1,11 +1,13 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import GameContext from "../../contexts/GameContext";
 import {startGame, ValidateCustomVotingSystem, ValidatePlayerName} from "./HomeScreenHelper";
 import ClientContext from "../../contexts/ClientContext";
 import {StyledKofiButton} from "../KofiButton/KofiButton";
+import {ConstPlayerMode} from "../../Constants";
 const HomeScreen = () => {
     const [playerName, setPlayerName] = useState("")
+    const [playerMode, setPlayerMode] = useState(ConstPlayerMode.Player)
     const [votingSystem, setVotingSystem] = useState("1, 2, 3, 5, 8, 13, 21, 34")
     const [customVotingSystem, setCustomVotingSystem] = useState("")
     const [displayCustomInput, setDisplayCustomInput] = useState(false)
@@ -44,8 +46,9 @@ const HomeScreen = () => {
         }
         
         if (gameValid) {
-            startGame(playerName, clientContext.clientId, votingSystem, customVotingSystem, updateGameContext, navigate)
-                .then()
+            startGame(playerName, clientContext.clientId, votingSystem, customVotingSystem, 
+                updateGameContext, navigate, playerMode).then()
+            
             navigate("/loading", {state: {fromHome: true}})
         }
     }
@@ -62,6 +65,8 @@ const HomeScreen = () => {
             setDisplayCustomInput(false)    
         }
     }
+    
+    const handlePlayerModeChange = (e) => setPlayerMode(e.target.value)
 
     return (
         <div>
@@ -71,10 +76,10 @@ const HomeScreen = () => {
             <div className="startScreen">
                 <div className="startScreenContent shadowSmall card bg-light">
                     <form className="w-75 mt-4 mb-4" onSubmit={handleSubmit}>
-                        <div className="mb-3 d-flex flex-column">
+                        <div className="mb-2 d-flex flex-column">
                             <h3 className="text-center">Start New Game</h3> 
                         </div>
-                        <div className="mb-3 d-flex flex-column">
+                        <div className="mb-2 d-flex flex-column">
                             <label className="form-label mx-auto text-center" htmlFor="playerName">Player Name</label>
                             <input
                                 type="text"
@@ -87,7 +92,17 @@ const HomeScreen = () => {
                                 {playerNameErrorDisplayed ? playerNameValidationResult : ""}
                             </span>
                         </div>
-                        <div className="mb-3 d-flex flex-column">
+                        <div className="mb-2 d-flex flex-column">
+                            <label className="form-label mx-auto text-center" htmlFor="playerMode">I'm a</label>
+                            <select id="playerMode"
+                                    name="playerMode"
+                                    className="form-select text-center m-2"
+                                    onChange={handlePlayerModeChange}>
+                                <option value={ConstPlayerMode.Player}>{ConstPlayerMode.Player}</option>
+                                <option value={ConstPlayerMode.Spectator}>{ConstPlayerMode.Spectator}</option>
+                            </select>
+                        </div>
+                        <div className="mb-2 d-flex flex-column">
                             <label className="form-label mx-auto text-center" htmlFor="votingSystem">Voting System</label>
                             <select id="votingSystem"
                                 name="votingSystem"
@@ -100,7 +115,7 @@ const HomeScreen = () => {
                         </div>
                         { displayCustomInput &&
                             <>
-                                <div className="mb-3 d-flex flex-column">
+                                <div className="mb-2 d-flex flex-column">
                                     <label htmlFor="customVotingSystem" 
                                            className="form-label text-secondary text-center customVotingLabel">
                                         Please enter comma separated values

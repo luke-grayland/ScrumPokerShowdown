@@ -30,7 +30,7 @@ public class HomeController : ControllerBase
                 throw new NullReferenceException();
 
             var votingSystem = _gameOrchestrator.ValidateVotingSystem(playerGame);
-            var player = _gameOrchestrator.CreatePlayer(playerGame.PlayerName, playerGame.ClientId);
+            var player = _gameOrchestrator.CreatePlayer(playerGame.PlayerName, playerGame.ClientId, playerGame.PlayerMode);
             var groupId = _gameOrchestrator.CreateGroup(player.Id);
             var gameModel = _gameOrchestrator.AssembleGameModel(votingSystem, player, groupId);
 

@@ -1,13 +1,15 @@
-import {LocalGameContextKey, LocalPlayerIdKey} from "../GameScreen/GameScreenHelper";
+import {LocalGameContextKey, LocalPlayerIdKey} from "../../Constants";
 
-export const startGame = async (playerName, clientId, votingSystem, customVotingSystem, updateGameContext, navigate) => {
+export const startGame = async (playerName, clientId, votingSystem, customVotingSystem, 
+                                updateGameContext, navigate, playerMode) => {
     const url = process.env.REACT_APP_START_GAME_URL;
 
     const data = {
         playerName: playerName,
         clientId: clientId,
         votingSystem: votingSystem,
-        customVotingSystem: customVotingSystem
+        customVotingSystem: customVotingSystem,
+        playerMode: playerMode
     };
 
     try {

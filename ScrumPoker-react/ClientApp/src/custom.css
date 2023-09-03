@@ -204,6 +204,20 @@ main {
   margin: auto;
 }
 
+.spectatorMode {
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+.spectatorModeText {
+  color: red;
+  text-align: center;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 99;
+}
+
 .scrumPokerCard {
   height: 90%;
   border-width: var(--borderWidthSmall);
@@ -445,4 +459,9 @@ main {
 
 .kofiButton {
   margin: auto;
+}
+
+.infoCircle {
+  height: auto;
+  width: 20px;
 }
