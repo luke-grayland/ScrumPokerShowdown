@@ -12,6 +12,7 @@ import {
 import VotingCardsRow from "./VotingCardsRow";
 import ClientContext from "../../contexts/ClientContext";
 import {useNavigate} from "react-router-dom";
+import {StyledKofiButton} from "../KofiButton/KofiButton";
 
 const GameScreen = () => {
     const {gameContext, updateGameContext} = useContext(GameContext)
@@ -117,6 +118,7 @@ const GameScreen = () => {
                                 showScores={showScores}
                                 groupId={groupId}/>    
             </div>
+            <StyledKofiButton/>
         </>
     );
 };

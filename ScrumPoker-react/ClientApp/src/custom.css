@@ -225,8 +225,8 @@ main {
 
 .voting {
   width: 10%;
-  min-width: 100px;
-  max-width: 200px;
+  min-width: 105px;
+  max-width: 170px;
   height: 80%;
   margin: 15px;
   /*background-color: var(--mediumBlue);*/
@@ -255,8 +255,8 @@ main {
   height: 95%;
   max-height: 450px;
   width: 5%;
-  min-width: 100px;
-  max-width: 250px;
+  min-width: 105px;
+  max-width: 170px;
   flex-direction: column;
   justify-content: space-evenly;
   align-content: center;
@@ -426,4 +426,23 @@ main {
 
 .backgroundLightGrey {
   background-color: var(--lightGrey);
+}
+
+.kofiDiv {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 10px;
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+}
+
+.kofiText {
+  color: black;
+  text-align: center;
+}
+
+.kofiButton {
+  margin: auto;
 }
