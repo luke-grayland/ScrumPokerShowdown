@@ -210,7 +210,6 @@ main {
 }
 
 .spectatorModeText {
-  color: white;
   margin: 0;
   text-align: center;
   position: absolute;
@@ -223,7 +222,7 @@ main {
   display: flex;
   justify-content: center;
   align-content: center;
-  height: 1.2rem;
+  height: 1rem;
 }
 
 .scrumPokerCard {

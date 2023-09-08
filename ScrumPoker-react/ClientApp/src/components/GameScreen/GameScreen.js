@@ -119,7 +119,7 @@ const GameScreen = () => {
                                 spectatorMode={spectatorMode}/>
                 {spectatorMode &&
                     <div className="spectatorModeTextContainer">
-                        <h4 className="spectatorModeText">Spectator Mode</h4>
+                        <h5 className="spectatorModeText text-muted">Spectator Mode</h5>
                     </div>
                 }
                 <VotingCardsRow votingCardsRow={votingCardsBottomRow}
