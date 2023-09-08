@@ -49,7 +49,7 @@ public class GameOrchestrator : IGameOrchestrator
         {
             Id = clientId,
             Name = SanitisePlayerName(playerName),
-            PlayerMode = playerMode
+            Mode = playerMode
         };
     }
 

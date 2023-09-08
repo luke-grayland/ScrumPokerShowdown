@@ -23,7 +23,7 @@ const GameScreen = () => {
     const [groupId, setGroupId] = useState("")
     const [clientId, setClientId] = useState("")
     const navigate = useNavigate()
-    const [spectatorMode, setSpectatorMode] = useState(true)
+    const [spectatorMode, setSpectatorMode] = useState(false)
 
     window.onpopstate = () => navigate("/")
     
@@ -41,6 +41,13 @@ const GameScreen = () => {
             updateGameContext({...parsedLocalGameContext})
         }
     }, [])
+    
+    useEffect(() => {
+        if (players !== null && Array.isArray(players)) {
+            const playerIsSpectator = players.find(x => x.Id === clientId)?.Mode === ConstPlayerMode.Spectator
+            setSpectatorMode(playerIsSpectator)    
+        }
+    }, [players])
     
     useEffect(() => {
         if(clientContext?.clientId)
@@ -61,7 +68,7 @@ const GameScreen = () => {
         setAverageResult(gameContext.AverageScore)
         setShowScores(gameContext.ScoresDisplayed)
         setGroupId(gameContext.GroupId)
-
+        
         window.localStorage.setItem(LocalGameContextKey, JSON.stringify(gameContext))
     }, [gameContext])
 
@@ -96,7 +103,7 @@ const GameScreen = () => {
             </div>
             <div className="players">
                 {players && players.map((player) => {
-                        const shouldRenderPlayerCard = player.PlayerMode === ConstPlayerMode.Player;
+                        const shouldRenderPlayerCard = player.Mode === ConstPlayerMode.Player;
 
                         return shouldRenderPlayerCard ? (
                             <PlayerCard key={player.Id} player={player} showScores={showScores} />
@@ -110,7 +117,11 @@ const GameScreen = () => {
                                 showScores={showScores}
                                 groupId={groupId}
                                 spectatorMode={spectatorMode}/>
-                <h4 className="spectatorModeText">Spectator Mode</h4>
+                {spectatorMode &&
+                    <div className="spectatorModeTextContainer">
+                        <h4 className="spectatorModeText">Spectator Mode</h4>
+                    </div>
+                }
                 <VotingCardsRow votingCardsRow={votingCardsBottomRow}
                                 setSelectedCard={setSelectedCard}
                                 selectedCard={selectedCard}
