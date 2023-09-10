@@ -1,6 +1,6 @@
 import {ValidatePlayerName} from "../HomeScreen/HomeScreenHelper";
 import React, {useContext, useEffect, useState} from "react";
-import {useNavigate, useSearchParams} from "react-router-dom";
+import {useLocation, useNavigate, useSearchParams} from "react-router-dom";
 import ClientContext from "../../contexts/ClientContext";
 import GameContext from "../../contexts/GameContext";
 import {GameIdQueryParameterText} from "../../Constants";
@@ -15,9 +15,14 @@ const JoinScreen = () => {
     const {clientContext} = useContext(ClientContext)
     const {updateGameContext} = useContext(GameContext)
     const [searchParams] = useSearchParams();
+    const [gameIdErrorDisplayed, setGameIdErrorDisplayed] = useState(false)
+    const [gameIdErrorMessage, setGameIdErrorMessage] = useState(false)
+    const location = useLocation()
     
     useEffect(() => {
         setGameId(searchParams.get(GameIdQueryParameterText))
+        setGameIdErrorDisplayed(location.state?.serverError)
+        setGameIdErrorMessage(location.state?.serverErrorMessage)
     }, [])
     
     const handleSubmit = (e) => {
@@ -74,7 +79,11 @@ const JoinScreen = () => {
                                 className="form-control m-2 text-center"
                                 readOnly
                             />
+                            <span className="invalid-danger text-danger text-center">
+                                {gameIdErrorDisplayed ? gameIdErrorMessage : ""}
+                            </span>
                         </div>
+                        
                         <input id="startNewGameButton"
                                type="submit"
                                value="Join Game"

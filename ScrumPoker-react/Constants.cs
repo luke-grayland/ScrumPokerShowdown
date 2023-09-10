@@ -12,4 +12,9 @@ public static class Constants
     {
         public const string GroupId = "GroupId";
     }
+
+    public static class GameSettings
+    {
+        public const int MaxPlayers = 12;
+    }
 }

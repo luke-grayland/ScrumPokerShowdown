@@ -3,7 +3,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import ImageFadeIn from "react-image-fade-in";
 import {useLocation, useNavigate} from "react-router-dom";
-import {LocalGameContextKey, LocalPlayerKey} from "../../Constants";
 
 const LoadingScreen = () => {
     const location = useLocation()
