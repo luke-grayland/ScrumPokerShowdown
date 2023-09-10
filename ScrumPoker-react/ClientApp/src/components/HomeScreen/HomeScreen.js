@@ -85,7 +85,8 @@ const HomeScreen = () => {
                             <h3 className="text-center">Start New Game</h3> 
                         </div>
                         <div className="mb-2 d-flex flex-column">
-                            <label className="form-label mx-auto text-center form-padding-left-small" htmlFor="playerName">Player Name</label>
+                            <label className="form-label mx-auto text-center form-padding-left-small" 
+                                   htmlFor="playerName">Player Name</label>
                             <input
                                 type="text"
                                 id="playerName"
@@ -98,7 +99,8 @@ const HomeScreen = () => {
                             </span>
                         </div>
                         <div className="mb-2 d-flex flex-column">
-                            <label className="form-label mx-auto text-center form-padding-left-small" htmlFor="playerMode">I'm a</label>
+                            <label className="form-label mx-auto text-center form-padding-left-small" 
+                                   htmlFor="playerMode">I'm a</label>
                             <select id="playerMode"
                                     name="playerMode"
                                     className="form-select text-center m-2 form-select-padding"
@@ -108,7 +110,8 @@ const HomeScreen = () => {
                             </select>
                         </div>
                         <div className="mb-2 d-flex flex-column">
-                            <label className="form-label mx-auto text-center form-padding-left-small" htmlFor="votingSystem">Voting System</label>
+                            <label className="form-label mx-auto text-center form-padding-left-small" 
+                                   htmlFor="votingSystem">Voting System</label>
                             <select id="votingSystem"
                                 name="votingSystem"
                                 className="form-select text-center m-2 form-select-padding"
