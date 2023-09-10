@@ -91,6 +91,14 @@ body {
   opacity: 0.6;
 }
 
+.form-padding-left-small {
+  padding-left: 10px;
+}
+
+.form-select-padding {
+  padding-left: 30px;
+}
+
 .copyIcon {
   height: auto;
   width: 20px;

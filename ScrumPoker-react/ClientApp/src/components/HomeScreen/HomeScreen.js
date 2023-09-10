@@ -85,7 +85,7 @@ const HomeScreen = () => {
                             <h3 className="text-center">Start New Game</h3> 
                         </div>
                         <div className="mb-2 d-flex flex-column">
-                            <label className="form-label mx-auto text-center" htmlFor="playerName">Player Name</label>
+                            <label className="form-label mx-auto text-center form-padding-left-small" htmlFor="playerName">Player Name</label>
                             <input
                                 type="text"
                                 id="playerName"
@@ -93,25 +93,25 @@ const HomeScreen = () => {
                                 className="form-control m-2 text-center"
                                 onChange={(e) => setPlayerName(e.target.value)}
                             />
-                            <span className="invalid-danger text-danger text-center">
+                            <span className="invalid-danger text-danger text-center form-padding-left-small">
                                 {playerNameErrorDisplayed ? playerNameValidationResult : ""}
                             </span>
                         </div>
                         <div className="mb-2 d-flex flex-column">
-                            <label className="form-label mx-auto text-center" htmlFor="playerMode">I'm a</label>
+                            <label className="form-label mx-auto text-center form-padding-left-small" htmlFor="playerMode">I'm a</label>
                             <select id="playerMode"
                                     name="playerMode"
-                                    className="form-select text-center m-2"
+                                    className="form-select text-center m-2 form-select-padding"
                                     onChange={handlePlayerModeChange}>
                                 <option value={ConstPlayerMode.Player}>{ConstPlayerMode.Player}</option>
                                 <option value={ConstPlayerMode.Spectator}>{ConstPlayerMode.Spectator}</option>
                             </select>
                         </div>
                         <div className="mb-2 d-flex flex-column">
-                            <label className="form-label mx-auto text-center" htmlFor="votingSystem">Voting System</label>
+                            <label className="form-label mx-auto text-center form-padding-left-small" htmlFor="votingSystem">Voting System</label>
                             <select id="votingSystem"
                                 name="votingSystem"
-                                className="form-select text-center m-2"
+                                className="form-select text-center m-2 form-select-padding"
                                 onChange={handleVotingSystemChange}>
                                 <option value="1, 2, 3, 5, 8, 13, 21, 34">1, 2, 3, 5, 8, 13, 21, 34</option>
                                 <option value="1, 2, 3, 4, 5, 8, 13, 18, 21, 34">1, 2, 3, 4, 5, 8, 13, 18, 21, 34</option>
@@ -122,7 +122,7 @@ const HomeScreen = () => {
                             <>
                                 <div className="mb-2 d-flex flex-column">
                                     <label htmlFor="customVotingSystem" 
-                                           className="form-label text-secondary text-center customVotingLabel">
+                                           className="form-label text-secondary text-center customVotingLabel form-padding-left-small">
                                         Please enter comma separated values
                                     </label>
                                     <input
@@ -132,7 +132,7 @@ const HomeScreen = () => {
                                         className="form-control text-center m-2"
                                         onChange={(e) =>
                                             setCustomVotingSystem(e.target.value)}/>
-                                    <span className="invalid-danger text-danger text-center">
+                                    <span className="invalid-danger text-danger text-center form-padding-left-small">
                                         {votingSystemErrorDisplayed ? votingSystemValidationResult : ""}
                                     </span>
                                 </div>

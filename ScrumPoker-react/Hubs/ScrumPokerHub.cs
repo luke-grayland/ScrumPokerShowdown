@@ -9,7 +9,6 @@ public class ScrumPokerHub : Hub
     public override async Task OnConnectedAsync()
     {
         var groupId = Context.GetHttpContext()!.Request.Query["groupId"].ToString();
-        // var oldPlayerId = Context.GetHttpContext()!.Request.Query["playerId"].ToString();
         var playerName = Context.GetHttpContext()!.Request.Query["playerName"].ToString();
         var playerMode = Context.GetHttpContext()!.Request.Query["playerMode"].ToString();
 
