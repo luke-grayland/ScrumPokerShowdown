@@ -4,5 +4,5 @@ export const ConstPlayerMode = {
 }
 
 export const LocalGameContextKey = "localGameContext"
-export const LocalPlayerIdKey = "localPlayerId"
+export const LocalPlayerKey = "localPlayer"
 export const GameIdQueryParameterText = 'GameId'

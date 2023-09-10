@@ -7,4 +7,9 @@ public static class Constants
         public const string Player = "Player";
         public const string Spectator = "Spectator";
     }
+
+    public static class ContextKeys
+    {
+        public const string GroupId = "GroupId";
+    }
 }

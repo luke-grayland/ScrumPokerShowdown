@@ -6,27 +6,25 @@ namespace ScrumPoker_react.Hubs;
 
 public class ScrumPokerHub : Hub
 {
-    public async Task ClearCardSelection()
-    {
-        await Clients.All.SendAsync("ClearCardSelection");
-    }
-    
     public override async Task OnConnectedAsync()
     {
         var groupId = Context.GetHttpContext()!.Request.Query["groupId"].ToString();
-        var oldPlayerId = Context.GetHttpContext()!.Request.Query["playerId"].ToString();
+        // var oldPlayerId = Context.GetHttpContext()!.Request.Query["playerId"].ToString();
+        var playerName = Context.GetHttpContext()!.Request.Query["playerName"].ToString();
+        var playerMode = Context.GetHttpContext()!.Request.Query["playerMode"].ToString();
 
-        if (!string.IsNullOrEmpty(groupId) && !string.IsNullOrEmpty(oldPlayerId))
+        if (!new List<string>() { groupId, playerName, playerMode }.Any(string.IsNullOrEmpty))
         {
             await Groups.AddToGroupAsync(Context.ConnectionId, groupId);
             var serviceProvider = Context.GetHttpContext()!.RequestServices;
             var gameController = serviceProvider.GetService<GameController>();
             
-            gameController?.UpdatePlayerId(new UpdatePlayerIdModel()
+            gameController?.ReAddPlayer(new ReAddPlayerModel()
             {
                 GroupId = groupId,
                 NewPlayerId = Context.ConnectionId,
-                OldPlayerId = oldPlayerId
+                PlayerName = playerName,
+                PlayerMode = playerMode
             });
         }
 
@@ -35,23 +33,33 @@ public class ScrumPokerHub : Hub
     
     public override async Task OnDisconnectedAsync(Exception? exception)
     {
-         // var groupId = Context.GetHttpContext()!.Request.Query["groupId"].ToString();
-         //
-         // if (!string.IsNullOrEmpty(groupId))
-         // {
-         //     var clientId = Context.ConnectionId;
-         //     var serviceProvider = Context.GetHttpContext()!.RequestServices;
-         //     var gameController = serviceProvider.GetService<GameController>();
-         //
-         //     var leaveGameModel = new LeaveGameModel()
-         //     {
-         //         ClientId = clientId,
-         //         GroupId = groupId
-         //     };
-         //
-         //     gameController?.LeaveGame(leaveGameModel);    
-         // }
+        var clientId = Context.ConnectionId;
+        var groupId = Context.Items[Constants.ContextKeys.GroupId]?.ToString();
+
+        if (!(string.IsNullOrEmpty(clientId) || string.IsNullOrEmpty(groupId)))
+        {
+            var serviceProvider = Context.GetHttpContext()!.RequestServices;
+            var gameController = serviceProvider.GetService<GameController>();
+         
+            var leaveGameModel = new LeaveGameModel()
+            {
+                ClientId = clientId,
+                GroupId = groupId
+            };
+         
+            gameController?.LeaveGame(leaveGameModel);    
+        }
         
-         await base.OnDisconnectedAsync(exception);
+        await base.OnDisconnectedAsync(exception);
+    }
+    
+    public async Task ClearCardSelection()
+    {
+        await Clients.All.SendAsync("ClearCardSelection");
+    }
+
+    public void StoreGroupIdInHubContext(string groupId)
+    {
+        Context.Items[Constants.ContextKeys.GroupId] = groupId;
     }
 }

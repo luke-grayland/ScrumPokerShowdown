@@ -49,17 +49,19 @@ public class GameController : ControllerBase
         }
     }
 
-    [HttpPost("UpdatePlayerId")]
-    public void UpdatePlayerId([FromBody] UpdatePlayerIdModel updatePlayerIdModel)
+    [HttpPost("ReAddPlayer")]
+    public void ReAddPlayer([FromBody] ReAddPlayerModel reAddPlayerModel)
     {
-        var gameModel = GetGameModel(updatePlayerIdModel.GroupId);
+        var gameModel = GetGameModel(reAddPlayerModel.GroupId);
         
-        var updatedGameModel = _gameOrchestrator.UpdatePlayerId(
-            gameModel, 
-            updatePlayerIdModel.OldPlayerId, 
-            updatePlayerIdModel.NewPlayerId);
-        
-        SaveGameModel(updatedGameModel, updatePlayerIdModel.GroupId);
+        var player = _gameOrchestrator.CreatePlayer(
+            reAddPlayerModel.PlayerName, 
+            reAddPlayerModel.NewPlayerId, 
+            reAddPlayerModel.PlayerMode);
+
+        var updatedGameModel = _gameOrchestrator.AddPlayerToGame(gameModel, player, reAddPlayerModel.GroupId);
+
+        SaveGameModel(updatedGameModel, reAddPlayerModel.GroupId);
         SendGameModelToGroup(updatedGameModel, updatedGameModel.GroupId);
     }
     

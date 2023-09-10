@@ -1,4 +1,4 @@
-import {LocalGameContextKey, LocalPlayerIdKey} from "../../Constants";
+import {LocalGameContextKey, LocalPlayerKey} from "../../Constants";
 
 export const startGame = async (playerName, clientId, votingSystem, customVotingSystem, 
                                 updateGameContext, navigate, playerMode) => {
@@ -89,7 +89,10 @@ export const GetExistingGroupId = () => {
     return groupId
 }
 
-export const GetExistingPlayerId = () => {
-    const localPlayerId = window.localStorage.getItem(LocalPlayerIdKey)
-    return localPlayerId === null ? "" : localPlayerId 
+export const GetExistingPlayer = () => {
+    const localPlayer = window.localStorage.getItem(LocalPlayerKey)
+    
+    return localPlayer === undefined || localPlayer === null || localPlayer === "undefined" 
+        ? "" 
+        : JSON.parse(localPlayer) 
 }

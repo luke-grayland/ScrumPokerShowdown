@@ -4,7 +4,7 @@ import AppRoutes from './AppRoutes';
 import './custom.css';
 import Layout from "./components/Layout";
 import {GetSignalRConnection, SignalRConnectionIdKey} from "./SignalRHelper";
-import {GetExistingGroupId, GetExistingPlayerId} from "./components/HomeScreen/HomeScreenHelper";
+import {GetExistingGroupId, GetExistingPlayer} from "./components/HomeScreen/HomeScreenHelper";
 
 const App = () => {
     const [clientId, setClientId] = useState()
@@ -12,8 +12,8 @@ const App = () => {
     
     useEffect(() => {
         const localGroupId = GetExistingGroupId()
-        const localPlayerId = GetExistingPlayerId()
-        const newClient = GetSignalRConnection(localGroupId, localPlayerId)
+        const localPlayer = GetExistingPlayer()
+        const newClient = GetSignalRConnection(localGroupId, localPlayer)
         
         newClient.start().then(() => {
             setClientConnection(newClient)

@@ -4,7 +4,7 @@ import GameContext from "../../contexts/GameContext";
 import {startGame, ValidateCustomVotingSystem, ValidatePlayerName} from "./HomeScreenHelper";
 import ClientContext from "../../contexts/ClientContext";
 import {StyledKofiButton} from "../KofiButton/KofiButton";
-import {ConstPlayerMode} from "../../Constants";
+import {ConstPlayerMode, LocalGameContextKey, LocalPlayerKey} from "../../Constants";
 const HomeScreen = () => {
     const [playerName, setPlayerName] = useState("")
     const [playerMode, setPlayerMode] = useState(ConstPlayerMode.Player)
@@ -65,6 +65,11 @@ const HomeScreen = () => {
             setDisplayCustomInput(false)    
         }
     }
+    
+    useEffect(() => {
+        window.localStorage.removeItem(LocalPlayerKey)
+        window.localStorage.removeItem(LocalGameContextKey)
+    }, [])
     
     const handlePlayerModeChange = (e) => setPlayerMode(e.target.value)
 

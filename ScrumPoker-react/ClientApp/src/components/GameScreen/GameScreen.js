@@ -8,7 +8,7 @@ import VotingCardsRow from "./VotingCardsRow";
 import ClientContext from "../../contexts/ClientContext";
 import {useNavigate} from "react-router-dom";
 import {StyledKofiButton} from "../KofiButton/KofiButton";
-import {LocalGameContextKey, LocalPlayerIdKey, ConstPlayerMode} from "../../Constants";
+import {LocalGameContextKey, LocalPlayerKey, ConstPlayerMode} from "../../Constants";
 
 const GameScreen = () => {
     const {gameContext, updateGameContext} = useContext(GameContext)
@@ -30,7 +30,7 @@ const GameScreen = () => {
     if (clientContext)
     {
         clientContext.clientConnection.on("ReceiveUpdatedGameModel", data => updateGameContext(JSON.parse(data)))
-        clientContext.clientConnection.on("ClearCardSelection", () => setSelectedCard(null))    
+        clientContext.clientConnection.on("ClearCardSelection", () => setSelectedCard(null))
     }
 
     useEffect(() => {
@@ -44,18 +44,17 @@ const GameScreen = () => {
     
     useEffect(() => {
         if (players !== null && Array.isArray(players)) {
-            const playerIsSpectator = players.find(x => x.Id === clientId)?.Mode === ConstPlayerMode.Spectator
-            setSpectatorMode(playerIsSpectator)    
+            const thisPlayer = players.find(x => x.Id === clientId)
+            const playerIsSpectator = thisPlayer?.Mode === ConstPlayerMode.Spectator
+            
+            setSpectatorMode(playerIsSpectator)
+            window.localStorage.setItem(LocalPlayerKey, JSON.stringify(thisPlayer))
         }
     }, [players])
     
     useEffect(() => {
         if(clientContext?.clientId)
-        {
-            const clientId = clientContext.clientId 
-            setClientId(clientId)
-            window.localStorage.setItem(LocalPlayerIdKey, clientId)
-        }
+            setClientId(clientContext.clientId)
     }, [clientContext])
     
     useEffect(() => {
@@ -68,6 +67,9 @@ const GameScreen = () => {
         setAverageResult(gameContext.AverageScore)
         setShowScores(gameContext.ScoresDisplayed)
         setGroupId(gameContext.GroupId)
+
+        if (clientContext)
+            clientContext.clientConnection.invoke("StoreGroupIdInHubContext", gameContext.GroupId)
         
         window.localStorage.setItem(LocalGameContextKey, JSON.stringify(gameContext))
     }, [gameContext])
@@ -103,9 +105,7 @@ const GameScreen = () => {
             </div>
             <div className="players">
                 {players && players.map((player) => {
-                        const shouldRenderPlayerCard = player.Mode === ConstPlayerMode.Player;
-
-                        return shouldRenderPlayerCard ? (
+                        return player.Mode === ConstPlayerMode.Player ? (
                             <PlayerCard key={player.Id} player={player} showScores={showScores} />
                         ) : null;
                     })}
