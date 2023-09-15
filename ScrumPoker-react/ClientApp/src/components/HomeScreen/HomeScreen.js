@@ -74,7 +74,7 @@ const HomeScreen = () => {
     const handlePlayerModeChange = (e) => setPlayerMode(e.target.value)
 
     return (
-        <div>
+        <div className="scrollable">
             <div className="logoDiv">
                 <img src={"/scrumPokerLogoWithText.png"} alt="Scrum Poker Logo" id="homeScreenLogo" />
             </div>

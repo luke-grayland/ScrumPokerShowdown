@@ -1,5 +1,7 @@
-﻿using System.Text.Json;
+﻿using System.Text;
+using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Distributed;
 using ScrumPoker_react.Models;
 using ScrumPoker_react.Orchestrators;
 using StackExchange.Redis;
@@ -11,14 +13,15 @@ namespace ScrumPoker_react.Controllers;
 public class HomeController : ControllerBase
 {
     private readonly IGameOrchestrator _gameOrchestrator;
-    private readonly IConnectionMultiplexer _redis;
+    private readonly IDistributedCache _cache;
     
     public HomeController(
         IConnectionMultiplexer redis, 
-        IGameOrchestrator gameOrchestrator)
+        IGameOrchestrator gameOrchestrator,
+        IDistributedCache cache)
     {
         _gameOrchestrator = gameOrchestrator;
-        _redis = redis;
+        _cache = cache;
     }
 
     [HttpPost("StartGame")]
@@ -34,8 +37,8 @@ public class HomeController : ControllerBase
             var groupId = _gameOrchestrator.CreateGroup(player.Id);
             var gameModel = _gameOrchestrator.AssembleGameModel(votingSystem, player, groupId);
 
-            _redis.GetDatabase().StringSet(groupId, JsonSerializer.Serialize(gameModel));
-
+            _cache.Set(groupId, Encoding.UTF8.GetBytes(JsonSerializer.Serialize(gameModel)));
+            
             return Ok(JsonSerializer.Serialize(gameModel));
         }
         catch

@@ -1,10 +1,11 @@
+using System.Text;
 using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
+using Microsoft.Extensions.Caching.Distributed;
 using ScrumPoker_react.Hubs;
 using ScrumPoker_react.Models;
 using ScrumPoker_react.Orchestrators;
-using StackExchange.Redis;
 
 namespace ScrumPoker_react.Controllers;
 
@@ -12,18 +13,18 @@ namespace ScrumPoker_react.Controllers;
 [Route("[controller]")]
 public class GameController : ControllerBase
 {
-    private readonly IConnectionMultiplexer _redis;
     private readonly IGameOrchestrator _gameOrchestrator;
     private readonly IHubContext<ScrumPokerHub> _hub;
+    private readonly IDistributedCache _cache;
 
     public GameController(
-        IConnectionMultiplexer redis, 
         IGameOrchestrator gameOrchestrator, 
-        IHubContext<ScrumPokerHub> hub)
+        IHubContext<ScrumPokerHub> hub,
+        IDistributedCache cache)
     {
-        _redis = redis;
         _gameOrchestrator = gameOrchestrator;
         _hub = hub;
+        _cache = cache;
     }
     
     [HttpPost("UpdatePlayerVote")]
@@ -151,14 +152,14 @@ public class GameController : ControllerBase
 
     private GameModel GetGameModel(string groupId)
     {
-        var serializedGameModel = _redis.GetDatabase().StringGet(groupId);
+        var serializedGameModel = _cache.GetString(groupId);
         
         return JsonSerializer.Deserialize<GameModel>(serializedGameModel);
     }
 
     private void SaveGameModel(GameModel updatedGameModel, string groupId)
     {
-        _redis.GetDatabase().StringSet(groupId, JsonSerializer.Serialize(updatedGameModel));
+        _cache.Set(groupId, Encoding.UTF8.GetBytes(JsonSerializer.Serialize(updatedGameModel)));
     }
 
     private void SendGameModelToGroup(GameModel updatedGameModel, string groupId)

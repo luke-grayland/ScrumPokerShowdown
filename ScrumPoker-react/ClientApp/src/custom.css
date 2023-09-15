@@ -485,3 +485,7 @@ main {
   height: auto;
   width: 20px;
 }
+
+.scrollable {
+  overflow: scroll;
+}
