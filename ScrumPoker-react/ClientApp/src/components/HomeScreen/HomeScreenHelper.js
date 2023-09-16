@@ -113,3 +113,11 @@ export const FetchInfoCardText = (setWhyCardText,
     fetch(CustomNumbers).then(r => r.text()).then(setCustomNumbersCardText)
     fetch(CardsPlanningSuccess).then(r => r.text()).then(setSuccessCardText)
 }
+
+export const executeScroll = (infoCardsRef) => {
+    const element = infoCardsRef.current;
+    if (element)
+        element.scrollIntoView({
+            behavior: "smooth"
+        });
+};

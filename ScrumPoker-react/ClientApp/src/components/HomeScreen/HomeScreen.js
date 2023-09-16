@@ -1,7 +1,13 @@
 import React, {useContext, useEffect, useRef, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import GameContext from "../../contexts/GameContext";
-import {FetchInfoCardText, startGame, ValidateCustomVotingSystem, ValidatePlayerName} from "./HomeScreenHelper";
+import {
+    executeScroll,
+    FetchInfoCardText,
+    startGame,
+    ValidateCustomVotingSystem,
+    ValidatePlayerName
+} from "./HomeScreenHelper";
 import ClientContext from "../../contexts/ClientContext";
 import {StyledKofiButton} from "../KofiButton/KofiButton";
 import {ConstPlayerMode, LocalGameContextKey, LocalPlayerKey} from "../../Constants";
@@ -60,14 +66,6 @@ const HomeScreen = () => {
         }
     }
 
-    const executeScroll = () => {
-        const element = infoCardsRef.current;
-        if (element) 
-            element.scrollIntoView({ 
-                behavior: "smooth"
-            });
-    };
-
     const handleVotingSystemChange = (e) => {
         let newVotingSystem = e.target.value
         setVotingSystem(newVotingSystem)
@@ -88,6 +86,7 @@ const HomeScreen = () => {
     }, [])
     
     const handlePlayerModeChange = (e) => setPlayerMode(e.target.value)
+    const handleExecuteScroll = () => executeScroll(infoCardsRef)
 
     return (
         <div className="scrollable">
@@ -164,13 +163,13 @@ const HomeScreen = () => {
                     </form>
                 </div>
                 <div className="infoCardContainer">
-                    <div className="learnMoreContainer">
-                        <div className="learnMoreInnerContainer" onClick={executeScroll}>
+                    <div className="learnMoreContainer" ref={infoCardsRef}>
+                        <div className="learnMoreInnerContainer" onClick={handleExecuteScroll}>
                             <h5 className="my-auto text-center text-muted mx-1">Learn more</h5>
                             <img src={"/down_arrow.png"} alt="Down arrow" className="downArrow my-auto" />
                         </div>
                     </div>
-                    <div id="infoCardsContainer" ref={infoCardsRef}>
+                    <div id="infoCardsContainer">
                         <InfoCard title={"What is Scrum Poker?"} bodyText={whatCardText}/>
                         <InfoCard title={"Custom Numbers"} bodyText={customNumbersCardText}/>
                         <InfoCard title={"Why use Scrum Poker Showdown?"} bodyText={whyCardText}/>
