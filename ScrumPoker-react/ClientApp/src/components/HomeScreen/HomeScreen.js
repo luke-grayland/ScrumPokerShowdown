@@ -5,6 +5,7 @@ import {startGame, ValidateCustomVotingSystem, ValidatePlayerName} from "./HomeS
 import ClientContext from "../../contexts/ClientContext";
 import {StyledKofiButton} from "../KofiButton/KofiButton";
 import {ConstPlayerMode, LocalGameContextKey, LocalPlayerKey} from "../../Constants";
+import {SignalRConnectionIdKey} from "../../SignalRHelper";
 const HomeScreen = () => {
     const [playerName, setPlayerName] = useState("")
     const [playerMode, setPlayerMode] = useState(ConstPlayerMode.Player)

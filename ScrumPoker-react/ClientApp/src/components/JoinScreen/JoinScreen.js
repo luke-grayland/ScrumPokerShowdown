@@ -3,8 +3,9 @@ import React, {useContext, useEffect, useState} from "react";
 import {useLocation, useNavigate, useSearchParams} from "react-router-dom";
 import ClientContext from "../../contexts/ClientContext";
 import GameContext from "../../contexts/GameContext";
-import {GameIdQueryParameterText} from "../../Constants";
+import {GameIdQueryParameterText, LocalGameContextKey, LocalPlayerKey} from "../../Constants";
 import {JoinGame} from "./JoinScreenHelper";
+import {SignalRConnectionIdKey} from "../../SignalRHelper";
 
 const JoinScreen = () => {
     const [playerName, setPlayerName] = useState("")
@@ -20,6 +21,9 @@ const JoinScreen = () => {
     const location = useLocation()
     
     useEffect(() => {
+        window.localStorage.removeItem(LocalPlayerKey)
+        window.localStorage.removeItem(LocalGameContextKey)
+        
         setGameId(searchParams.get(GameIdQueryParameterText))
         setGameIdErrorDisplayed(location.state?.serverError)
         setGameIdErrorMessage(location.state?.serverErrorMessage)
