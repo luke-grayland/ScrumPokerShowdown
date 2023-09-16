@@ -263,7 +263,6 @@ main {
   max-width: 170px;
   height: 80%;
   margin: 15px;
-  /*background-color: var(--mediumBlue);*/
   transition: var(--transitionSpeed);
 }
 
@@ -380,21 +379,6 @@ main {
   text-align: center;
 }
 
-/*.submitButton {*/
-/*  width: 150px;*/
-/*  height: 40px;*/
-/*  border: solid;*/
-/*  border-width: var(--borderWidthSmall);*/
-/*  border-radius: var(--borderRadiusSmall);*/
-/*  border-color: var(--greyGreen);*/
-/*  display: flex;*/
-/*  align-content: center;*/
-/*  justify-content: center;*/
-/*  align-items: center;*/
-/*  font-family: futura, sans-serif;*/
-/*  transition: var(--transitionSpeed);*/
-/*}*/
-
 .cardValueHidden {
   opacity: 0.8;
   background: repeating-linear-gradient( -45deg, #82ABA1, #82ABA1 2.5px, #e5e5f7 2.5px, #e5e5f7 12.5px );
@@ -488,4 +472,42 @@ main {
 
 .scrollable {
   overflow: scroll;
+}
+
+.downArrow {
+  width: auto;
+  height: 1.2rem;
+  opacity: 0.4;
+}
+
+.infoCardLogo {
+  height: 30px;
+  width: auto;
+}
+
+.infoCard {
+  margin: 0 auto 40px auto;
+}
+
+.infoCardContainer {
+  margin-bottom: 20px;
+}
+
+.learnMoreContainer {
+  height: 100px;
+  display: flex;
+  align-content: center;
+  justify-content: center;
+}
+
+.learnMoreInnerContainer {
+  display: flex;
+  align-content: center;
+  justify-content: center;
+}
+
+.learnMoreInnerContainer:hover {
+  transform: scale(1.08);
+  cursor: pointer;
+  transition: var(--transitionSpeed);
 }

@@ -1,11 +1,11 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext, useEffect, useRef, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import GameContext from "../../contexts/GameContext";
-import {startGame, ValidateCustomVotingSystem, ValidatePlayerName} from "./HomeScreenHelper";
+import {FetchInfoCardText, startGame, ValidateCustomVotingSystem, ValidatePlayerName} from "./HomeScreenHelper";
 import ClientContext from "../../contexts/ClientContext";
 import {StyledKofiButton} from "../KofiButton/KofiButton";
 import {ConstPlayerMode, LocalGameContextKey, LocalPlayerKey} from "../../Constants";
-import {SignalRConnectionIdKey} from "../../SignalRHelper";
+import InfoCard from "./InfoCard";
 const HomeScreen = () => {
     const [playerName, setPlayerName] = useState("")
     const [playerMode, setPlayerMode] = useState(ConstPlayerMode.Player)
@@ -19,6 +19,12 @@ const HomeScreen = () => {
     const navigate = useNavigate()
     const {updateGameContext} = useContext(GameContext)
     const {clientContext} = useContext(ClientContext)
+    const [whatCardText, setWhatCardText] = useState("")
+    const [whyCardText, setWhyCardText] = useState("")
+    const [howCardText, setHowCardText] = useState("")
+    const [customNumbersCardText, setCustomNumbersCardText] = useState("")
+    const [successCardText, setSuccessCardText] = useState("")
+    const infoCardsRef = useRef(null)
     
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -54,6 +60,14 @@ const HomeScreen = () => {
         }
     }
 
+    const executeScroll = () => {
+        const element = infoCardsRef.current;
+        if (element) 
+            element.scrollIntoView({ 
+                behavior: "smooth"
+            });
+    };
+
     const handleVotingSystemChange = (e) => {
         let newVotingSystem = e.target.value
         setVotingSystem(newVotingSystem)
@@ -70,6 +84,7 @@ const HomeScreen = () => {
     useEffect(() => {
         window.localStorage.removeItem(LocalPlayerKey)
         window.localStorage.removeItem(LocalGameContextKey)
+        FetchInfoCardText(setWhyCardText, setWhatCardText, setHowCardText, setCustomNumbersCardText, setSuccessCardText)
     }, [])
     
     const handlePlayerModeChange = (e) => setPlayerMode(e.target.value)
@@ -147,6 +162,21 @@ const HomeScreen = () => {
                                value="Start Game" 
                                className="btn btn-primary d-flex mx-auto buttonBlue"/>
                     </form>
+                </div>
+                <div className="infoCardContainer">
+                    <div className="learnMoreContainer">
+                        <div className="learnMoreInnerContainer" onClick={executeScroll}>
+                            <h5 className="my-auto text-center text-muted mx-1">Learn more</h5>
+                            <img src={"/down_arrow.png"} alt="Down arrow" className="downArrow my-auto" />
+                        </div>
+                    </div>
+                    <div id="infoCardsContainer" ref={infoCardsRef}>
+                        <InfoCard title={"What is Scrum Poker?"} bodyText={whatCardText}/>
+                        <InfoCard title={"Custom Numbers"} bodyText={customNumbersCardText}/>
+                        <InfoCard title={"Why use Scrum Poker Showdown?"} bodyText={whyCardText}/>
+                        <InfoCard title={"How is it played?"} bodyText={howCardText}/>
+                        <InfoCard title={"Cards, Planning, & Success"} bodyText={successCardText} footer={"Happy Estimating!"}/>
+                    </div>
                 </div>
             </div>
             <StyledKofiButton/>

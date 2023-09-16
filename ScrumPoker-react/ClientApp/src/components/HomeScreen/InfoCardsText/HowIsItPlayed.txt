@@ -1,0 +1,1 @@
+In Scrum Poker, participants use a deck of special cards to assign estimates to user stories, features, or tasks. Each card in the deck represents a different numerical value. Here at Scrum Poker Showdown, we offer a unique twist: you can use your custom numbers!

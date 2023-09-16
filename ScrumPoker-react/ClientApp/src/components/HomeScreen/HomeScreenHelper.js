@@ -1,4 +1,9 @@
 import {LocalGameContextKey, LocalPlayerKey} from "../../Constants";
+import WhyScrumPoker from './InfoCardsText/WhyScrumPoker.txt';
+import HowIsItPlayed from './InfoCardsText/HowIsItPlayed.txt';
+import WhatIsScrumPoker from './InfoCardsText/WhatIsScrumPoker.txt';
+import CardsPlanningSuccess from './InfoCardsText/CardsPlanningSuccess.txt';
+import CustomNumbers from './InfoCardsText/CustomNumbers.txt';
 
 export const startGame = async (playerName, clientId, votingSystem, customVotingSystem, 
                                 updateGameContext, navigate, playerMode) => {
@@ -95,4 +100,16 @@ export const GetExistingPlayer = () => {
     return localPlayer === undefined || localPlayer === null || localPlayer === "undefined" 
         ? "" 
         : JSON.parse(localPlayer) 
+}
+
+export const FetchInfoCardText = (setWhyCardText, 
+                                  setWhatCardText, 
+                                  setHowCardText, 
+                                  setCustomNumbersCardText, 
+                                  setSuccessCardText) => {
+    fetch(WhyScrumPoker).then(r => r.text()).then(setWhyCardText)
+    fetch(WhatIsScrumPoker).then(r => r.text()).then(setWhatCardText)
+    fetch(HowIsItPlayed).then(r => r.text()).then(setHowCardText)
+    fetch(CustomNumbers).then(r => r.text()).then(setCustomNumbersCardText)
+    fetch(CardsPlanningSuccess).then(r => r.text()).then(setSuccessCardText)
 }

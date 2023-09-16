@@ -1,0 +1,1 @@
+Scrum Poker, sometimes referred to as Planning Poker, is an agile estimation technique used in project management to facilitate consensus among team members during the sprint planning process. It's a fun and interactive way to gauge the effort required for various tasks in a project.
