@@ -1,8 +1,6 @@
-﻿using ScrumPoker_react;
-using ScrumPoker_react.Controllers;
+﻿using ScrumPoker_react.Controllers;
 using ScrumPoker_react.Hubs;
 using ScrumPoker_react.Orchestrators;
-using StackExchange.Redis;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,14 +21,6 @@ builder.Services.AddSession(options => {
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true;
 });
-
-var redisConfiguration = new RedisConfiguration
-{
-    ConnectionString = configuration["Redis:ConnectionString"],
-    InstanceName = configuration["Redis:InstanceName"]
-};
-builder.Services.AddSingleton<IConnectionMultiplexer>(x =>
-    ConnectionMultiplexer.Connect(redisConfiguration.ConnectionString));
 
 var app = builder.Build();
 

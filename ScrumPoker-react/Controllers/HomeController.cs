@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Distributed;
 using ScrumPoker_react.Models;
 using ScrumPoker_react.Orchestrators;
-using StackExchange.Redis;
 
 namespace ScrumPoker_react.Controllers;
 
@@ -15,10 +14,7 @@ public class HomeController : ControllerBase
     private readonly IGameOrchestrator _gameOrchestrator;
     private readonly IDistributedCache _cache;
     
-    public HomeController(
-        IConnectionMultiplexer redis, 
-        IGameOrchestrator gameOrchestrator,
-        IDistributedCache cache)
+    public HomeController(IGameOrchestrator gameOrchestrator, IDistributedCache cache)
     {
         _gameOrchestrator = gameOrchestrator;
         _cache = cache;
