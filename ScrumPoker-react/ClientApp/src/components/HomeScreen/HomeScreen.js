@@ -170,11 +170,12 @@ const HomeScreen = () => {
                         </div>
                     </div>
                     <div id="infoCardsContainer" className="infoCardsContainer card" >
+                        <h3 className="text-center my-4">FAQs</h3>
                         <InfoCard title={"What is Scrum Poker?"} bodyText={whatCardText}/>
-                        <InfoCard title={"Custom Numbers"} bodyText={customNumbersCardText}/>
-                        <InfoCard title={"Why use Scrum Poker Showdown?"} bodyText={whyCardText}/>
+                        <InfoCard title={"Can I use custom numbers?"} bodyText={customNumbersCardText}/>
                         <InfoCard title={"How is Scrum Poker played?"} bodyText={howCardText}/>
-                        <InfoCard title={"Cards, Planning, & Success"} bodyText={successCardText} footer={"Happy Estimating!"}/>
+                        <InfoCard title={"Why use Scrum Poker Showdown?"} bodyText={whyCardText}/>
+                        <InfoCard title={"How does Scrum Poker promote effective planning?"} bodyText={successCardText} footer={"Happy Estimating!"}/>
                     </div>
                 </div>
                 <h6 className="text-center pb-3 text-muted">© LazyGrayLabs 2023</h6>

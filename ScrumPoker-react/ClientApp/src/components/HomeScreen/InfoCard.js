@@ -9,9 +9,6 @@ const InfoCard = ({title, bodyText, footer}) => {
                 <h5 className="card-title">{title}</h5>
                 <p className="card-text">{bodyText}</p>
             </div>
-            <div className="card-footer text-body-secondary">
-                {footer ? <h5 className="m-1">{footer}</h5> : <img src={"/down_arrow.png"} alt="Down arrow" className="downArrow" />}
-            </div>
         </div>
     )
 }
