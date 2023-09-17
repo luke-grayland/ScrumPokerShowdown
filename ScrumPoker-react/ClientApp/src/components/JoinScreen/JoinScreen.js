@@ -5,7 +5,6 @@ import ClientContext from "../../contexts/ClientContext";
 import GameContext from "../../contexts/GameContext";
 import {GameIdQueryParameterText, LocalGameContextKey, LocalPlayerKey} from "../../Constants";
 import {JoinGame} from "./JoinScreenHelper";
-import {SignalRConnectionIdKey} from "../../SignalRHelper";
 
 const JoinScreen = () => {
     const [playerName, setPlayerName] = useState("")

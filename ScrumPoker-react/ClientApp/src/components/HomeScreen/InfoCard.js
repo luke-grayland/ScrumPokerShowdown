@@ -1,7 +1,7 @@
 const InfoCard = ({title, bodyText, footer}) => {
     
     return (
-        <div className="card text-center w-50 shadowSmall infoCard">
+        <div className="card text-center w-75 shadowSmall infoCard">
             <div className="card-header">
                 <img src="/scrumPokerLogoOnly.png" alt="Scrum Poker Logo" className="infoCardLogo" />
             </div>

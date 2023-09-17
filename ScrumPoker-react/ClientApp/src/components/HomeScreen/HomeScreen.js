@@ -169,14 +169,15 @@ const HomeScreen = () => {
                             <img src={"/down_arrow.png"} alt="Down arrow" className="downArrow my-auto" />
                         </div>
                     </div>
-                    <div id="infoCardsContainer">
+                    <div id="infoCardsContainer" className="infoCardsContainer card" >
                         <InfoCard title={"What is Scrum Poker?"} bodyText={whatCardText}/>
                         <InfoCard title={"Custom Numbers"} bodyText={customNumbersCardText}/>
                         <InfoCard title={"Why use Scrum Poker Showdown?"} bodyText={whyCardText}/>
-                        <InfoCard title={"How is it played?"} bodyText={howCardText}/>
+                        <InfoCard title={"How is Scrum Poker played?"} bodyText={howCardText}/>
                         <InfoCard title={"Cards, Planning, & Success"} bodyText={successCardText} footer={"Happy Estimating!"}/>
                     </div>
                 </div>
+                <h6 className="text-center pb-3 text-muted">© LazyGrayLabs 2023</h6>
             </div>
             <StyledKofiButton/>
         </div>

@@ -511,3 +511,10 @@ main {
   cursor: pointer;
   transition: var(--transitionSpeed);
 }
+
+.infoCardsContainer {
+  width: 70%;
+  margin: auto;
+  padding-top: 50px;
+  background-color: rgba(248,249,250, 0.3);
+}
