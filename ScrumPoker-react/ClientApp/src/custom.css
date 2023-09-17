@@ -494,7 +494,7 @@ main {
 }
 
 .learnMoreContainer {
-  height: 100px;
+  height: 140px;
   display: flex;
   align-content: center;
   justify-content: center;
@@ -513,8 +513,8 @@ main {
 }
 
 .infoCardsContainer {
-  width: 70%;
+  width: 80%;
   margin: auto;
   padding-top: 50px;
-  background-color: rgba(248,249,250, 0.3);
+  background-color: rgba(248,249,250, 0.4);
 }
