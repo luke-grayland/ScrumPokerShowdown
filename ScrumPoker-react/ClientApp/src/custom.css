@@ -386,6 +386,13 @@ main {
 
 .playerHasVoted {
   border-color: #5E5E5E;
+  border-width: 4px;
+}
+
+.playerHasVotedTick {
+  height: auto;
+  width: 40%;
+  margin-top: 8px;
 }
 
 .selected {
