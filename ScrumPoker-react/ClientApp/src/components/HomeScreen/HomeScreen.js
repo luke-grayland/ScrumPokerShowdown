@@ -133,6 +133,7 @@ const HomeScreen = () => {
                                 onChange={handleVotingSystemChange}>
                                 <option value="1, 2, 3, 5, 8, 13, 21, 34">1, 2, 3, 5, 8, 13, 21, 34</option>
                                 <option value="1, 2, 3, 4, 5, 8, 13, 18, 21, 34">1, 2, 3, 4, 5, 8, 13, 18, 21, 34</option>
+                                <option value="0.5, 1, 2, 3, 5, 8, 13, 21">0.5, 1, 2, 3, 5, 8, 13, 21</option>
                                 <option value="Custom">Custom</option>
                             </select>
                         </div>

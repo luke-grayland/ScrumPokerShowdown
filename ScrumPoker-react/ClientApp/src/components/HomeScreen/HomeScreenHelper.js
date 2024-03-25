@@ -52,10 +52,10 @@ export const ValidateCustomVotingSystem = (customVotingSystem) => {
     if (customVotingSystem.slice(-1) === ",")
         result = "Custom values must not end with comma"
     
-    if (inputValues.some(x => (parseInt(x) < 1 || parseInt(x) > 99)))
-        result = "Custom values must be between 1 - 99"
+    if (inputValues.some(x => (parseFloat(x) < 0.1 || parseFloat(x) > 99)))
+        result = "Custom values must be between 0.1 and 99"
     
-    if (inputValues.some(x => isNaN(parseInt(x))))
+    if (inputValues.some(x => isNaN(parseFloat(x))))
         result = "Custom values must be numeric"
 
     if(inputValues.some((element, index) => {

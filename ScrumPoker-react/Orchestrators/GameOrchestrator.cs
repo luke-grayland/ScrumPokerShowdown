@@ -13,7 +13,7 @@ public class GameOrchestrator : IGameOrchestrator
     {
         _hub = hub;
     }
-    public List<int> ValidateVotingSystem(NewGameModel newGameModel)
+    public List<float> ValidateVotingSystem(NewGameModel newGameModel)
     {
         var votingSystem = newGameModel.VotingSystem == "Custom"
             ? newGameModel.CustomVotingSystem
@@ -21,7 +21,7 @@ public class GameOrchestrator : IGameOrchestrator
 
         try
         {
-            return votingSystem.Split(",").Select(int.Parse).OrderBy(x => x).ToList();
+            return votingSystem.Split(",").Select(float.Parse).OrderBy(x => x).ToList();
         }
         catch
         {
@@ -29,7 +29,7 @@ public class GameOrchestrator : IGameOrchestrator
         }
     }
 
-    public GameModel AssembleGameModel(IList<int> votingSystem, PlayerModel player, string groupId)
+    public GameModel AssembleGameModel(IList<float> votingSystem, PlayerModel player, string groupId)
     {
         var votingCardRows = SplitCardsToRows(votingSystem);
         
@@ -61,7 +61,7 @@ public class GameOrchestrator : IGameOrchestrator
         return groupId;
     }
 
-    public GameModel UpdatePlayerVote(GameModel gameModel, int cardValue, string playerId)
+    public GameModel UpdatePlayerVote(GameModel gameModel, float cardValue, string playerId)
     {
         var playerToUpdate = gameModel.Players.FirstOrDefault(x => x.Id == playerId);
         if (playerToUpdate != null) 
@@ -118,16 +118,16 @@ public class GameOrchestrator : IGameOrchestrator
         return game;
     }
     
-    private static Tuple<List<int>, List<int>> SplitCardsToRows(IList<int> votingCardsVales)
+    private static Tuple<List<float>, List<float>> SplitCardsToRows(IList<float> votingCardsVales)
     {
-        var topRow = new List<int>();
-        var bottomRow = new List<int>();
+        var topRow = new List<float>();
+        var bottomRow = new List<float>();
         var topRowCount = (int)Math.Ceiling(votingCardsVales.Count / 2.0);
 
         for (var i = 0; i < topRowCount; i++)
             topRow.Add(votingCardsVales[i]);
 
-        for (var i = topRowCount; i < votingCardsVales.Count; i++)
+        for (var i = topRowCount; i < votingCardsVales.Count; i++) 
             bottomRow.Add(votingCardsVales[i]);
 
         return Tuple.Create(topRow, bottomRow);
@@ -135,12 +135,12 @@ public class GameOrchestrator : IGameOrchestrator
 
     private static double CalculateAverageScore(IEnumerable<PlayerModel> players)
     {
-        var totalScore = 0;
+        float totalScore = 0;
         var playerCount = 0;
 
         foreach (var player in players)
         {
-            if (player.Vote < 1)
+            if (player.Vote < 0.1)
                 continue;
                 
             totalScore += player.Vote;
