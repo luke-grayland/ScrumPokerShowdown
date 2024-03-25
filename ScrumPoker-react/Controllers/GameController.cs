@@ -115,9 +115,9 @@ public class GameController : ControllerBase
                 throw new NullReferenceException();
 
             var player = _gameOrchestrator.CreatePlayer(
-                joinGameModel.PlayerName, 
+                joinGameModel.PlayerName,
                 joinGameModel.ClientId, 
-                Constants.PlayerMode.Player);
+                joinGameModel.PlayerMode);
             var groupId = ExtractGroupId(joinGameModel.GameId);
             var gameModel = GetGameModel(groupId);
             var updatedGameModel = _gameOrchestrator.AddPlayerToGame(gameModel, player, groupId);

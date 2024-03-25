@@ -24,6 +24,8 @@ const GameScreen = () => {
     const [clientId, setClientId] = useState("")
     const navigate = useNavigate()
     const [spectatorMode, setSpectatorMode] = useState(false)
+    const [spectatorCount, setSpectatorCount] = useState(0)
+    const [spectatorList, setSpectatorList] = useState()
 
     window.onpopstate = () => navigate("/")
     
@@ -67,7 +69,20 @@ const GameScreen = () => {
         setAverageResult(gameContext.AverageScore)
         setShowScores(gameContext.ScoresDisplayed)
         setGroupId(gameContext.GroupId)
-
+        
+        let spectatorCount = gameContext.Players.filter(x => x.Mode == ConstPlayerMode.Spectator).length 
+        setSpectatorCount(spectatorCount)
+        
+        if(spectatorCount > 0)
+        {
+            let spectatorList = gameContext.Players
+                .filter(item => item.Mode == ConstPlayerMode.Spectator)
+                .map((item, index) => (
+                <h5 className="m-1" key={index}>{item.Name}</h5>
+            ));
+            setSpectatorList(spectatorList)    
+        }
+        
         if (clientContext)
             clientContext.clientConnection.invoke("StoreGroupIdInHubContext", gameContext.GroupId)
         
@@ -102,6 +117,14 @@ const GameScreen = () => {
                         {showScores ? "New Vote" : "Show"}
                     </button>
                 </div>
+                { spectatorCount > 0 &&
+                    <div className="spectatorBoard">
+                        <h5 className="m-1">Spectators ({spectatorCount}):</h5>
+                        <div>
+                            {spectatorList}
+                        </div>
+                    </div>    
+                }
             </div>
             <div className="players">
                 {players && players.map((player) => {

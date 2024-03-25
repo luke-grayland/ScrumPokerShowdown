@@ -3,13 +3,14 @@ import React, {useContext, useEffect, useState} from "react";
 import {useLocation, useNavigate, useSearchParams} from "react-router-dom";
 import ClientContext from "../../contexts/ClientContext";
 import GameContext from "../../contexts/GameContext";
-import {GameIdQueryParameterText, LocalGameContextKey, LocalPlayerKey} from "../../Constants";
+import {ConstPlayerMode, GameIdQueryParameterText, LocalGameContextKey, LocalPlayerKey} from "../../Constants";
 import {JoinGame} from "./JoinScreenHelper";
 
 const JoinScreen = () => {
     const [playerName, setPlayerName] = useState("")
     const [playerNameErrorDisplayed, setPlayerNameErrorDisplayed] = useState(false)
     const [playerNameValidationResult, setPlayerNameValidationResult] = useState("")
+    const [playerMode, setPlayerMode] = useState(ConstPlayerMode.Player )
     const [gameId, setGameId] = useState("")
     const navigate = useNavigate()
     const {clientContext} = useContext(ClientContext)
@@ -27,6 +28,8 @@ const JoinScreen = () => {
         setGameIdErrorDisplayed(location.state?.serverError)
         setGameIdErrorMessage(location.state?.serverErrorMessage)
     }, [])
+
+    const handlePlayerModeChange = (e) => setPlayerMode(e.target.value)
     
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -43,7 +46,7 @@ const JoinScreen = () => {
         }
 
         if (gameValid) {
-            JoinGame(playerName, clientContext.clientId, gameId, navigate, updateGameContext).then()
+            JoinGame(playerName, playerMode, clientContext.clientId, gameId, navigate, updateGameContext).then()
             navigate("/loading", {state: {fromHome: true}})
         }
     }
@@ -71,6 +74,17 @@ const JoinScreen = () => {
                             <span className="invalid-danger text-danger text-center">
                                 {playerNameErrorDisplayed ? playerNameValidationResult : ""}
                             </span>
+                        </div>
+                        <div className="mb-3 d-flex flex-column">
+                            <label className="form-label mx-auto text-center form-padding-left-small"
+                                   htmlFor="playerMode">I'm a</label>
+                            <select id="playerMode"
+                                    name="playerMode"
+                                    className="form-select text-center m-2 form-select-padding"
+                                    onChange={handlePlayerModeChange}>
+                                <option value={ConstPlayerMode.Player}>{ConstPlayerMode.Player}</option>
+                                <option value={ConstPlayerMode.Spectator}>{ConstPlayerMode.Spectator}</option>
+                            </select>
                         </div>
                         <div className="mb-3 d-flex flex-column">
                             <label className="form-label mx-auto text-center" htmlFor="gameId">Game ID</label>

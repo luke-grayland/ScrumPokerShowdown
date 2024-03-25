@@ -1,8 +1,9 @@
-export const JoinGame = async (playerName, clientId, gameId, navigate, updateGameContext) => {
+export const JoinGame = async (playerName, playerMode, clientId, gameId, navigate, updateGameContext) => {
     const url = process.env.REACT_APP_JOIN_GAME_URL;
 
     const data = {
         playerName: playerName,
+        playerMode: playerMode,
         clientId: clientId,
         gameId: gameId,
     };

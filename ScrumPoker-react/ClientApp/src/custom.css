@@ -172,7 +172,17 @@ main {
   align-items: center;
   justify-content: space-evenly;
   padding: 15px;
+}
 
+.spectatorBoard {
+  position: absolute;
+  top: 10%;
+  right: 5%;
+  width: 29%;
+  height: 15%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 }
 
 .average {

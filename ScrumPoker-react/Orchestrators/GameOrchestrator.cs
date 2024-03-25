@@ -102,7 +102,7 @@ public class GameOrchestrator : IGameOrchestrator
 
     public GameModel AddPlayerToGame(GameModel game, PlayerModel player, string groupId)
     {
-        if (game.Players.Count > Constants.GameSettings.MaxPlayers)
+        if (game.Players.Count(x => x.Mode == Constants.PlayerMode.Player) > Constants.GameSettings.MaxPlayers)
             throw new Exception("Game is at maximum capacity");
 
         _hub.Groups.AddToGroupAsync(player.Id, groupId);
